@@ -2,7 +2,7 @@
 
 function connect() {
     $servername = "pawsitive-change-taara.com";
-    $username = "u578970591_taara_db";
+    $username = "u578970591_taara_user";
     $password = "Taara_db_pass2025";
     $dbname = "u578970591_taara_db";
 
