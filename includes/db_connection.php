@@ -1,7 +1,7 @@
 <?php
 
 function connect() {
-    $servername = "pawsitive-change-taara.com";
+    $servername = "srv1365.hstgr.io";
     $username = "u578970591_taara_user";
     $password = "Taara_db_pass2025";
     $dbname = "u578970591_taara_db";
