@@ -1,10 +1,10 @@
 <?php
 
 function connect() {
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "taara_db";
+    $servername = "pawsitive-change-taara.com";
+    $username = "u578970591_taara_db";
+    $password = "Taara_db_2025";
+    $dbname = "u578970591_taara_db";
 
     $conn = new mysqli($servername, $username, $password, $dbname);
 
