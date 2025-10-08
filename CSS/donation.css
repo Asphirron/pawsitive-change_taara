@@ -1,0 +1,94 @@
+.feature-section{
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.featured-content{
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    width: auto;
+    row-gap: 20px;
+}
+
+.collapsible-header{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+
+}
+
+.subsection-header-text{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.collapse-icon{
+    cursor: pointer;
+}
+
+.donation-card{
+    height: 250px;
+    width: 400px;
+}
+
+.donation-progress-group{
+    display: flex;
+    flex-direction: column;
+    gap: 2.5px;
+}
+
+.progress-bar, .progress-level{
+    border-radius: 15px;
+    height: 12px;
+    width: 100%;
+}
+
+.progress-bar{
+    border: 1px solid var(--color-text-disabled);
+    background-color: var(--color-bg);
+}
+
+.progress-level{
+    background-color: var(--color-highlight);
+    width: 20%;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+.progress-level-full{
+    width: 100%;
+}
+.progress-level-empty{
+    width: 0%;
+}
+.donation-goal, .duration{
+    color: var(--color-text-primary);    
+}
+
+.donate-card-btn{
+    background-color: var(--color-primary);
+    color: var(--color-text-secondary);
+    padding-block: 8px;
+    width: 100%;
+}
+
+
+
+/* MONETARY DONATION */
+
+.donation-banner-img{
+    width: 100px;
+    height: 100px;
+}
+
+.donation-details{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    width: 100%;
+}
