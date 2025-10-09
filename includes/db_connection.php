@@ -2,9 +2,9 @@
 
 function connect() {
     $servername = "pawsitive-change-taara.com";
-    $username = "taara_db";
+    $username = "u578970591_taara_db";
     $password = "Taara_pass2025";
-    $dbname = "taara_db";
+    $dbname = "u578970591_taara_db";
 
     $conn = new mysqli($servername, $username, $password, $dbname);
 
