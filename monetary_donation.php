@@ -358,7 +358,6 @@ if (!empty($deadline) && strtotime($deadline) !== false) {
       <p class="donation-description"><?php echo $desc; ?></p>
 
       <div class="donate-actions">
-        <button class="donate-action-btn"><i class="fa-solid fa-bookmark"></i> Bookmark</button>
         <button class="donate-action-btn"><i class="fa-solid fa-share-nodes"></i> Share</button>
       </div>
 
@@ -392,9 +391,7 @@ if (!empty($deadline) && strtotime($deadline) !== false) {
     <input type="text" name="contact" placeholder="Contact Number">
   </div>
 
-  <label class="checkbox">
-    <input type="checkbox" name="agreed" value="true"> Send me email updates
-  </label>
+ 
 
  <div class="payment-buttons">
   <button type="submit" name="payment_method" value="paypal" class="submit-btn paypal-btn">
