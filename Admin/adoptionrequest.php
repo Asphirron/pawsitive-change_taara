@@ -312,6 +312,47 @@ function logout() {
   alert("Logging out...");
   window.location.href = "../login.php";
 }
+
+
+  const userRole = "<?php echo $user_role; ?>";
+
+  const navLinks = {
+    dashboard: document.querySelector("li[onclick*='index.php']"),
+    adoption: document.querySelector("li[onclick*='adoptionrequest.php']"),
+    animals: document.querySelector("li[onclick*='animalprofile.php']"),
+    volunteers: document.querySelector("li[onclick*='volunteers.php']"),
+    donations: document.querySelector("li[onclick*='donation.php']"),
+    events: document.querySelector("li[onclick*='events.php']"),
+    reports: document.querySelector("li[onclick*='reports.php']")
+  };
+
+  // Lock everything first
+  Object.values(navLinks).forEach(link => {
+    if (link) link.classList.add("opacity-50", "pointer-events-none");
+  });
+
+  // Unlock based on role
+  switch (userRole) {
+    case "director":
+      Object.values(navLinks).forEach(link => link?.classList.remove("opacity-50", "pointer-events-none"));
+      break;
+    case "adoption":
+      navLinks.adoption?.classList.remove("opacity-50", "pointer-events-none");
+      break;
+    case "rescue":
+      navLinks.reports?.classList.remove("opacity-50", "pointer-events-none");
+      break;
+    case "donation":
+      navLinks.donations?.classList.remove("opacity-50", "pointer-events-none");
+      break;
+    case "event":
+      navLinks.events?.classList.remove("opacity-50", "pointer-events-none");
+      break;
+  }
+
+
+
+
 </script>
 </body>
 </html>
