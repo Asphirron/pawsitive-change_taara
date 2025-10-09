@@ -149,7 +149,7 @@ elseif ($method === "gcash") {
         <form action='donation_success.php' method='get' style='margin-top:14px;'>
             <input type='hidden' name='donation_id' value='" . htmlspecialchars($donation_id) . "'>
             <input type='hidden' name='ref' value='" . htmlspecialchars($ref) . "'>
-            <button class='btn' type='submit'>Send Proof</button>
+            <button class='btn' type='submit'>I have paid with GCash</button>
         </form>
 
         <a href='../index.php' class='btn secondary' style='display:inline-block; margin-top:8px;'>Return to Dashboard</a>
