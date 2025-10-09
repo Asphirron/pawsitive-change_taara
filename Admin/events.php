@@ -1,367 +1,265 @@
 <?php
-include "includes/db_connection.php";
-session_start();
+include '../includes/db_connection.php';
 
-$logged_in = false;
-$user_data = $username = $user_img = $uid = $user_type = $email = "";
+$event_table = new DatabaseCRUD('event');
 
-if (isset($_SESSION['email'])) {
-  $logged_in = true;
-  $email = $_SESSION['email'];
-  $user_table = new DatabaseCRUD('user');
-  $user_result = $user_table->select(["*"], ["email" => $email], 1);
+// --- Add New Event ---
+if (isset($_POST['add_event'])) {
+    $title = $_POST['title'];
+    $description = $_POST['description'];
+    $location = $_POST['location'];
+    $event_date = $_POST['event_date'];
+    $date_posted = date('Y-m-d');
+    $img_path = null;
 
-  if (!empty($user_result)) {
-    // ✅ Extract first row from array
-    $user_data = $user_result[0];
+    if (!empty($_FILES['img']['name'])) {
+        $uploadDir = 'Assets/Images/';
+        if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
+        $fileName = basename($_FILES['img']['name']);
+        $targetPath = $uploadDir . $fileName;
+        move_uploaded_file($_FILES['img']['tmp_name'], $targetPath);
+        $img_path = $targetPath;
+    }
 
-    $uid = $user_data['user_id'];
-    $user_img = $user_data['profile_img'];
-    $username = $user_data['username'];
-    $user_type = $user_data['user_type'];
-  }
+    $event_table->create([
+        'title' => $title,
+        'description' => $description,
+        'img' => $img_path,
+        'location' => $location,
+        'event_date' => $event_date,
+        'date_posted' => $date_posted
+    ]);
 }
+
+// --- Edit Event ---
+if (isset($_POST['edit_event'])) {
+    $event_id = $_POST['event_id'];
+    $title = $_POST['title'];
+    $description = $_POST['description'];
+    $location = $_POST['location'];
+    $event_date = $_POST['event_date'];
+
+    $img_path = $_POST['current_img'];
+    if (!empty($_FILES['img']['name'])) {
+        $uploadDir = 'uploads/';
+        if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
+        $fileName = time() . '_' . basename($_FILES['img']['name']);
+        $targetPath = $uploadDir . $fileName;
+        move_uploaded_file($_FILES['img']['tmp_name'], $targetPath);
+        $img_path = $targetPath;
+    }
+
+    $event_table->update($event_id, [
+        'title' => $title,
+        'description' => $description,
+        'img' => $img_path,
+        'location' => $location,
+        'event_date' => $event_date
+    ]);
+}
+
+// --- Delete Event ---
+if (isset($_POST['delete_event'])) {
+    $event_table->delete($_POST['event_id']);
+}
+
+// Fetch all events
+$events = $event_table->readAll();
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <link rel="stylesheet" href="CSS/essentials.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TAARA Admin - Events</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <title>Events - TAARA</title>
-
-<style>
-/* ===== General Card Styling ===== */
-.site-footer {
-  width: auto;
-  height: auto;
-  color: var(--color-text-primary);
-  background-color: var(--color-fg);
-  box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.275);
-  padding-block: 20px;
-}
-.footer-content {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-.footer-content img {
-  height: 20px;
-  width: 20px;
-}
-
-.card-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  margin-top: 1rem;
-  justify-content: center;
-}
-
-.event-card {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  flex: 0 0 100%;
- 
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.event-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
-}
-
-.event-card img {
-  width: 100%;
-  height: 350px;
-  object-fit: cover;
-  display: block;
-}
-
-.card-details {
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;   /* vertical center */
-  align-items: center;       /* horizontal center */
-  text-align: center;        /* center text */
-  gap: .5rem;
-  min-height: 260px;         /* keeps a nice balanced height */
-}
-
-
-.event-date {
-  color: #777;
-  font-size: 0.9rem;
-  margin-bottom: 0.4rem;
-}
-
-.card-title {
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: #222;
-  margin-bottom: 0.5rem;
-}
-
-.card-text {
-  font-size: 0.95rem;
-  color: #555;
-  line-height: 1.5;
-  margin-bottom: 1rem;
-  flex-grow: 1;
-}
-
-.event-info {
-  font-size: 0.9rem;
-  color: #444;
-  margin-bottom: 1rem;
-}
-
-.event-info strong {
-  color: #e91e63;
-}
-
-.event-card button {
-  background-color: #e91e63;
-  color: white;
-  border: none;
-  padding: 0.7rem;
-  border-radius: 10px;
-  font-weight: 600;
-  cursor: pointer;
-  width: 100%;
-  transition: background-color 0.25s ease;
-}
-
-.event-card button:hover {
-  background-color: #c2185b;
-}
-
-/* ===== Carousel Layout ===== */
-.carousel-wrapper {
-  position: relative;
-  width: 100%;
-  max-width: 750px;
-  margin: 2.5rem auto;
-  overflow: hidden;
-  border-radius: 12px;
-}
-
-.carousel-track {
-  display: flex;
-  transition: transform 0.6s ease-in-out;
-  width: 100%;
-}
-
-.carousel-track .event-card {
-  flex: 0 0 100%;
-  margin: 0;
-}
-
-/* Navigation Buttons */
-.carousel-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(255,255,255,0.95);
-  border: 2px solid #e91e63;
-  color: #e91e63;
-  border-radius: 50%;
-  width: 42px;
-  height: 42px;
-  cursor: pointer;
-  font-size: 1.25rem;
-  font-weight: 700;
-  transition: 0.3s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  z-index: 10;
-}
-
-.carousel-btn:hover {
-  background-color: #e91e63;
-  color: #fff;
-}
-
-.carousel-btn.prev { left: 12px; }
-.carousel-btn.next { right: 12px; }
-
-/* ===== Upcoming Events Title ===== */
-.subsection-header-text {
-  font-size: 2rem;
-  font-weight: 800;
-  text-align: center;
-  margin-top: 2rem;
-  color: #e91e63;
-  position: relative;
-}
-
-.subsection-header-text::after {
-  content: "";
-  display: block;
-  width: 60px;
-  height: 3px;
-  background-color: #e91e63;
-  margin: 0.5rem auto 0;
-  border-radius: 2px;
-}
-
-/* ===== Responsive ===== */
-@media (max-width: 768px) {
-  .carousel-wrapper { max-width: 95%; }
-  .event-card img { height: 250px; }
-  .card-title { font-size: 1.1rem; }
-  .subsection-header-text { font-size: 1.6rem; }
-}
-
-</style>
-
-
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
+<body class="bg-gray-100 font-sans">
 
-<body>
-  <header>
-    <img src="Assets/UI/taaralogo.jpg" alt="TAARA Logo">
-    <div class="nav-container">
+  <div class="flex">
+
+      <!-- Navigation -->
+     <!-- Sidebar -->
+    <aside class="w-64 bg-[#0b1d3a] text-white min-h-screen p-6">
+      <!-- Logo -->
+      <div class="flex flex-col items-center mb-10">
+        <img src="logo.png" alt="Logo" class="w-20 h-20 mb-4">
+        <h1 class="text-lg font-bold">T.A.A.R.A</h1>
+      </div>
+
+      <!-- Navigation -->
       <nav>
-        <ul>
-          <li><a href="rescue.php">Rescue</a></li>
-          <li><a href="adoption.php">Adopt</a></li>
-          <li><a href="donation.php">Donation</a></li>
-          <li><a href="volunteer.php">Volunteer</a></li>
-          <li><a class='active' href="events.php">Events</a></li>
-          <li><a href="index.php">About</a></li>
+        <ul class="space-y-4">
+          <li class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-700 cursor-pointer" onclick="window.location.href='index.php'">
+            <span class="material-icons">dashboard</span> Dashboard
+          </li>
+          <li class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-700 cursor-pointer" onclick="window.location.href='adoptionrequest.php'">
+            <span class="material-icons">pets</span> Adoption Requests
+          </li>
+          <li class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-700 cursor-pointer" onclick="window.location.href='animalprofile.php'">
+            <span class="material-icons">favorite</span> Animal Profiles
+          </li>
+          <li class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-700 cursor-pointer" onclick="window.location.href='volunteers.php'">
+            <span class="material-icons">groups</span> Volunteers
+          </li>
+          <li class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-700 cursor-pointer" onclick="window.location.href='donation.php'">
+            <span class="material-icons">volunteer_activism</span> Donations
+          </li>
+          <li class="flex items-center gap-3 p-3 rounded-lg bg-gray-700 cursor-pointer" onclick="window.location.href='events.php'">
+            <span class="material-icons">event</span> Events
+          </li>
+          <li class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-700 cursor-pointer" onclick="window.location.href='reports.php'">
+            <span class="material-icons">report</span> Rescue Reports
+          </li>
+          <li class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-700 cursor-pointer" onclick="window.location.href='settings.php'">
+            <span class="material-icons">settings</span> Settings
+          </li>
+          <li class="flex items-center gap-3 p-3 rounded-lg hover:bg-red-600 cursor-pointer mt-10" onclick="logout()">
+            <span class="material-icons">logout</span> Logout
+          </li>
         </ul>
       </nav>
+    </aside>
 
-      <?php
-      if ($logged_in) {
-        echo "<img src='Assets/Profile_Images/$user_img' class='profile-img' id='user_profile'>";
-      } else {
-        echo "<a href='register.php' class='bg-pink-600 text-white px-4 py-2 rounded-full font-bold hover:bg-pink-700 flex items-center gap-2'>
-                <i class='fa-solid fa-user-plus'></i> Register
-              </a>";
-      }
-      ?>
-    </div>
-  </header>
 
-  <div class="content-area">
-  <article class="feature-section">
-    <div class="featured-content">
-      <div class="collapsible-header">
-        <h4 class="subsection-header-text">Upcoming Events</h4>
+    <!-- Main Content -->
+    <main class="flex-1 p-8">
+      <h1 class="text-3xl font-bold mb-6">📅 Events Management</h1>
+
+      <!-- Event List Table -->
+      <div class="bg-white shadow rounded-xl p-6">
+        <h2 class="text-xl font-semibold mb-4">All Events</h2>
+        <table class="w-full border rounded-lg overflow-hidden">
+          <thead class="bg-gray-200">
+            <tr>
+              <th class="p-3 text-left">Image</th>
+              <th class="p-3 text-left">Title</th>
+              <th class="p-3 text-left">Date</th>
+              <th class="p-3 text-left">Location</th>
+              <th class="p-3 text-left">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($events as $event): ?>
+              <tr class="border-b hover:bg-gray-50">
+                <td class="p-3">
+                  <?php if (!empty($event['img'])): ?>
+                    <img src="<?= htmlspecialchars($event['img']) ?>" class="w-20 h-20 object-cover rounded">
+                  <?php else: ?>
+                    <span class="text-gray-400 italic">No image</span>
+                  <?php endif; ?>
+                </td>
+                <td class="p-3"><?= htmlspecialchars($event['title']) ?></td>
+                <td class="p-3"><?= date('M d, Y', strtotime($event['event_date'])) ?></td>
+                <td class="p-3"><?= htmlspecialchars($event['location']) ?></td>
+                <td class="p-3 flex gap-2">
+                  <button onclick='openEditModal(<?= json_encode($event) ?>)' class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Edit</button>
+                  <form method="POST" onsubmit="return confirm('Delete this event?')" style="display:inline;">
+                    <input type="hidden" name="event_id" value="<?= $event['event_id'] ?>">
+                    <button type="submit" name="delete_event" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</button>
+                  </form>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
       </div>
 
-      <!-- 🎠 Carousel Wrapper -->
-      <div class="carousel-wrapper">
-        <button class="carousel-btn prev" id="prevBtn">&#10094;</button>
+      <!-- Add New Event Form -->
+      <div class="bg-white shadow rounded-xl p-6 mt-6">
+        <h2 class="text-xl font-semibold mb-4">Add New Event</h2>
+        <form method="POST" enctype="multipart/form-data" class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-gray-700 mb-1">Event Title</label>
+            <input type="text" name="title" class="border rounded p-2 w-full" required>
+          </div>
+          <div>
+            <label class="block text-gray-700 mb-1">Date</label>
+            <input type="date" name="event_date" class="border rounded p-2 w-full" required>
+          </div>
+          <div>
+            <label class="block text-gray-700 mb-1">Location</label>
+            <input type="text" name="location" class="border rounded p-2 w-full" required>
+          </div>
+          <div>
+            <label class="block text-gray-700 mb-1">Image</label>
+            <input type="file" name="img" accept="image/*" class="border rounded p-2 w-full">
+          </div>
+          <div class="col-span-2">
+            <label class="block text-gray-700 mb-1">Description</label>
+            <textarea name="description" rows="4" class="border rounded p-2 w-full"></textarea>
+          </div>
+          <div class="col-span-2 flex justify-end">
+            <button type="submit" name="add_event" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add Event</button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
 
-        <div class="carousel-track" id="eventCarousel">
-          <?php
-          $conn = connect();
-          $query = "SELECT event_id, title, description, img, location, event_date FROM event ORDER BY event_date ASC";
-          $result = $conn->query($query);
-
-          if ($result->num_rows > 0) {
-              while ($row = $result->fetch_assoc()) {
-                  $id = $row['event_id'];
-                  $title = htmlspecialchars($row['title']);
-                  $desc = htmlspecialchars($row['description']);
-                  $img = $row['img'];
-                  $location = htmlspecialchars($row['location']);
-                  $event_date = date("F d, Y", strtotime($row['event_date']));
-
-                  echo "
-                  <div class='event-card'>
-                      <img src='$img' alt='$title'>
-                      <div class='card-details'>
-                          <small class='event-date'>$event_date</small>
-                          <h4 class='card-title'>$title</h4>
-                          <p class='card-text'>$desc</p>
-                          <p class='event-info'><strong>Location:</strong> $location</p>
-                          <button id='notify-btn$id' onclick='notify($id)'>Notify Me</button>
-                      </div>
-                  </div>";
-              }
-          } else {
-              echo "<p>No events found.</p>";
-          }
-          $conn->close();
-          ?>
+  <!-- Edit Modal -->
+  <div id="editModal" class="hidden fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50" onclick="closeOnOutsideClick(event)">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-1/2 max-h-[90vh] overflow-y-auto relative" onclick="event.stopPropagation()">
+      <span class="absolute top-2 right-3 text-gray-600 cursor-pointer text-2xl" onclick="closeModal()">&times;</span>
+      <h2 class="text-xl font-semibold mb-4">Edit Event</h2>
+      <form method="POST" enctype="multipart/form-data" id="editForm" class="grid grid-cols-2 gap-4">
+        <input type="hidden" name="event_id" id="edit_event_id">
+        <input type="hidden" name="current_img" id="current_img">
+        <div>
+          <label class="block mb-1 text-gray-700">Title</label>
+          <input type="text" name="title" id="edit_title" class="border rounded p-2 w-full">
         </div>
-
-        <button class="carousel-btn next" id="nextBtn">&#10095;</button>
-      </div>
+        <div>
+          <label class="block mb-1 text-gray-700">Date</label>
+          <input type="date" name="event_date" id="edit_date" class="border rounded p-2 w-full">
+        </div>
+        <div>
+          <label class="block mb-1 text-gray-700">Location</label>
+          <input type="text" name="location" id="edit_location" class="border rounded p-2 w-full">
+        </div>
+        <div>
+          <label class="block mb-1 text-gray-700">Image</label>
+          <input type="file" name="img" class="border rounded p-2 w-full">
+        </div>
+        <div class="col-span-2">
+          <label class="block mb-1 text-gray-700">Description</label>
+          <textarea name="description" id="edit_description" rows="4" class="border rounded p-2 w-full"></textarea>
+        </div>
+        <div class="col-span-2 flex justify-end">
+          <button type="submit" name="edit_event" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Save Changes</button>
+        </div>
+      </form>
     </div>
-  </article>
-
-  
-</div>
-
-
-  <footer class="site-footer">
-      <div class="footer-content">
-          <img src="Assets/UI/facebook.png" class="footer-content-img">
-          <h3 class="footer-content-text">Facebook</h3>
-      </div>
-      <div class="footer-content">
-          <img src="Assets/UI/phone.png" class="footer-content-img">
-          <h3 class="footer-content-text">09055238105</h3>
-      </div>
-      <div class="footer-content">
-          <h3 class="footer-content-text">Tabaco Animal Advocates and Rescuers Association - All rights reserved</h3>
-      </div>
-  </footer>
+  </div>
 
   <script>
-    function notify(btn_id){
-      notify_btn = document.getElementById('notify-btn'+btn_id);
-      notify_btn.innerText = 'Notified';
-      notify_btn.disabled = true;
-      notify_btn.style.bgcolor = 'lightgray';
-
+    function openEditModal(event) {
+      document.getElementById('editModal').classList.remove('hidden');
+      document.getElementById('edit_event_id').value = event.event_id;
+      document.getElementById('edit_title').value = event.title;
+      document.getElementById('edit_date').value = event.event_date;
+      document.getElementById('edit_location').value = event.location;
+      document.getElementById('edit_description').value = event.description;
+      document.getElementById('current_img').value = event.img || '';
     }
+
+    function closeModal() {
+      document.getElementById('editModal').classList.add('hidden');
+    }
+
+    function closeOnOutsideClick(e) {
+      if (e.target.id === 'editModal') {
+        closeModal();
+      }
+    }
+
+    function logout() {
+  alert("Logging out...");
+  window.location.href = "../login.php";
+}
   </script>
-
-<script>
-  const carouselTrack = document.getElementById('eventCarousel');
-  const nextBtn = document.getElementById('nextBtn');
-  const prevBtn = document.getElementById('prevBtn');
-  const slides = carouselTrack.querySelectorAll('.event-card');
-  let currentIndex = 0;
-
-  // Function to display slides one at a time
-  function showSlide(index) {
-    if (index < 0) index = slides.length - 1;
-    if (index >= slides.length) index = 0;
-    carouselTrack.style.transform = `translateX(-${index * 100}%)`;
-    currentIndex = index;
-  }
-
-  nextBtn.addEventListener('click', () => showSlide(currentIndex + 1));
-  prevBtn.addEventListener('click', () => showSlide(currentIndex - 1));
-
-  // Simple notify button behavior
-  function notify(btn_id){
-    const btn = document.getElementById('notify-btn'+btn_id);
-    btn.innerText = 'Notified';
-    btn.disabled = true;
-    btn.style.backgroundColor = '#aaa';
-  }
-</script>
-
 
 </body>
 </html>
