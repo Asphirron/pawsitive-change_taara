@@ -35,107 +35,289 @@ if (isset($_SESSION['email'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="CSS/essentials.css">
     <title>Home</title>
-    <style>
-    body {
-      background-color: #fafafa;
+   <style>
+  body {
+    background: linear-gradient(135deg, #f8f9fc, #eef0ff);
+    font-family: 'Poppins', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* === FOOTER === */
+  footer {
+    background-color: #222;
+    color: #eee;
+    text-align: center;
+    padding: 1.5rem 0;
+    font-size: 0.9rem;
+  }
+
+  footer a {
+    color: #e83e8c;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  footer a:hover {
+    text-decoration: underline;
+  }
+
+  /* === PAGE HEADER TITLE === */
+  .page-header {
+    text-align: center;
+    padding: 2.5rem 1rem 1.5rem;
+    background: linear-gradient(135deg, #ffffff, #f7f6ff);
+    border-radius: 0 0 25px 25px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+    max-width: 1000px;
+    margin: 1.5rem auto;
+  }
+
+  .page-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2b2ba1;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-header p {
+    font-size: 1rem;
+    color: #555;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* === ADOPTION CONTAINER === */
+  .adoption-container {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 1.5rem 2rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Gradient top border */
+  .adoption-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(135deg, #c9378a, #8e2bb5);
+    border-radius: 20px 20px 0 0;
+  }
+
+  /* Title & subtitle */
+  .adoption-container h2 {
+    font-size: 1.75rem;
+    color: #2b2ba1;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+
+  .adoption-container p {
+    color: #555;
+    font-size: 0.95rem;
+    max-width: 650px;
+    margin: 0 auto 1.2rem;
+    line-height: 1.5;
+  }
+
+  /* === FILTER SECTION === */
+  .filter-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 1.5rem auto 2rem;
+  }
+
+  .filter-box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 1rem 1.2rem;
+    background: #f9f9fc;
+    padding: 1.2rem 1.5rem;
+    border-radius: 14px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  /* Each field container */
+  .filter-field {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 130px;
+  }
+
+  .filter-field label {
+    font-size: 0.85rem;
+    color: #444;
+    margin-bottom: 0.35rem;
+    font-weight: 500;
+  }
+
+  .filter-box select,
+  .filter-box input {
+    border: 1px solid #d5d5f5;
+    border-radius: 8px;
+    padding: 0.45rem 0.7rem;
+    font-size: 0.9rem;
+    background: #fff;
+    transition: 0.2s ease;
+    width: 100%;
+  }
+
+  .filter-box select:focus,
+  .filter-box input:focus {
+    border-color: #7a3cc1;
+    box-shadow: 0 0 0 2px rgba(122, 60, 193, 0.15);
+    outline: none;
+  }
+
+  /* === BUTTONS SIDE BY SIDE === */
+  .filter-actions {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.6rem;
+  }
+
+  .filter-btn,
+  .reset-btn {
+    border: none;
+    border-radius: 8px;
+    padding: 0.45rem 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+  }
+
+  /* Search button (primary) */
+  .filter-btn {
+    background: linear-gradient(135deg, #2b2ba1, #6a2cb5);
+    color: white;
+  }
+
+  .filter-btn:hover {
+    background: linear-gradient(135deg, #3a3aa8, #7b37c6);
+    transform: translateY(-1px);
+  }
+
+  /* Reset button (secondary) */
+  .reset-btn {
+    background: #f0f0f7;
+    color: #444;
+    border: 1px solid #ddd;
+  }
+
+  .reset-btn:hover {
+    background: #e6e6f3;
+    transform: translateY(-1px);
+  }
+
+  /* === CARD GRID === */
+  .animal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.6rem;
+    margin-top: 2rem;
+  }
+
+  .animal-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #e3e3f7;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+  }
+
+  .animal-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  }
+
+  .animal-card img {
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+  }
+
+  .animal-info {
+    padding: 1rem 1.2rem;
+    text-align: left;
+  }
+
+  .animal-info h3 {
+    margin-bottom: 0.4rem;
+    font-size: 1.1rem;
+    color: #2b2b85;
+    font-weight: 600;
+  }
+
+  .animal-info p {
+    margin: 0.25rem 0;
+    font-size: 0.88rem;
+    color: #555;
+    line-height: 1.4;
+  }
+
+  .adopt-btn {
+    background: linear-gradient(135deg, #c9378a, #8e2bb5);
+    border: none;
+    color: white;
+    width: 90%;
+    padding: 0.6rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin: 0.8rem auto 1rem;
+    display: block;
+    transition: 0.25s ease;
+  }
+
+  .adopt-btn:hover {
+    background: linear-gradient(135deg, #b02f7a, #7a23a4);
+    transform: translateY(-2px);
+  }
+
+  /* === RESPONSIVE DESIGN === */
+  @media (max-width: 768px) {
+    .filter-box {
+      flex-direction: column;
+      align-items: stretch;
+      width: 90%;
+      gap: 0.8rem;
     }
 
-    .filter-bar {
-      background: #fff;
-      padding: 1rem;
-      margin: 1rem auto;
-      border-radius: 12px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-      gap: 1rem;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      max-width: 1200px;
+    .filter-actions {
+      justify-content: center;
+      margin-top: 0.5rem;
     }
 
-    .filter-bar select, .filter-bar input, .filter-bar datalist {
-      border: 1px solid #ccc;
-      padding: 0.5rem 0.8rem;
-      border-radius: 6px;
-      min-width: 150px;
-    }
-
-    .filter-bar button {
-      background-color: #2b2ba1;
-      color: white;
-      padding: 0.6rem 1.5rem;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.2s ease-in;
-    }
-
-    .filter-bar button:hover {
-      background-color: #1e1e80;
+    .filter-btn,
+    .reset-btn {
+      width: 45%;
     }
 
     .animal-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.5rem;
-      max-width: 1200px;
-      margin: 2rem auto;
-      padding: 0 1rem;
+      gap: 1rem;
     }
+  }
+</style>
 
-    .animal-card {
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      overflow: hidden;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
 
-    .animal-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-    }
-
-    .animal-card img {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-    }
-
-    .animal-info {
-      padding: 1rem;
-    }
-
-    .animal-info h3 {
-      margin: 0;
-      font-size: 1.2rem;
-      font-weight: 700;
-    }
-
-    .animal-info p {
-      margin: 0.2rem 0;
-      font-size: 0.9rem;
-      color: #555;
-    }
-
-    .adopt-btn {
-      background: #e83e8c;
-      border: none;
-      color: white;
-      width: 100%;
-      padding: 0.6rem;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-      margin-top: 0.6rem;
-      transition: background 0.2s ease;
-    }
-
-    .adopt-btn:hover {
-      background: #d03075;
-    }
-  </style>
   </head>
   <body>
   <header>
@@ -164,54 +346,89 @@ if (isset($_SESSION['email'])) {
     </div>
   </header>
 
-      <!-- FILTER BAR -->
-  
-  <section class="filter-bar">
-    <h1>Tell us what you want?</h1>
-    <select id="filter-type">
-      <option value="">All Types</option>
-      <option value="Dog">Dog</option>
-      <option value="Cat">Cat</option>
-    </select>
+<!-- FILTER DROPDOWN -->
 
-    <input list="breed-options" id="filter-breed" placeholder="Select Breed">
-    <datalist id="breed-options">
-      <option value="Labrador">
-      <option value="Poodle">
-      <option value="Golden Retriever">
-      <option value="Persian">
-      <option value="Siamese">
-      <option value="Bengal">
-    </datalist>
 
-    <select id="filter-age">
-      <option value="">Any Age</option>
-      <option value="1">1 year</option>
-      <option value="2">2 years</option>
-      <option value="3">3 years</option>
-      <option value="4">4 years</option>
-      <option value="5">5 years or older</option>
-    </select>
+<section class="adoption-container">
+  <h2>Available Pets for Adoption</h2>
+  <p>Find your new best friend! Use the filters below to narrow down pets based on your preferences.</p>
 
-    <select id="filter-gender">
-      <option value="">Any Gender</option>
-      <option value="Male">Male</option>
-      <option value="Female">Female</option>
-    </select>
+  <!-- Filter Box with Labels -->
+<div class="filter-wrapper">
+  <div class="filter-box">
 
-    <select id="filter-behavior">
-      <option value="">Any Behavior</option>
-      <option value="Friendly">Friendly</option>
-      <option value="Playful">Playful</option>
-      <option value="Calm">Calm</option>
-      <option value="Aggressive">Aggressive</option>
-    </select>
+    <div class="filter-field">
+      <label for="filter-type">Type</label>
+      <select id="filter-type">
+        <option value="">All Types</option>
+        <option value="Dog">Dog</option>
+        <option value="Cat">Cat</option>
+      </select>
+    </div>
 
-    <button onclick="loadAnimals()">Search</button>
-  </section>
+    <div class="filter-field">
+      <label for="filter-breed">Breed</label>
+      <input list="breed-options" id="filter-breed" placeholder="Enter breed...">
+      <datalist id="breed-options">
+        <option value="Labrador">
+        <option value="Poodle">
+        <option value="Golden Retriever">
+        <option value="Persian">
+        <option value="Siamese">
+        <option value="Bengal">
+      </datalist>
+    </div>
 
-  <!-- ANIMAL GRID -->
+    <div class="filter-field">
+      <label for="filter-age">Age</label>
+      <select id="filter-age">
+        <option value="">Any Age</option>
+        <option value="1">1 year</option>
+        <option value="2">2 years</option>
+        <option value="3">3 years</option>
+        <option value="4">4 years</option>
+        <option value="5">5+ years</option>
+      </select>
+    </div>
+
+    <div class="filter-field">
+      <label for="filter-gender">Gender</label>
+      <select id="filter-gender">
+        <option value="">Any Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
+    </div>
+
+    <div class="filter-field">
+      <label for="filter-behavior">Behavior</label>
+      <select id="filter-behavior">
+        <option value="">Any Behavior</option>
+        <option value="Friendly">Friendly</option>
+        <option value="Playful">Playful</option>
+        <option value="Calm">Calm</option>
+        <option value="Aggressive">Aggressive</option>
+      </select>
+    </div>
+
+    <!-- Button row -->
+    <div class="filter-actions">
+      <button class="filter-btn" onclick="loadAnimals()">Search</button>
+      <button class="reset-btn" onclick="resetFilters()">Reset</button>
+    </div>
+
+  </div>
+</div>
+
+
+
   <div id="animal-grid" class="animal-grid"></div>
+</section>
+
+
+
+
+
    
 
     <!-- FOOTER -->
@@ -244,7 +461,19 @@ if (isset($_SESSION['email'])) {
     </div>
   
 
- <script>
+<script>
+function resetFilters() {
+  document.getElementById("filter-type").value = "";
+  document.getElementById("filter-breed").value = "";
+  document.getElementById("filter-age").value = "";
+  document.getElementById("filter-gender").value = "";
+  document.getElementById("filter-behavior").value = "";
+  loadAnimals(); // reload all animals
+}
+</script>
+
+
+   <script>
     const profileImg = document.getElementById("user_profile");
     const modal = document.getElementById("user_options");
 
@@ -317,5 +546,7 @@ if (isset($_SESSION['email'])) {
   // Load all on start
   loadAnimals();
   </script>
+
+
   </body>
 </html>
