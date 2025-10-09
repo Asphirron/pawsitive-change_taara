@@ -24,16 +24,16 @@ if (isset($_SESSION['email'])) {
     if ($user_role !== 'director') {
         switch ($user_role) {
             case 'adoption':
-                header("Location: Admin/adoptionrequest.php");
+                header("Location: adoptionrequest.php");
                 exit();
             case 'rescue':
-                header("Location: Admin/reports.php");
+                header("Location: reports.php");
                 exit();
             case 'donation':
-                header("Location: Admin/donation.php");
+                header("Location: donation.php");
                 exit();
             case 'event':
-                header("Location: Admin/events.php");
+                header("Location: events.php");
                 exit();
             default:
                 header("Location: ../login.php?msg=Unauthorized access");
