@@ -2,6 +2,48 @@
 include '../includes/db_connection.php';
 session_start();
 
+
+$logged_in = false;
+$user_data = $username = $user_img = $uid = $user_type = $email = "";
+
+if (isset($_SESSION['email'])) {
+  $logged_in = true;
+  $email = $_SESSION['email'];
+  $user_table = new DatabaseCRUD('user');
+  $user_result = $user_table->select(["*"], ["email" => $email], 1);
+
+  if (!empty($user_result)) {
+    $user_data = $user_result[0];
+    $uid = $user_data['user_id'];
+    $user_img = $user_data['profile_img'];
+    $username = $user_data['username'];
+    $user_type = $user_data['user_type'];
+    $user_role = $user_data['role'];
+
+    // ✅ Redirect non-directors to their corresponding admin pages
+    if ($user_role !== 'director') {
+        switch ($user_role) {
+            case 'adoption':
+                header("Location: Admin/adoptionrequest.php");
+                exit();
+            case 'rescue':
+                header("Location: Admin/reports.php");
+                exit();
+            case 'donation':
+                header("Location: Admin/donation.php");
+                exit();
+            case 'event':
+                header("Location: Admin/events.php");
+                exit();
+            default:
+                header("Location: ../login.php?msg=Unauthorized access");
+                exit();
+        }
+    }
+  }
+}
+
+
 $user_table = new DatabaseCRUD('user');
 $animal_table = new DatabaseCRUD('animal');
 $application_table = new DatabaseCRUD('adoption_application');

@@ -19,6 +19,8 @@ if (isset($_SESSION['email'])) {
     $user_img = $user_data['profile_img'];
     $username = $user_data['username'];
     $user_type = $user_data['user_type'];
+    $user_role = $user_data['role'];
+
   }
 }
 
