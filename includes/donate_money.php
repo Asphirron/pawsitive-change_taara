@@ -139,7 +139,7 @@ elseif ($method === "gcash") {
             $stmt->close();
             $conn->close();
 
-            header("Location: donation_success.php");
+            //header("Location: donation_success.php");
 
             echo "
             <!DOCTYPE html>
