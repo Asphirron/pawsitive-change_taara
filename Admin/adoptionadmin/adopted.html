@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Adopted - TAARA</title>
+  <link rel="stylesheet" href="adoption.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body data-page="adopted">
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <img src="C:/Users/eugene castillo/Desktop/TAARA_CODES/IMAGES/taaralogo-removebg-preview.png" alt="TAARA Logo"/>
+        <h2>TAARA</h2>
+      </div>
+      <ul class="nav-links">
+        <li><a href="adoptiondash.html"><i class="fa-solid fa-chart-line"></i><span>Dashboard</span></a></li>
+        <li class="active"><a href="adopted.html"><i class="fa-solid fa-heart"></i><span>Adopted</span></a></li>
+        <li><a href="approved.html"><i class="fa-solid fa-circle-check"></i><span>Approved</span></a></li>
+        <li><a href="pending.html"><i class="fa-solid fa-hourglass-half"></i><span>Pending</span></a></li>
+        <li><a href="cancelled.html"><i class="fa-solid fa-ban"></i><span>Cancelled</span></a></li>
+        <li><a href="returned.html"><i class="fa-solid fa-rotate-left"></i><span>Returned</span></a></li>
+        <li><a href="adopter.html"><i class="fa-solid fa-user-group"></i><span>Adopter</span></a></li>
+        <li><a href="settings.html"><i class="fa-solid fa-gear"></i><span>Settings</span></a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Filter Bar -->
+      <div class="filter-bar">
+        <input type="text" id="searchInput" placeholder="Search adopter, animal, or ID...">
+        <select id="filterType">
+          <option value="">All Types</option>
+          <option value="Dog">Dog</option>
+          <option value="Cat">Cat</option>
+        </select>
+      </div>
+
+      <!-- Table -->
+      <section class="table-card">
+        <div class="card-head"><h3>All Adopted Records</h3></div>
+        <div class="table-wrap">
+          <table id="adoptedTable">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Adopter</th>
+                <th>Name</th>
+                <th>Breed</th>
+                <th>Type</th>
+                <th>Date Adopted</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>#AD-101</td>
+                <td>Juan Dela Cruz</td>
+                <td>Buddy</td>
+                <td>Chihuahua</td>
+                <td>Dog</td>
+                <td>2025-02-01</td>
+                <td><span class="badge success">Adopted</span></td>
+                 <tr>
+                <td>#AD-102</td>
+                <td>Janna Castillo</td>
+                <td>Bunak</td>
+                <td>Persian</td>
+                <td>Cat</td>
+                <td>2025-02-01</td>
+                <td><span class="badge success">Available</span></td>
+        
+              </tr>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
