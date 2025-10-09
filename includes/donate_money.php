@@ -85,8 +85,8 @@ function createPayPalOrder($amount, $donation_id) {
             "description" => "Donation #$donation_id to TAARA"
         ]],
         "application_context" => [
-            "return_url" => "http://localhost/beta.pawsitive.change/includes/donation_success.php?donation_id=$donation_id",
-            "cancel_url" => "http://localhost/beta.pawsitive.change/includes/donation_cancel.php?donation_id=$donation_id"
+            "return_url" => "https:pawsitive-change-taara/includes/donation_success.php?donation_id=$donation_id",
+            "cancel_url" => "https:pawsitive-change-taara/includes/donation_cancel.php?donation_id=$donation_id"
         ]
     ];
 
