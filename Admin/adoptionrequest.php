@@ -23,9 +23,7 @@ if (isset($_SESSION['email'])) {
     // ✅ Redirect non-directors to their corresponding admin pages
     if ($user_role !== 'director') {
         switch ($user_role) {
-            case 'adoption':
-                header("Location: adoptionrequest.php");
-                exit();
+            
             case 'rescue':
                 header("Location: reports.php");
                 exit();
