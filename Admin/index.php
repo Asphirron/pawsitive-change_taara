@@ -1,48 +1,13 @@
 <?php
-include '../includes/db_connection.php';
-session_start();
+  include "../includes/db_connection.php";
 
+  //starts the session
+  session_start();
 
-$logged_in = false;
-$user_data = $username = $user_img = $uid = $user_type = $email = "";
-
-if (isset($_SESSION['email'])) {
-  $logged_in = true;
-  $email = $_SESSION['email'];
-  $user_table = new DatabaseCRUD('user');
-  $user_result = $user_table->select(["*"], ["email" => $email], 1);
-
-  if (!empty($user_result)) {
-    $user_data = $user_result[0];
-    $uid = $user_data['user_id'];
-    $user_img = $user_data['profile_img'];
-    $username = $user_data['username'];
-    $user_type = $user_data['user_type'];
-    $user_role = $user_data['role'];
-
-    // ✅ Redirect non-directors to their corresponding admin pages
-    if ($user_role !== 'director') {
-        switch ($user_role) {
-            case 'adoption':
-                header("Location: adoptionrequest.php");
-                exit();
-            case 'rescue':
-                header("Location: reports.php");
-                exit();
-            case 'donation':
-                header("Location: donation.php");
-                exit();
-            case 'event':
-                header("Location: events.php");
-                exit();
-            default:
-                header("Location: ../login.php?msg=Unauthorized access");
-                exit();
-        }
-    }
+  //verifies if the user is logged in
+  if(!isset($_SESSION['email'])){
+    header("Location: ../login.php?");
   }
-}
-
 
 ?>
 
@@ -191,43 +156,6 @@ if (isset($_SESSION['email'])) {
     </div>
   </div>
 
-  <script>
-  const userRole = "<?php echo $user_role; ?>";
-
-  const navLinks = {
-    dashboard: document.querySelector("li[onclick*='index.php']"),
-    adoption: document.querySelector("li[onclick*='adoptionrequest.php']"),
-    animals: document.querySelector("li[onclick*='animalprofile.php']"),
-    volunteers: document.querySelector("li[onclick*='volunteers.php']"),
-    donations: document.querySelector("li[onclick*='donation.php']"),
-    events: document.querySelector("li[onclick*='events.php']"),
-    reports: document.querySelector("li[onclick*='reports.php']")
-  };
-
-  // Lock everything first
-  Object.values(navLinks).forEach(link => {
-    if (link) link.classList.add("opacity-50", "pointer-events-none");
-  });
-
-  // Unlock based on role
-  switch (userRole) {
-    case "director":
-      Object.values(navLinks).forEach(link => link?.classList.remove("opacity-50", "pointer-events-none"));
-      break;
-    case "adoption":
-      navLinks.adoption?.classList.remove("opacity-50", "pointer-events-none");
-      break;
-    case "rescue":
-      navLinks.reports?.classList.remove("opacity-50", "pointer-events-none");
-      break;
-    case "donation":
-      navLinks.donations?.classList.remove("opacity-50", "pointer-events-none");
-      break;
-    case "event":
-      navLinks.events?.classList.remove("opacity-50", "pointer-events-none");
-      break;
-  }
-</script>
-
+  
 </body>
 </html>
