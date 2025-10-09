@@ -65,184 +65,262 @@ if (!empty($deadline) && strtotime($deadline) !== false) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Donation - <?php echo $title; ?></title>
-  <link rel="stylesheet" href="CSS/globals.css">
   <link rel="stylesheet" href="CSS/essentials.css">
-  <script src="https://cdn.tailwindcss.com"></script>
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    body {
-      background-color: #fafafa;
-    }
+ <style>
+  :root {
+    --accent: #e63946;
+    --accent-dark: #d62828;
+    --success: #06d6a0;
+    --bg: #f8f9fa;
+    --text-dark: #222;
+    --text-light: #555;
+    --border: #eaeaea;
+  }
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 50px;
-      background: white;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
+  body {
+    background: var(--bg);
+    font-family: 'Inter', system-ui, sans-serif;
+    margin: 0;
+  }
 
-    header img {
-      height: 70px;
-      width: auto;
-      border-radius: 10px;
-    }
+  .donation-wrapper {
+    max-width: 1200px;
+    margin: 40px auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    padding: 0 20px;
+  }
 
-    .nav-container ul {
-      display: flex;
-      gap: 20px;
-      list-style: none;
-    }
-
-    .nav-container a {
-      text-decoration: none;
-      color: #333;
-      font-weight: 600;
-    }
-
-    .nav-container a.active {
-      color: #e63946;
-      border-bottom: 2px solid #e63946;
-    }
-
-    /* Donation Layout */
+  @media (max-width: 900px) {
     .donation-wrapper {
-      max-width: 1200px;
-      margin: 40px auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      align-items: start;
-      padding: 0 20px;
+      grid-template-columns: 1fr;
     }
+  }
 
-    @media (max-width: 900px) {
-      .donation-wrapper {
-        grid-template-columns: 1fr;
-      }
-    }
+  /* LEFT: Donation Details */
+  .donation-details {
+    background: #fff;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    transition: 0.3s;
+  }
 
-    .donation-banner-img {
-      width: 100%;
-      height: 300px;
-      object-fit: cover;
-      border-radius: 15px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    }
+  .donation-details:hover {
+    transform: translateY(-3px);
+  }
 
-    .donation-details {
-      background: #fff;
-      border-radius: 15px;
-      padding: 25px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-    }
+  .donation-banner-img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin-bottom: 15px;
+  }
 
-    .donation-title {
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin-top: 15px;
-      color: #222;
-    }
+  .donation-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 10px;
+  }
 
-    .donation-description {
-      color: #555;
-      line-height: 1.5;
-      margin: 10px 0 20px;
-    }
+  .donation-description {
+    color: var(--text-light);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
 
-    .donate-actions {
-      display: flex;
-      gap: 15px;
-      margin-bottom: 20px;
-    }
+  .donate-actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
 
-    .donate-action-btn {
-      background-color: #e63946;
-      border: none;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 25px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: 0.3s;
-    }
+  .donate-action-btn {
+    background: var(--accent);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.3s;
+  }
 
-    .donate-action-btn:hover {
-      background-color: #d62828;
-    }
+  .donate-action-btn:hover {
+    background: var(--accent-dark);
+    transform: translateY(-2px);
+  }
 
-    .progress-bar {
-      width: 100%;
-      height: 12px;
-      background-color: #eee;
-      border-radius: 8px;
-      overflow: hidden;
-      margin-bottom: 8px;
-    }
+  .progress-bar {
+    width: 100%;
+    height: 12px;
+    background: #e9ecef;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
 
-    .progress-level {
-      height: 100%;
-      background-color: #06d6a0;
-      border-radius: 8px;
-    }
+  .progress-level {
+    height: 100%;
+    background: var(--success);
+    transition: width 0.5s ease;
+  }
 
-    .donation-form {
-      background: #fff;
-      border-radius: 15px;
-      padding: 25px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-    }
+  /* RIGHT: Donation Form */
+  .donation-form {
+    background: #fff;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+  }
 
-    .donate-input, textarea {
-      width: 100%;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      margin-bottom: 15px;
-      font-size: 1rem;
-    }
+  .donation-form h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+  }
 
-    .donate-input:focus, textarea:focus {
-      outline: none;
-      border-color: #e63946;
-      box-shadow: 0 0 0 2px rgba(230,57,70,0.1);
-    }
+  .donation-form p {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+  }
 
-    .submit-btn {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      color: white;
-      font-weight: 600;
-      padding: 12px;
-      border-radius: 10px;
-      border: none;
-      cursor: pointer;
-      transition: 0.3s;
-    }
+  .form-group {
+    margin-bottom: 15px;
+    position: relative;
+  }
 
-    .submit-btn:hover {
-      transform: scale(1.02);
-      opacity: 0.9;
-    }
+  .form-group input, 
+  .form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    font-size: 1rem;
+    transition: 0.2s;
+    background: #fff;
+  }
 
-    footer {
-      background-color: #333;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      font-size: 0.9rem;
-      margin-top: 40px;
-    }
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(230,57,70,0.15);
+  }
 
-    footer a {
-      color: #ffd166;
-      text-decoration: none;
-    }
-  </style>
+  .submit-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px;
+    font-weight: 600;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .submit-btn img {
+    height: 20px;
+  }
+
+  .submit-btn:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+  }
+
+  .payment-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: stretch; /* makes both buttons equal height */
+  margin-top: 10px;
+  margin-bottom: 0; /* remove unwanted bottom spacing */
+}
+
+.payment-buttons .submit-btn {
+  flex: 1;
+  min-width: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 48px; /* consistent button height */
+  padding: 0 12px;
+  border-radius: 10px;
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+}
+
+.payment-buttons .submit-btn img {
+  height: 20px;
+  width: auto;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.payment-buttons .paypal-btn {
+  background: #0070BA;
+}
+
+.payment-buttons .gcash-btn {
+  background: #0077FF;
+}
+
+.payment-buttons .submit-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+
+.donation-form {
+  background: #fff;
+  border-radius: 20px;
+  padding: 30px 30px 25px; 
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+
+@media (max-width: 600px) {
+  .payment-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+  .checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 20px;
+  }
+
+  .checkbox input {
+    accent-color: var(--accent);
+  }
+</style>
 </head>
 
 <body>
@@ -292,38 +370,42 @@ if (!empty($deadline) && strtotime($deadline) !== false) {
     </div>
 
     <!-- RIGHT: Donation Form -->
-    <form class="donation-form" action="includes/donate_money.php" method="post">
-      <h2 class="text-xl font-bold mb-3 text-gray-800">Make a Donation</h2>
-      <p class="text-sm text-gray-500 mb-4">Your support helps us provide shelter, food, and care for animals in need.</p>
+   <form class="donation-form" action="includes/donate_money.php" method="post">
+  <h2>Make a Donation</h2>
+  <p>Your support helps us provide shelter, food, and care for animals in need.</p>
 
-      <input type="hidden" name="dpost" value="<?php echo $id; ?>">
+  <input type="hidden" name="dpost" value="<?php echo $id; ?>">
 
-      <label class="font-semibold text-gray-700">Full Name</label>
-      <input type="text" name="fullname" class="donate-input" placeholder="Enter your full name" required>
+  <div class="form-group">
+    <input type="text" name="fullname" placeholder="Full Name" required>
+  </div>
 
-      <label class="font-semibold text-gray-700">Amount (₱)</label>
-      <input type="number" name="amount" class="donate-input" placeholder="Enter amount" min="1" required>
+  <div class="form-group">
+    <input type="number" name="amount" placeholder="Amount (₱)" min="1" required>
+  </div>
 
-      <label class="font-semibold text-gray-700">Message (optional)</label>
-      <textarea name="message" rows="3" class="donate-input" placeholder="What do you want to say to us?"></textarea>
+  <div class="form-group">
+    <textarea name="message" rows="3" placeholder="Your message (optional)"></textarea>
+  </div>
 
-      <label class="font-semibold text-gray-700">Contact Number</label>
-      <input type="text" name="contact" class="donate-input" placeholder="Enter your contact number">
+  <div class="form-group">
+    <input type="text" name="contact" placeholder="Contact Number">
+  </div>
 
-      <div class="flex items-center gap-2 mb-4">
-        <input type="checkbox" id="agreed" name="agreed" value="true">
-        <label for="agreed" class="text-sm text-gray-600">Send me email updates</label>
-      </div>
+  <label class="checkbox">
+    <input type="checkbox" name="agreed" value="true"> Send me email updates
+  </label>
 
-      <div class="space-y-3">
-        <button type="submit" name="payment_method" value="paypal" class="submit-btn" style="background:#0070BA;">
-          <img src="Assets/UI/paypal.png" alt="PayPal" style="height:20px;"> Donate with PayPal
-        </button>
-        <button type="submit" name="payment_method" value="gcash" class="submit-btn" style="background:#0077FF;">
-          <img src="Assets/UI/gcash.png" alt="GCash" style="height:20px;"> Donate with GCash
-        </button>
-      </div>
-    </form>
+ <div class="payment-buttons">
+  <button type="submit" name="payment_method" value="paypal" class="submit-btn paypal-btn">
+    <img src="Assets/UI/paypal.png" alt="PayPal"> Donate with PayPal
+  </button>
+
+  <button type="submit" name="payment_method" value="gcash" class="submit-btn gcash-btn">
+    <img src="Assets/UI/gcash.png" alt="GCash"> Donate with GCash
+  </button>
+</div>
+</form>
   </div>
 
   <footer>
