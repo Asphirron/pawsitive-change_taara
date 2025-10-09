@@ -114,62 +114,13 @@ if ($method === "paypal") {
 
 // If GCash chosen
 elseif ($method === "gcash") {
-    // Generate reference and QR data
+    // Create a small "fake" transaction reference to show in the QR
     $ref = 'GC' . strtoupper(bin2hex(random_bytes(3))) . '-' . rand(1000,9999);
     $qrData = "TAARA|GCash|ref:$ref|donation_id:$donation_id|amount:PHP$amount";
+    // Use QRServer (no API key required). size 250x250
     $qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" . urlencode($qrData);
 
-    // If user uploaded proof
-    if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES['proof_img'])) {
-        $targetDir = "../Assets/UserGenerated/";
-        if (!is_dir($targetDir)) mkdir($targetDir, 0777, true);
-
-        // Generate clean, unique filename
-        $extension = pathinfo($_FILES["proof_img"]["name"], PATHINFO_EXTENSION);
-        $safeExt = strtolower(preg_replace('/[^a-z0-9]+/i', '', $extension));
-        $fileName = "proof_uid{$uid}_donation{$donation_id}_" . time() . "." . $safeExt;
-        $targetFile = $targetDir . $fileName;
-
-        // Move uploaded file to Assets/UserGenerated/
-        if (move_uploaded_file($_FILES["proof_img"]["tmp_name"], $targetFile)) {
-            $conn = connect();
-            $stmt = $conn->prepare("UPDATE monetary_donation SET proof_img=?, status='Pending Verification' WHERE m_donation_id=?");
-            $stmt->bind_param("si", $fileName, $donation_id);
-            $stmt->execute();
-            $stmt->close();
-            $conn->close();
-
-            //header("Location: donation_success.php");
-
-            echo "
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <meta charset='utf-8'>
-                <title>Proof Uploaded</title>
-                <meta name='viewport' content='width=device-width,initial-scale=1'>
-                <style>
-                    body { font-family: Arial, Helvetica, sans-serif; text-align:center; padding:30px; background:#f7fafc; color:#1f2937; }
-                    .card { display:inline-block; background:#fff; padding:24px; border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.08); max-width:420px; width:100%; }
-                    .btn { display:inline-block; margin-top:20px; padding:10px 18px; background:#0077ff; color:white; border-radius:6px; text-decoration:none; }
-                    .btn:hover { background:#005fcc; }
-                </style>
-            </head>
-            <body>
-                <div class='card'>
-                    <h2>Proof of Payment Uploaded ✅</h2>
-                    <p>Thank you for your donation! Your payment proof has been submitted for verification.</p>
-                    <a href='../index.php' class='btn'>Go to Dashboard</a>
-                </div>
-            </body>
-            </html>";
-            exit;
-        } else {
-            echo "<p style='color:red;text-align:center;'>⚠️ Failed to upload image. Please try again.</p>";
-        }
-    }
-
-    // Display QR and upload form
+    // Render a simple confirmation page with the QR image
     echo "
     <!DOCTYPE html>
     <html>
@@ -181,31 +132,33 @@ elseif ($method === "gcash") {
             body { font-family: Arial, Helvetica, sans-serif; text-align:center; padding:30px; background:#f7fafc; color:#1f2937; }
             .card { display:inline-block; background:#fff; padding:24px; border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.08); max-width:420px; width:100%; }
             img { width:250px; height:250px; object-fit:contain; margin:16px 0; }
-            input[type=file] { display:block; margin:10px auto; padding:10px; }
-            button { background:#0077ff; color:white; border:none; border-radius:6px; padding:10px 18px; cursor:pointer; }
-            button:hover { background:#005fcc; }
+            .btn { display:inline-block; margin:10px 6px; padding:10px 18px; background:#0077ff; color:white; border-radius:6px; text-decoration:none; }
+            .btn.secondary { background:#6b7280; }
             .small { color:#6b7280; font-size:0.9rem; }
             .ref { font-weight:600; margin-top:8px; }
         </style>
     </head>
     <body>
-        <div class='card'>
-            <h2>Scan to Pay with GCash</h2>
-            <p class='small'>Amount: <strong>₱" . htmlspecialchars(number_format($amount,2)) . "</strong></p>
-            <img src='" . htmlspecialchars($qrCodeUrl) . "' alt='GCash QR Code' />
-            <p class='ref'>Reference: " . htmlspecialchars($ref) . "</p>
-            <p class='small'>Scan the QR using your GCash app, complete payment, and upload your proof below.</p>
+      <div class='card'>
+        <h2>Scan to Pay with GCash</h2>
+        <p class='small'>Amount: <strong>₱" . htmlspecialchars(number_format($amount,2)) . "</strong></p>
+        <img src='" . htmlspecialchars($qrCodeUrl) . "' alt='GCash QR Code' />
+        <p class='ref'>Reference: " . htmlspecialchars($ref) . "</p>
+        <p class='small'>Scan the QR with your GCash app and include the reference in the payment notes.</p>
 
-            <form action='' method='POST' enctype='multipart/form-data' style='margin-top:16px;'>
-                <input type='file' name='proof_img' accept='image/*' required>
-                <button type='submit'>Send Proof</button>
-            </form>
-        </div>
+        <form action='donation_success.php' method='get' style='margin-top:14px;'>
+            <input type='hidden' name='donation_id' value='" . htmlspecialchars($donation_id) . "'>
+            <input type='hidden' name='ref' value='" . htmlspecialchars($ref) . "'>
+            <button class='btn' type='submit'>Send Proof</button>
+        </form>
+
+        <a href='../index.php' class='btn secondary' style='display:inline-block; margin-top:8px;'>Return to Dashboard</a>
+        <p class='small' style='margin-top:12px'>This QR is a simulated/test QR for local development only.</p>
+      </div>
     </body>
     </html>";
     exit;
 }
-
 
 
 ?>
