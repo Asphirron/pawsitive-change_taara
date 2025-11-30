@@ -10,7 +10,7 @@ function displayNav($activePage){
             <div class='mobile-nav-bar'>
                 <button id='hamburger-btn' class='hamburger hidden' onclick='toggleMobileNav()'>
                     ☰
-                </button>
+                </button >
 
                 <div class='mobile-logo'>
                     <img class='logo' src='logo.png'>
