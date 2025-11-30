@@ -19,7 +19,7 @@ if (isset($_POST['cancel_donation'])) {
         $inkindDB->delete($id, 'i_donation_id');
     }
 
-    header('Location: your_donations.php');
+    header('Location: user_donations.php');
     exit;
 }
 

@@ -13,7 +13,7 @@ $adoptDB = new DatabaseCRUD('adoption');
 if (isset($_POST['cancel_application'])) {
     $id = intval($_POST['a_application_id']);
     $appDB->update($id, ['status' => 'cancelled'], 'a_application_id');
-    header('Location: your_adoptions.php');
+    header('Location: user_adoptions.php');
     exit;
 }
 
