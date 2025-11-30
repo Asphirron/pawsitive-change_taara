@@ -23,7 +23,7 @@ include "../Admin/admin_ui.php"; //Displays Navigation
 <body>
 <?= displayNav('dashboard'); ?>
 
-<!-- Main Content -->
+<!-- Main Content --->
     <div class="flex-1">
       
       <!-- Dashboard Section -->
