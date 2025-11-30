@@ -33,7 +33,7 @@ function pdfImage($filename) {
     }
 
     // Convert file path to full URL for Dompdf
-    $url = 'http://localhost/' . str_replace('\\','/',$filePath); // Dompdf can read file:// URLs
+    $url = 'https:pawsitive-change-taara.com/' . str_replace('\\','/',$filePath); // Dompdf can read file:// URLs
 
     return "<img src='{$url}' style='width:80px;height:80px;object-fit:cover;border-radius:8px;'>";
 }
