@@ -1,161 +1,186 @@
 <?php
-  include "../includes/db_connection.php";
+// admin_dynamic.php
+include "../includes/db_connection.php"; //Establishes database connection
+include "../Admin/admin_ui.php"; //Displays Navigation
 
-  //starts the session
-  session_start();
+session_start();
+if($_SERVER['REQUEST_METHOD'] === 'GET'){
 
-  //verifies if the user is logged in
-  if(!isset($_SESSION['email'])){
-    header("Location: ../login.php?");
-  }
+    if(!isset($_GET['unset'])){
+        unset($_SESSION['visibleColumns']);
+    }
+}else{
+    unset($_SESSION['visibleColumns']);
+}
+
+
+
+// -------------------- CONFIG --------------------
+$tableName = 'animal';   // Change this to your table
+$pk = 'animal_id';       // Primary key column of the table
+
+$crud = new DatabaseCRUD($tableName);
+$tableData = $crud->readAll();
+
+// Define fields and types for modal & table
+$fieldsConfig = [
+    'animal_id' => 'id',
+    'name' => 'text',
+    'description' => 'textarea',
+    'type' => ['Dog','Cat','Other'],
+    'breed' => 'text',
+    'gender' => ['Male','Female'],
+    'age' => 'number',
+    'behavior' => ['Friendly','Playful','Calm','Aggressive','Timid'],
+    'date_rescued' => 'date',
+    'status' => ['At a Shelter','Adopted','Pending Adoption'],
+    'img' => 'image'
+];
+
+
+$_SESSION['fields_config'] = $fieldsConfig; 
+
+// Columns initially visible in table
+$defaultColumns = ['animal_id','name','type','breed','age','status'];
+
+
+if(!isset($_SESSION['visibleColumns'])) {
+    $_SESSION['visibleColumns'] = $defaultColumns;
+}
+
+$visibleColumns = $_SESSION['visibleColumns'];
+
+$message = "";
+
+// -------------------- HELPER --------------------
+function e($v){ return htmlspecialchars($v ?? '', ENT_QUOTES); }
+
+include "../includes/post_handler.php" //Handles POST (search, CRUD, etc)
 
 ?>
-
-
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TAARA Admin Dashboard</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Material Icons -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <script>
-    function showPage(page) {
-      alert("You clicked " + page + " page. This will redirect to " + page + ".html");
-      // Example: window.location.href = page + ".html";
-    }
-
-    function logout() {
-      alert("Logging out...");
-     window.location.href = "../login.php";
-    }
-  </script>
+<meta charset="UTF-8">
+<title><?= ucwords($tableName) ?> Admin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../CSS/admin_style.css">
+<link rel="icon" type="image/png" href="../Assets/UI/Taara_Logo.webp">
 </head>
-<body class="bg-gray-100 font-sans">
 
-  <div class="flex">
-    
-    <!-- Sidebar -->
-    <aside class="w-64 bg-[#0b1d3a] text-white min-h-screen p-6">
-      <!-- Logo -->
-      <div class="flex flex-col items-center mb-10">
-        <img src="logo.png" alt="Logo" class="w-20 h-20 mb-4">
-        <h1 class="text-lg font-bold">T.A.A.R.A</h1>
-      </div>
+<body>
+<?= displayNav('index'); ?>
 
-      <!-- Navigation -->
-      <nav>
-        <ul class="space-y-4">
-          <li class="flex items-center gap-3 p-3 rounded-lg bg-gray-700 cursor-pointer" onclick="window.location.href='index.php'">
-            <span class="material-icons">dashboard</span> Dashboard
-          </li>
-          <li class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-700 cursor-pointer" onclick="window.location.href='adoptionrequest.php'">
-            <span class="material-icons">pets</span> Adoption Requests
-          </li>
-          <li class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-700 cursor-pointer" onclick="window.location.href='animalprofile.php'">
-            <span class="material-icons">favorite</span> Animal Profiles
-          </li>
-          <li class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-700 cursor-pointer" onclick="window.location.href='volunteers.php'">
-            <span class="material-icons">groups</span> Volunteers
-          </li>
-          <li class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-700 cursor-pointer" onclick="window.location.href='donation.php'">
-            <span class="material-icons">volunteer_activism</span> Donations
-          </li>
-          <li class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-700 cursor-pointer" onclick="window.location.href='events.php'">
-            <span class="material-icons">event</span> Events
-          </li>
-          <li class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-700 cursor-pointer" onclick="window.location.href='reports.php'">
-            <span class="material-icons">report</span> Rescue Reports
-          </li>
-          <li class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-700 cursor-pointer" onclick="window.location.href='settings.php'">
-            <span class="material-icons">settings</span> Settings
-          </li>
-          <li class="flex items-center gap-3 p-3 rounded-lg hover:bg-red-600 cursor-pointer mt-10" onclick="logout()">
-            <span class="material-icons">logout</span> Logout
-          </li>
-        </ul>
-      </nav>
-    </aside>
+<main class="content flex-c">
+    <header class='top-nav flex-r'>
+        <a href='animals-records.php' class='top-active'>Records</a>
+        <a href='animals-activities.php'>Activity Logs</a>
+        <a href='animals-vaccinations.php'>Vaccination</a>
+    </header>
 
+    <div style='padding-inline:10px;'>
+        <h2>📋 <?= ucwords(str_replace('_',' ',$tableName)) ?> Table</h2>
 
-    <!-- Main Content -->
-    <div class="flex-1">
-      
-      <!-- Dashboard Section -->
-      <main class="p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div class="bg-white shadow rounded-xl p-6">
-          <h3 class="font-bold">Animal Profiles</h3>
-          <p class="text-gray-600">Manage rescued and adoptable animals.</p>
+        <!-- SEARCH FORM -->
+        <form method="POST" enctype="multipart/form-data" style="margin-bottom:12px;">
+            <div class="search-group">
+                <input type="text" name="search_bar" class="search-bar" placeholder="Search..." value="<?= e($_POST['search_bar'] ?? '') ?>">
+                <select name="search_by">
+                    <option value="none">None</option>
+                    <?php foreach(array_keys($fieldsConfig) as $f): ?>
+                        <option value="<?= $f ?>" <?= (isset($_POST['search_by']) && $_POST['search_by']===$f)?'selected':'' ?>><?= ucwords(str_replace('_',' ',$f)) ?></option>
+                    <?php endforeach; ?>
+                </select>
+                <select name="order_by" placeholder='Order by'>
+                    <option value="ascending" <?= (isset($_POST['order_by']) && $_POST['order_by']==='ascending')?'selected':'' ?>>Ascending</option>
+                    <option value="descending" <?= (isset($_POST['order_by']) && $_POST['order_by']==='descending')?'selected':'' ?>>Descending</option>
+                </select>
+                <input type="number" name="num_of_results" min="1" max="1000" value="<?= intval($_POST['num_of_results']??10) ?>" placeholder='Results shown'>
+                <button type="button" class="btn btn-secondary" onclick="toggleColumnSelector()">Columns</button>
+
+                <div id="column-selector" style="display:none; position:absolute; background:#fff; border:1px solid #ccc; padding:10px; top: 10%; left: 50%;" placeholder='Table columns shown'>
+                    <?php foreach($fieldsConfig as $f=>$t): ?>
+                        <label>
+                            <input type="checkbox" class="column-toggle" value="<?= $f ?>" 
+                                <?= in_array($f,$visibleColumns)?'checked':'' ?>> <?= ucwords(str_replace('_',' ',$f)) ?>
+                        </label><br>
+                    <?php endforeach; ?>
+                    <button type="button" onclick="applyColumnSelection()">Apply</button>
+                </div>
+
+                <button type="submit" name="reset_btn" class="btn btn-secondary">Reset</button >
+                <button type="submit" name="search_btn" class="btn btn-primary">Search</button>
+
+            </div>
+        </form>
+
+        <!-- ACTION BUTTON -->
+        <button class="btn btn-primary" onclick="openSharedModal('add')">+ Add <?= ucwords($tableName) ?></button>
+        <a href="../export/export_pdf.php?table=<?=$tableName?>" target="_blank"><button type='button' class="btn btn-success">Export as PDF</button></a>
+
+        <!-- RESULT TABLE -->
+        <div class="result-table">
+            <table class="rounded-border">
+                <thead>
+                <tr>
+                    <?php foreach($visibleColumns as $f): ?>
+                        <th><?= ucwords(str_replace('_',' ',$f)) ?></th>
+                    <?php endforeach; ?>
+                    <th>Action</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <?php if(empty($tableData)): ?>
+                    <tr><td colspan="<?= sizeOF($visibleColumns) ?>">No records found.</td></tr>
+                <?php endif; ?>
+
+                <?php foreach($tableData as $row): ?>
+                <tr>
+                    <?php foreach($visibleColumns as $f): ?>
+                        <?php if ($fieldsConfig[$f] === 'image'): ?>
+                            <?php
+                                $imgFile = $row[$f] ?? '';
+                                $imgPath = "../Assets/UserGenerated/" . $imgFile;
+                                $exists = !empty($imgFile) && file_exists(__DIR__ . "/../Assets/UserGenerated/" . $imgFile);
+                            ?>
+                            <td>
+                                <?php if ($exists): ?>
+                                    <img 
+                                        src="<?= $imgPath ?>" 
+                                        class="thumb-img"
+                                        onclick="openImagePreview('<?= $imgPath ?>')">
+                                <?php else: ?>
+                                    <span>No image</span>
+                                <?php endif; ?>
+                            </td>
+                        <?php else: ?>
+                            <td><?= e($row[$f] ?? '') ?></td>
+                        <?php endif; ?>
+
+                    <?php endforeach; ?>
+                    <td style="width: auto;">
+                        <?php $json = htmlspecialchars(json_encode($row, JSON_HEX_APOS | JSON_HEX_QUOT), ENT_QUOTES, 'UTF-8'); ?>
+                        <button onclick='openSharedModal("edit", <?= $json ?>)' style='width:60px;' class='btn btn-success action-btn'>Edit</button>
+                        <button onclick='openDeleteModal(<?= e($row[$pk]) ?>,"<?= e($row[$pk]) ?>")' style='width:60px;' class='btn btn-danger action-btn'>Delete</button>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+                </tbody>
+
+            </table>
         </div>
-        <div class="bg-white shadow rounded-xl p-6">
-          <h3 class="font-bold">Adoption</h3>
-          <p class="text-blue-600 font-bold">26 Pending</p>
-        </div>
-        <div class="bg-white shadow rounded-xl p-6">
-          <h3 class="font-bold">Volunteers</h3>
-          <p class="text-green-600 font-bold">100 Registered</p>
-        </div>
-        <div class="bg-white shadow rounded-xl p-6">
-          <h3 class="font-bold">Donations</h3>
-          <p>₱10,000 • 30 Items</p>
-        </div>
-      </main>
-
-      <!-- ADMIN PANEL SECTION -->
-      <section class="p-8">
-        <h2 class="text-2xl font-bold mb-6">Admin Panel</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-          <!-- Manage Users -->
-          <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg cursor-pointer">
-            <h3 class="font-bold text-lg mb-3">User Management</h3>
-            <p class="text-sm text-gray-600">Add, update, or remove volunteers & adopters.</p>
-            <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded">Manage</button>
-          </div>
-
-          <!-- Manage Animals -->
-          <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg cursor-pointer">
-            <h3 class="font-bold text-lg mb-3">Animal Management</h3>
-            <p class="text-sm text-gray-600">Update profiles, track adoptions, mark rescued.</p>
-            <button class="mt-3 px-4 py-2 bg-green-500 text-white rounded">Manage</button>
-          </div>
-
-          <!-- Manage Donations -->
-          <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg cursor-pointer">
-            <h3 class="font-bold text-lg mb-3">Donation Management</h3>
-            <p class="text-sm text-gray-600">Approve donations and view history.</p>
-            <button class="mt-3 px-4 py-2 bg-purple-500 text-white rounded">Manage</button>
-          </div>
-
-          <!-- Manage Events -->
-          <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg cursor-pointer">
-            <h3 class="font-bold text-lg mb-3">Event Management</h3>
-            <p class="text-sm text-gray-600">Create, edit, or cancel adoption drives.</p>
-            <button class="mt-3 px-4 py-2 bg-orange-500 text-white rounded">Manage</button>
-          </div>
-
-          <!-- Reports -->
-          <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg cursor-pointer">
-            <h3 class="font-bold text-lg mb-3">Reports & Analytics</h3>
-            <p class="text-sm text-gray-600">Generate and download reports in CSV/PDF.</p>
-            <button class="mt-3 px-4 py-2 bg-red-500 text-white rounded">Generate</button>
-          </div>
-
-          <!-- Notifications -->
-          <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg cursor-pointer">
-            <h3 class="font-bold text-lg mb-3">Admin Notifications</h3>
-            <p class="text-sm text-gray-600">Approve requests & review pending alerts.</p>
-            <button class="mt-3 px-4 py-2 bg-yellow-500 text-white rounded">View</button>
-          </div>
-
-        </div>
-      </section>
     </div>
-  </div>
+</main>
 
-  
+<!-- DYNAMIC MODAL -->
+<?php 
+include 'dynamic_modal.php'; 
+//Includes Add/Edit/View, Delete, Message, and ImagePreview Modals
+?> 
+
+<?php if(!empty($message)): ?>
+<script> showMessage("<?= e($message) ?>"); </script>
+<?php endif; ?>
 </body>
 </html>
