@@ -24,10 +24,11 @@ include "../Admin/admin_ui.php"; //Displays Navigation
 <?= displayNav('dashboard'); ?>
 
 <!-- Main Content --->
-    <div class="flex">
+ <div class='flex'>
+    <div class="flex-1">
       
       <!-- Dashboard Section ---->
-      <main class="p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <main class="p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" style="margin-left: 15vw">
         <div class="bg-white shadow rounded-xl p-6">
           <h3 class="font-bold">Animal Profiles</h3>
           <p class="text-gray-600">Manage rescued and adoptable animals.</p>
@@ -96,7 +97,7 @@ include "../Admin/admin_ui.php"; //Displays Navigation
         </div>
       </section>
     </div>
-
+</div>
 <!-- DYNAMIC MODAL -->
 <?php 
 include 'dynamic_modal.php'; 
