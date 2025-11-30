@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit();
 }
 
-// ✅ Collect and sanitize input
+// ✅ Collect and sanitize input9pi
 $email = trim($_POST['email'] ?? '');
 $password = trim($_POST['password'] ?? '');
 

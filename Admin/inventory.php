@@ -11,6 +11,21 @@ $inventory_table = $inventoryCrud->readAll();
 
 $message = "";
 
+
+session_start();
+if($_SERVER['REQUEST_METHOD'] === 'GET'){
+
+    if(!isset($_GET['unset'])){
+        unset($_SESSION['visibleColumns']);
+    }
+}else{
+    unset($_SESSION['visibleColumns']);
+}
+
+$_SESSION['visibleColumns'] = [
+    'item_id', 'item_name', 'item_type', 'quantity', 'date_stored'
+];
+
 // Helper: safe output
 function e($v) { return htmlspecialchars($v ?? '', ENT_QUOTES); }
 
@@ -258,6 +273,7 @@ END_POST_PROCESSING:
     <div class="action-buttons flex-c wrap" style="margin-bottom:8px;">
         <div class="action_btn_group flex-r">
             <button class="btn btn-primary" onclick="openSharedModal('add')"><img class="icon-1" src="../Assets/Ui/more.png"> Add item</button>
+            <a href="../export/export_pdf.php?table=donation_inventory" target="_blank"><button type='button' class="btn btn-success">Export as PDF</button></a>
         </div>
     </div>
 
