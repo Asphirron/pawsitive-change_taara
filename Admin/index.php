@@ -56,7 +56,7 @@ include "../Admin/admin_ui.php"; //Displays Navigation
           <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg cursor-pointer">
             <h3 class="font-bold text-lg mb-3">User Management</h3>
             <p class="text-sm text-gray-600">Add, update, or remove volunteers & adopters.</p>
-            <a href='animals-records.php'><button class="mt-3 px-4 py-2 bg-green-500 text-white rounded">Manage</button></a>
+            <a href='animals-records.php'><button class="mt-3 px-4 py-2 bg-green-500 text-white rounded" style="height: 40px;">Manage</button></a>
           </div>
 
           <!-- Manage Animals -->
