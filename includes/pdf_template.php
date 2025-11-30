@@ -22,7 +22,7 @@ function pdfImage($filename) {
                 // Save to temp PNG file
                 $tmpFile = tempnam(sys_get_temp_dir(), 'pdfimg_') . '.png';
                 imagepng($im, $tmpFile);
-                imagedestroy($im);
+                //imagedestroy($im);
                 $filePath = $tmpFile; // use this for embedding
             } else {
                 return '<span style="color:#c00">Invalid WebP</span>';
