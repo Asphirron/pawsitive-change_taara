@@ -17,7 +17,7 @@ include "../Admin/admin_ui.php"; //Displays Navigation
 </head>
 
 <body>
-<?= displayNav('index'); ?>
+<?= displayNav('dashboard'); ?>
 
 <!-- Main Content -->
     <div class="flex-1">
