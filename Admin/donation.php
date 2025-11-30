@@ -57,10 +57,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // --- Fetch Data ---
-$donationPosts = $donationPostTable->readAll();
-$monetaryDonations = array_filter($monetaryTable->readAll(), fn($row) => $row['status'] !== 'rejected');
-$inkindDonations = $inkindTable->readAll();
-$donationInventory = $inventoryTable->readAll();
+$donationPosts = array_reverse($donationPostTable->readAll());
+$monetaryDonations = array_reverse(array_filter($monetaryTable->readAll(), fn($row) => $row['status'] !== 'rejected'));
+$inkindDonations = array_reverse($inkindTable->readAll());
+$donationInventory = array_reverse($inventoryTable->readAll());
 
 // --- Helper ---
 function daysRemaining($deadline) {
@@ -130,7 +130,71 @@ function daysRemaining($deadline) {
     <main class="flex-1 p-8 space-y-6">
   <h1 class="text-3xl font-bold mb-6">💝 Donations Overview</h1>
 
-  <!-- Donation Posts -->
+    <!-- Top Donors -->
+  <div class="bg-white rounded-xl shadow overflow-hidden">
+    <button onclick="toggleSection('topDonors')" class="w-full flex justify-between items-center p-6 text-left text-2xl font-bold hover:bg-gray-100">
+      📢 TOP DONORS
+      <span id="icon-topDonors" class="material-icons transform transition-transform">expand_more</span>
+    </button>
+    <div id="section-topDonors" class="p-6 border-t">
+      <table class="w-full border-collapse">
+        <thead>
+          <tr class="bg-gray-200 text-left">
+            <th class="p-3">Donor Name</th>
+            <th class="p-3">Total Donation Amount</th>
+            <th class="p-3">Ranking</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php
+          // Example Month/Year
+          $year = 2025;
+          $month = 11; 
+
+          // Database Query
+          $sql = "
+              SELECT full_name, SUM(amount) AS total_donated
+              FROM monetary_donation
+              WHERE YEAR(date_donated) = ? 
+                AND MONTH(date_donated) = ?
+              GROUP BY full_name
+              ORDER BY total_donated DESC
+              LIMIT 5
+          ";
+
+          /*$stmt = $pdo->prepare($sql);
+          $stmt->execute([$year, $month]);
+          $topDonors = $stmt->fetchAll(PDO::FETCH_ASSOC);*/
+
+          $conn = connect();
+          $stmt = $conn->prepare($sql);
+          $stmt->bind_param("ii", $year, $month);
+          $stmt->execute();
+          $result = $stmt->get_result();
+          $topDonors = $result;
+          $stmt->close();
+
+          if (empty($topDonors)) {
+            echo "<tr><td colspan='3' style='text-align:center;'>No donations found for this month.</td></tr>";
+
+          } else {
+              $rank = 1;
+              while ($donor = $topDonors->fetch_assoc()) {
+                  echo "<tr class='border-b'>";
+                  echo "<td class='p-3 font-medium'>" . $donor['full_name'] . "</td>";
+                  echo "<td class='p-3'>₱" . number_format($donor['total_donated'], 2) . "</td>";
+                  echo "<td class='p-3 '>" . $rank++ . "</td>";
+                  echo "</tr>";
+              }
+          }
+          $conn->close();
+          ?>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Donation Allocations -->
   <div class="bg-white rounded-xl shadow overflow-hidden">
     <button onclick="toggleSection('donationPosts')" class="w-full flex justify-between items-center p-6 text-left text-2xl font-bold hover:bg-gray-100">
       📢 Monthly Donation Allocations
@@ -270,6 +334,28 @@ function daysRemaining($deadline) {
     </div>
   </div>
 </main>
+
+<!-- VERIFY DONATION MODAL -->
+<div id="donationModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+  <div class="bg-white rounded-lg p-6 w-full max-w-2xl relative shadow-lg">
+    <h2 id="modalTitle" class="text-2xl font-bold mb-4">Add Animal</h2>
+    <form id="animalForm" enctype="multipart/form-data">
+      <input type="hidden" id="animal_id" name="animal_id">
+
+
+      <div class="mt-4 flex items-center gap-4">
+        <div>
+          <label class="block text-gray-700">Proof of Payment</label> </div>
+        <img id="previewImg" src="" alt="Preview" class="w-24 h-24 object-cover rounded-lg border hidden">
+      </div>
+
+      <div class="flex justify-end gap-3 mt-6">
+        <button type="button" onclick="closeModal()" class="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500">Cancel</button>
+        <button type="submit" class="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600">Verify</button>
+      </div>
+    </form>
+  </div>
+</div>
 
 <script>
 function toggleSection(id) {

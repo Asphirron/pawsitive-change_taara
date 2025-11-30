@@ -2,7 +2,7 @@
 include '../includes/db_connection.php';
 $conn = connect();
 
-// CRUD handling (add, edit, delete) — same as before
+// CRUD handling (add, edit, delete)
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
     if ($_POST['action'] == 'add') {
         $name = $_POST['name'];
@@ -261,8 +261,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
 </main>
 
   </div>
-
-  <!-- Add/Edit Modal -->
   <!-- ADD / EDIT ANIMAL MODAL -->
 <div id="animalModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
   <div class="bg-white rounded-lg p-6 w-full max-w-2xl relative shadow-lg">

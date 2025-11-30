@@ -18,7 +18,7 @@
   </style>
 </head>
 <body>
-  <h1>❌ Donation Cancelled</h1>
+  <h1>Donation Cancelled</h1>
   <p>Your donation was not completed.</p>
   <a href="../index.php" class="btn">Return to Home</a>
 </body>

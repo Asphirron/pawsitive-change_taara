@@ -85,8 +85,11 @@ function createPayPalOrder($amount, $donation_id) {
             "description" => "Donation #$donation_id to TAARA"
         ]],
         "application_context" => [
-            "return_url" => "https:pawsitive-change-taara/includes/donation_success.php?donation_id=$donation_id",
-            "cancel_url" => "https:pawsitive-change-taara/includes/donation_cancel.php?donation_id=$donation_id"
+            //"return_url" => "https:pawsitive-change_taara/includes/donation_success.php?donation_id=$donation_id",
+            //"cancel_url" => "https:pawsitive-change-taara/includes/donation_cancel.php?donation_id=$donation_id"
+
+            "return_url" => "localhost:includes/donation_success.php?donation_id=$donation_id",
+            "cancel_url" => "localhost:includes/donation_cancel.php?donation_id=$donation_id"
         ]
     ];
 
@@ -146,14 +149,16 @@ elseif ($method === "gcash") {
         <p class='ref'>Reference: " . htmlspecialchars($ref) . "</p>
         <p class='small'>Scan the QR with your GCash app and include the reference in the payment notes.</p>
 
-        <form action='donation_success.php' method='get' style='margin-top:14px;'>
+        <form action='donation_success.php' method='post' enctype='multipart/form-data' style='margin-top:14px;'>
             <input type='hidden' name='donation_id' value='" . htmlspecialchars($donation_id) . "'>
             <input type='hidden' name='ref' value='" . htmlspecialchars($ref) . "'>
-            <button class='btn' type='submit'>I have paid with GCash</button>
+            <hr>
+            <p class='small'>Please submit a screenshot of the QR Code</p>
+            <input type='file' id='proof' name='img' accept='image/*' required>
+            <button class='btn' type='submit' name='gcash_donate'>I have paid with GCash</button>
         </form>
 
-        <a href='../index.php' class='btn secondary' style='display:inline-block; margin-top:8px;'>Return to Dashboard</a>
-        <p class='small' style='margin-top:12px'>This QR is a simulated/test QR for local development only.</p>
+        <a href='../index.php' class='btn secondary' style='display:inline-block; margin-top:8px; width: 140px'>Cancel</a>
       </div>
     </body>
     </html>";

@@ -1,3 +1,31 @@
+<?php
+include "db_connection.php";
+
+if(isset($_POST['gcash_donate'])){
+  $conn = connect();
+  $img = 'no proof provided';
+  $m_donation_id = $_POST['donation_id'];
+
+  if (!empty($_FILES['img']['name'])) {
+    $target_dir = "../Assets/UserGenerated/";
+    $file_name = time() . "_" . basename($_FILES['img']['name']);
+    $target_file = $target_dir . $file_name;
+    if (move_uploaded_file($_FILES["img"]["tmp_name"], $target_file)) {
+        $img = $file_name;
+
+    }
+  }
+  
+  $query = "UPDATE monetary_donation SET proof=? WHERE m_donation_id=?";
+  $stmt = $conn->prepare($query);
+  $stmt->bind_param("si", $img, $m_donation_id);
+  $stmt->execute();
+  $stmt->close();
+  $conn->close();
+}
+?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,8 +46,8 @@
   </style>
 </head>
 <body>
-  <h1>🎉 Thank You for Your Donation!</h1>
+  <h1>Thank You for Your Donation!</h1>
   <p>Your donation has been received successfully.</p>
-  <a href="../index.php" class="btn">Return to Home</a>
+  <a href="../donation.php" class="btn">Return</a>
 </body>
 </html>

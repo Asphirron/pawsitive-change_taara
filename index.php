@@ -12,7 +12,7 @@ if (isset($_SESSION['email'])) {
   $user_result = $user_table->select(["*"], ["email" => $email], 1);
 
   if (!empty($user_result)) {
-    // ✅ Extract first row from array
+    //  Extract first row from array
     $user_data = $user_result[0];
 
     $uid = $user_data['user_id'];
@@ -315,7 +315,7 @@ if (isset($_SESSION['email'])) {
         for Strays
       </h1>
       <p>"Their second chance starts with you—save a life, share your love, support the cause."</p>
-      <button>Explore Now</button>
+      <a href="#intro"><button>Explore Now</button></a>
     </div>
     <img src="Assets/UI/frontpic-removebg-preview.png" alt="Girl with Dog">
   </section>
@@ -330,7 +330,7 @@ if (isset($_SESSION['email'])) {
 
   <!-- ABOUT -->
   <section class="about">
-    <h2>TAARA — Bicolandia’s Voice for the Voiceless</h2>
+    <h2 id="intro">TAARA — Bicolandia’s Voice for the Voiceless</h2>
     <p><strong>What is TAARA?</strong><br>
     TAARA (Tabaco Animal Advocates and Rescuers Association) is a dedicated animal welfare organization based in Tabaco City, Albay.</p>
     <p><strong>Mission and Vision of TAARA:</strong><br>

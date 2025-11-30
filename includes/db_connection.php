@@ -1,10 +1,10 @@
 <?php
 
 function connect() {
-    $servername = "pawsitive-change-taara.com";
-    $username = "u578970591_taara_db";
-    $password = "taara-db_passV1";
-    $dbname = "u578970591_taara_db";
+    $servername = /*"pawsitive-change-taara.com"*/ "localhost";
+    $username = /*"u578970591_taara_db"*/ "root";
+    $password = /*"taara-db_passV1"*/ "";
+    $dbname = /*"u578970591_taara_db"*/ "taara_db";
 
     $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -129,7 +129,7 @@ class DatabaseCRUD {
         $this->columns = $this->getTableColumns(); 
     }
 
-    // ✅ Fetch table metadata (private)
+    // Fetch table metadata (private)
     private function getTableColumns() {
         $query = "SHOW COLUMNS FROM `$this->table`";
         $result = $this->conn->query($query);
@@ -141,12 +141,12 @@ class DatabaseCRUD {
         return $cols;
     }
 
-    // ✅ Public method to view table schema
+    // Public method to view table schema
     public function describe() {
         return $this->columns;
     }
 
-    // ✅ Create / Insert
+    // Create / Insert
    public function create($data) {
     $fields = array_intersect_key($data, $this->columns);
     if (empty($fields)) return false;
@@ -161,7 +161,7 @@ class DatabaseCRUD {
     $stmt->bind_param($types, ...array_values($fields));
 
     $success = $stmt->execute();
-    $lastId = $this->conn->insert_id; // ✅ get last inserted ID
+    $lastId = $this->conn->insert_id; // get last inserted ID
 
     $stmt->close();
 
@@ -169,7 +169,7 @@ class DatabaseCRUD {
     }
 
 
-    // ✅ Read (single row or all)
+    // Read (single row or all)
     public function read($id = null, $idColumn = "id") {
         if ($id) {
             $stmt = $this->conn->prepare("SELECT * FROM `$this->table` WHERE $idColumn = ?");
@@ -234,7 +234,7 @@ class DatabaseCRUD {
 }
 
 
-    // ✅ Update (dynamic fields)
+    // Update (dynamic fields)
     public function update($id, $fields, $idColumn = "id") {
         $fields = array_intersect_key($fields, $this->columns);
         if (empty($fields)) return false;
@@ -258,7 +258,7 @@ class DatabaseCRUD {
         return $success;
     }
 
-    // ✅ Delete
+    // Delete
     public function delete($id, $idColumn = "id") {
         $stmt = $this->conn->prepare("DELETE FROM `$this->table` WHERE $idColumn = ?");
         $stmt->bind_param("i", $id);
@@ -267,7 +267,7 @@ class DatabaseCRUD {
         return $success;
     }
 
-    // ✅ Detect parameter types
+    // Detect parameter types
     private function getParamTypes($fields) {
         $types = "";
         foreach ($fields as $value) {
@@ -281,6 +281,23 @@ class DatabaseCRUD {
         }
         return $types;
     }
+
+    public function getColumns() {
+        $conn = connect();
+        $table = $this->table;
+
+        $sql = "SHOW COLUMNS FROM `$table`";
+        $result = $conn->query($sql);
+
+        $columns = [];
+        while ($row = $result->fetch_assoc()) {
+            $columns[] = $row;
+        }
+
+        $conn->close();
+        return $columns;
+    }
+
 
     public function __destruct() {
         $this->conn->close();
@@ -318,3 +335,13 @@ class DatabaseCRUD {
         // Delete animal
         $animalDB->delete(5, "animal_id");
     */
+
+
+function saveImage($targetDir){
+    $targetDir = "../Assets/Pets/";
+    $fileName = basename($_FILES["img"]["name"]);
+    $targetFile = $targetDir . $fileName;
+    move_uploaded_file($_FILES["img"]["tmp_name"], $targetFile);
+    $img = $fileName;
+}
+    

@@ -254,10 +254,10 @@ $application_id = $application_table->create([
           <fieldset>
             <label>2. Reason for adopting a pet?</label>
             <select name="reason" required>
-              <option value="companion_child">Companion for child</option>
-              <option value="companion_pet">Companion for other pet</option>
-              <option value="companion_self">Companion for self</option>
-              <option value="service_animal">Service animal</option>
+              <option value="companion for child">Companion for child</option>
+              <option value="companion for other pet">Companion for other pet</option>
+              <option value="companion for self">Companion for self</option>
+              <option value="service animal">Service animal</option>
               <option value="security">Security</option>
             </select>
           </fieldset>
