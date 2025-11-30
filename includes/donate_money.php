@@ -85,11 +85,11 @@ function createPayPalOrder($amount, $donation_id) {
             "description" => "Donation #$donation_id to TAARA"
         ]],
         "application_context" => [
-            //"return_url" => "https:pawsitive-change_taara/includes/donation_success.php?donation_id=$donation_id",
-            //"cancel_url" => "https:pawsitive-change-taara/includes/donation_cancel.php?donation_id=$donation_id"
+            "return_url" => "https:pawsitive-change_taara/includes/donation_success.php?donation_id=$donation_id",
+            "cancel_url" => "https:pawsitive-change-taara/includes/donation_cancel.php?donation_id=$donation_id"
 
-            "return_url" => "localhost:includes/donation_success.php?donation_id=$donation_id",
-            "cancel_url" => "localhost:includes/donation_cancel.php?donation_id=$donation_id"
+            //"return_url" => "localhost:includes/donation_success.php?donation_id=$donation_id",
+            //"cancel_url" => "localhost:includes/donation_cancel.php?donation_id=$donation_id"
         ]
     ];
 

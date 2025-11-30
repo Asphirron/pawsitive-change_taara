@@ -54,7 +54,7 @@ $_SESSION['username'] = $user_data['username'];
 $_SESSION['user_type'] = $user_data['user_type'];
 
 if($user_data['user_type'] === 'admin'){
-    header("Location: Admin/index.php");
+    header("Location: ../Admin/index.php");
     exit();
 }else{
     // ✅ Redirect to index page
