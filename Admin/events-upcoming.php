@@ -74,7 +74,7 @@ $setPropertyConfig = [
 $_SESSION['fields_config'] = $fieldsConfig; 
 
 // Columns initially visible in table
-$defaultColumns = ['event_id','title','description','img', 'location', 'event_date'];
+$defaultColumns = ['event_id','title','img', 'location', 'event_date'];
 
 
 if(!isset($_SESSION['visibleColumns'])) {
