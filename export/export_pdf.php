@@ -1,7 +1,7 @@
 <?php
 // /export/export_pdf.php
 
-require __DIR__ . "/../vendor/autoload.php";
+require "../vendor/autoload.php";
 include "../includes/db_connection.php";
 include "../includes/pdf_template.php";
 
