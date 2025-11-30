@@ -115,6 +115,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $updateData['date_adopted'] = date('Y-m-d H:i:s'); // current date/time
             }else if ($tableName == 'adoption_application' && in_array($value, ['accepted','rejected'])) {
                 $updateData['date_responded'] = date('Y-m-d H:i:s'); // current date/time
+                $tempCrud = new DatabaseCRUD('adoption');
+                $tempCrud->create([
+                    'user_id'=> $_POST['user_id'],
+                    'animal_id'=> $_POST['animal_d'],
+                    'date_adopted'=> '0000-00-00',
+                    'status'=> 'pending'
+                ]);
             }else if ($tableName == 'volunteer_application' && in_array($value, ['accepted','rejected'])) {
                 $updateData['respond_date'] = date('Y-m-d H:i:s'); // current date/time
 
@@ -128,9 +135,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             $success = $crud->update(intval($_POST[$pk]), $updateData, $pk);
-            /*$message .= $success 
+            $message .= $success 
                 ? "Updated record ID: ".$_POST[$pk]." set $property = $value"
-                : "Failed to update record.";*/
+                : "Failed to update record.";
             $tableData = $crud->readAll();
         }
     }
