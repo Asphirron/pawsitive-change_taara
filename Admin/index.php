@@ -63,35 +63,35 @@ include "../Admin/admin_ui.php"; //Displays Navigation
           <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg cursor-pointer">
             <h3 class="font-bold text-lg mb-3">Animal Management</h3>
             <p class="text-sm text-gray-600">Update profiles, track adoptions, mark rescued.</p>
-            <a href='animals-records.php'><button class="mt-3 px-4 py-2 bg-green-500 text-white rounded">Manage</button></a>
+            <a href='animals-records.php'><button class="mt-3 px-4 py-2 bg-green-500 text-white rounded" style="height: 40px;">Manage</button></a>
           </div>
 
           <!-- Manage Donations -->
           <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg cursor-pointer">
             <h3 class="font-bold text-lg mb-3">Donation Management</h3>
             <p class="text-sm text-gray-600">Approve donations and view history.</p>
-            <a href='donations-topdonors.php'><button class="mt-3 px-4 py-2 bg-green-500 text-white rounded">Manage</button></a>
+            <a href='donations-topdonors.php'><button class="mt-3 px-4 py-2 bg-green-500 text-white rounded" style="height: 40px;">Manage</button></a>
           </div>
 
           <!-- Manage Events -->
           <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg cursor-pointer">
             <h3 class="font-bold text-lg mb-3">Event Management</h3>
             <p class="text-sm text-gray-600">Create, edit, or cancel adoption drives.</p>
-            <a href='events-upcoming.php'><button class="mt-3 px-4 py-2 bg-green-500 text-white rounded">Manage</button></a>
+            <a href='events-upcoming.php'><button class="mt-3 px-4 py-2 bg-green-500 text-white rounded" style="height: 40px;">Manage</button></a>
           </div>
 
           <!-- Reports -->
           <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg cursor-pointer">
             <h3 class="font-bold text-lg mb-3">Reports & Analytics</h3>
             <p class="text-sm text-gray-600">Generate and download reports in CSV/PDF.</p>
-            <button class="mt-3 px-4 py-2 bg-red-500 text-white rounded">Generate</button>
+            <button class="mt-3 px-4 py-2 bg-red-500 text-white rounded" style="height: 40px;">Generate</button>
           </div>
 
           <!-- Notifications -->
           <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg cursor-pointer">
             <h3 class="font-bold text-lg mb-3">Admin Notifications</h3>
             <p class="text-sm text-gray-600">Approve requests & review pending alerts.</p>
-            <button class="mt-3 px-4 py-2 bg-yellow-500 text-white rounded">View</button>
+            <button class="mt-3 px-4 py-2 bg-yellow-500 text-white rounded" style="height: 40px;">View</button>
           </div>
 
         </div>
