@@ -1,10 +1,10 @@
 <?php
 
 function connect() {
-    $servername = /*"pawsitive-change-taara.com"*/ "localhost";
-    $username = /*"u578970591_taara_db"*/ "root";
-    $password = /*"taara-db_passV1"*/ "";
-    $dbname = /*"u578970591_taara_db"*/ "taara_db";
+    $servername = "pawsitive-change-taara.com";
+    $username = /*"u578970591_taara_db"*/ "u578970591_taara_db";
+    $password = 'TAARA-database2025';
+    $dbname = /*"u578970591_taara_db"*/ "u578970591_taara_db";
 
     $conn = new mysqli($servername, $username, $password, $dbname);
 
