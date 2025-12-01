@@ -151,8 +151,8 @@ function renderEventTable($rows, $visibleColumns, $fieldsConfig, $pk, $fieldLabe
 
 <main class="content flex-c">
     <header class='top-nav flex-r'>
-        <a href='events-records.php' class='top-active'>Records</a>
-        <a href='events-application.php'>Applications</a>
+        <a href='events-upcoming.php' class='top-active'>Events</a>
+        <a href='events-calendar.php'>Calendar</a>
     </header>
 
     <div style='padding-inline:10px;'>

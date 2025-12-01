@@ -106,8 +106,7 @@ include "../includes/post_handler.php"; //Handles POST (search, CRUD, etc)
 
 <main class="content flex-c">
     <header class='top-nav flex-r'>
-        <a href='volunteers-records.php' class='top-active'>Records</a>
-        <a href='volunteers-application.php'>Applications</a>
+        <a href='volunteers-records.php' class='top-active'>Event Records</a>
     </header>
 
     <div style='padding-inline:10px;'>
