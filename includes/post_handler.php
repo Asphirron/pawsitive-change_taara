@@ -115,14 +115,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $updateData['date_adopted'] = date('Y-m-d H:i:s'); // current date/time
 
             }else if ($tableName == 'adoption_application' && in_array($value, ['accepted','rejected'])) {
+                if($_POST['status'] !== 'pending'){
+                    $message = 'Application has been already accepted/rejected!';
+                    return;
+                }
+                
                 $updateData['date_responded'] = date('Y-m-d H:i:s'); // current date/time
-                $tempCrud = new DatabaseCRUD('adoption');
-                $tempCrud->create([
-                    'user_id'=> $_POST['user_id'],
-                    'animal_id'=> $_POST['animal_d'],
-                    'date_adopted'=> null,
-                    'status'=> 'pending'
-                ]);
+                if($value === 'accepted'){
+                    $tempCrud = new DatabaseCRUD('adoption');
+                    $tempCrud->create([
+                        'user_id'=> $_POST['user_id'],
+                        'animal_id'=> $_POST['animal_d'],
+                        'date_adopted'=> null,
+                        'status'=> 'pending'
+                    ]);
+                }
+                
 
             }else if ($tableName == 'volunteer_application' && in_array($value, ['accepted','rejected'])) {
                 $updateData['respond_date'] = date('Y-m-d H:i:s'); // current date/time
