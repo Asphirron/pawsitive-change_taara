@@ -221,7 +221,7 @@ END_POST_PROCESSING:
 <main class="content flex-c">
     <header class='top-nav flex-r'>
         <a href='index.php' class='top-active'>Inventory</a>
-        <a href='index.php'>History</a>
+        <!--a href='index.php'>History</a-->
     </header>
 
     <div style='padding-inline: 10px;'>
