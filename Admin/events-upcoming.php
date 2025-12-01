@@ -183,8 +183,8 @@ include "../includes/post_handler.php"; //Handles POST (search, CRUD, etc)
 
                             <?php
                                 $imgFile = $row[$f] ?? '';
-                                $imgPath = "../Assets/UserGenerated/" . $imgFile;
-                                $exists = !empty($imgFile) && file_exists(__DIR__ . "/../Assets/UserGenerated/" . $imgFile);
+                                $imgPath = "../Assets/Images/" . $imgFile;
+                                $exists = !empty($imgFile) && file_exists(__DIR__ . "/../Assets/Images/" . $imgFile);
                             ?>
                             <td>
                                 <?php if ($exists): ?>

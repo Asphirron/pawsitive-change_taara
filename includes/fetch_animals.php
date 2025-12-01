@@ -31,7 +31,7 @@ if (empty($filtered)) {
 foreach ($filtered as $row) {
   echo "
   <div class='animal-card'>
-    <img src='Assets/Pets/{$row['img']}' alt='{$row['name']}'>
+    <img src='Assets/UserGenerated/{$row['img']}' alt='{$row['name']}'>
     <div class='animal-info'>
       <h3>{$row['name']}</h3>
       <p>Type: {$row['type']}</p>
