@@ -125,8 +125,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $tempCrud = new DatabaseCRUD('adoption');
                     $tempCrud->create([
                         'user_id'=> $_POST['user_id'],
-                        'animal_id'=> $_POST['animal_d'],
-                        'date_adopted'=> '',
+                        'animal_id'=> $_POST['animal_id'],
+                        'date_adopted'=> null,
                         'status'=> 'pending'
                     ]);
                 }
