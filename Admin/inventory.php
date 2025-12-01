@@ -272,7 +272,7 @@ END_POST_PROCESSING:
     <!-- ACTION BUTTONS -->
     <div class="action-buttons flex-c wrap" style="margin-bottom:8px;">
         <div class="action_btn_group flex-r">
-            <button class="btn btn-primary" onclick="openSharedModal('add')"><img class="icon-1" src="../Assets/Ui/more.png"> Add item</button>
+            <button class="btn btn-primary" onclick="openSharedModal('add')">+ Add item</button>
             <a href="../export/export_pdf.php?table=donation_inventory" target="_blank"><button type='button' class="btn btn-success">Export as PDF</button></a>
         </div>
     </div>
