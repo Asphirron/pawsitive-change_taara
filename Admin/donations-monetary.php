@@ -27,7 +27,7 @@ $fieldsConfig = [
     'dpost_id' => 'fk',
     'full_name' => 'text',
     'amount' => 'number',
-    'payment_option' => ['gcash, paypal'],
+    'payment_option' => ['gcash', 'paypal'],
     'message' => 'textarea',
     'contact_num' => 'number',
     'date_donated' => 'date',
@@ -86,10 +86,10 @@ $fieldLabels = [
 $setPropertyConfig = [
     'table_name' => 'monetary_donation',
     'property' => 'status',
-    'values' => ['verified','cancelled'],
+    'values' => ['verified'],
     'modal_title' => 'Verify Donation',
-    'button_text' => ['Verify', 'Cancel'],
-    'button_class' => ['btn btn-primary', 'btn btn-secondary']
+    'button_text' => ['Verify'],
+    'button_class' => ['btn btn-primary']
 ];
 
 

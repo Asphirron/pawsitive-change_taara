@@ -20,7 +20,7 @@ function displayNav($activePage){
                 <!-- ANIMALS DROPDOWN -->
                 <div class='dropdown'>
                     <button class='dropdown-btn ".($activePage == "animals" ? "active" : "")."'>
-                        Animals ▼
+                        Animals
                     </button>
                     <div class='dropdown-content'>
                         <a href='animals-records.php'>Animals Records</a>
@@ -32,7 +32,7 @@ function displayNav($activePage){
                 <!-- ADOPTIONS DROPDOWN -->
                 <div class='dropdown'>
                     <button class='dropdown-btn ".($activePage == "adoptions" ? "active" : "")."'>
-                        Adoptions ▼
+                        Adoptions
                     </button>
                     <div class='dropdown-content'>
                         <a href='adoptions-records.php'>Adoption Records</a>
@@ -44,7 +44,7 @@ function displayNav($activePage){
                <!-- DONATIONS DROPDOWN -->
                 <div class='dropdown'>
                     <button class='dropdown-btn ".($activePage == "donations" ? "active" : "")."'>
-                        Donations ▼
+                        Donations
                     </button>
                     <div class='dropdown-content'>
                         <a href='donations-topdonors.php'>Top Donors</a>
@@ -58,7 +58,7 @@ function displayNav($activePage){
                 <!-- REPORTS DROPDOWN -->
                 <div class='dropdown'>
                     <button class='dropdown-btn ".($activePage == "reports" ? "active" : "")."'>
-                        Reports ▼
+                        Reports
                     </button>
                     <div class='dropdown-content'>
                         <a href='reports-rescue.php'>Rescue Reports</a>
@@ -70,7 +70,7 @@ function displayNav($activePage){
                 <!-- VOLUNTEERS DROPDOWN -->
                 <div class='dropdown'>
                     <button class='dropdown-btn ".($activePage == "events" ? "active" : "")."'>
-                        Volunteers ▼
+                        Volunteers
                     </button>
                     <div class='dropdown-content'>
                         <a href='volunteers-records.php'>Volunteer Records</a>
@@ -81,7 +81,7 @@ function displayNav($activePage){
                 <!-- EVENTS DROPDOWN -->
                 <div class='dropdown'>
                     <button class='dropdown-btn ".($activePage == "events" ? "active" : "")."'>
-                        Events ▼
+                        Events
                     </button>
                     <div class='dropdown-content'>
                         <a href='events-upcoming.php'>Event Records</a>

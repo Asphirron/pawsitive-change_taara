@@ -334,6 +334,10 @@ pre { white-space: pre-wrap; }
     padding: 8px 0;
 }
 
+.dropdown .active{
+    color: rgb(238, 59, 127);
+}
+
 .dropdown-btn:hover {
     color: rgb(238, 59, 127);
 }
@@ -347,7 +351,7 @@ pre { white-space: pre-wrap; }
 }
 
 .dropdown-content a {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     opacity: 0.9;
 }
 

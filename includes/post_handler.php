@@ -124,7 +124,7 @@ if (isset($_POST['reset_btn'])) {
             $message .= $newId ? "Added record ID: $newId" : "Failed to add record.";
         } elseif ($action === 'update' && !empty($_POST[$pk])) {
             $success = $crud->update(intval($_POST[$pk]), $data, $pk);
-            $message .= $success ? "Updated record ID: " . $_POST[$pk] : "Failed to update record.";
+            $message .= $success ? "Successfully updated record " : "Failed to update record.";
         }
 
         $tableData = $crud->readAll();
@@ -177,17 +177,25 @@ if (isset($_POST['reset_btn'])) {
                         'role'=> $_POST['first_committee'],
                         'user_id'=> $_POST['user_id']
                     ]);
+                }    
+            }else if ($tableName == 'monetary_donation' && in_array($value, ['verified'])) {
+
+                if($_POST['status'] === 'verified'){
+                    $message = 'Donation has been already verified.';
+                    return;
                 }
 
+                if($_POST['status'] === 'cancelled'){
+                    $message = 'Donation cannot be verified. It has been already cancelled. .';
+                    return;
+                }
 
-                
-
-                
+                $updateData['respond_date'] = date('Y-m-d H:i:s'); // current date/time
             }
 
             $success = $crud->update(intval($_POST[$pk]), $updateData, $pk);
             $message .= $success 
-                ? "Updated record ID: ".$_POST[$pk]." set $property = $value"
+                ? "Successfully updated record."
                 : "Failed to update record.";
             $tableData = $crud->readAll();
         }

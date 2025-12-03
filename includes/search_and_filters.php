@@ -136,7 +136,7 @@ if (!empty($_POST['order_by']) || !empty($_POST['num_of_results']) || isset($_PO
             <?php foreach ($filterConfig as $f): ?>
                 <?php if (isset($fieldsConfig[$f])): ?>
                     <?php if (is_array($fieldsConfig[$f])): ?>
-                        <select class="filter-field" name="<?= $f ?>" class="auto-filter">
+                        <select class="filter-field auto-filter" name="<?= $f ?>">
                             <option class="filter-field" value=""><?= "Any " . ucwords(str_replace('_',' ',$f)) ?></option>
                             <?php foreach ($fieldsConfig[$f] as $opt): ?>
                                 <option value="<?= $opt ?>" <?= (($_POST[$f] ?? '')===$opt)?'selected':'' ?>><?= $opt ?></option>
@@ -144,13 +144,12 @@ if (!empty($_POST['order_by']) || !empty($_POST['num_of_results']) || isset($_PO
                         </select>
                     <?php else: ?>
                         <input 
-                            class="filter-field"
+                            class="filter-field auto-filter"
                             type="<?= $fieldsConfig[$f] === 'number' ? 'number' : ($fieldsConfig[$f] === 'date' ? 'date' : 'text') ?>" 
                             name="<?= $f ?>" 
                             value="<?= e($_POST[$f] ?? '') ?>" 
                             placeholder="<?= 'Any ' . ucwords(str_replace('_',' ',$f)) ?>" 
-                            list="filter-suggestions-<?= $f ?>"
-                            class="auto-filter">
+                            list="filter-suggestions-<?= $f ?>">
 
                         <?php if (!empty($filterSuggestions[$f])): ?>
                             <datalist id="filter-suggestions-<?= $f ?>">
