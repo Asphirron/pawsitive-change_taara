@@ -298,6 +298,61 @@ class DatabaseCRUD {
         return $columns;
     }
 
+        /**
+     * Run a generic CRUD query (only SELECT, INSERT, UPDATE, DELETE allowed).
+     * @param string $sql The SQL query string
+     * @param array $params Optional parameters for prepared statement
+     * @param string $types Optional parameter types string (e.g. "si")
+     * @return mixed Array for SELECT, boolean for INSERT/UPDATE/DELETE
+     */
+    public function runQuery($sql, $params = [], $types = "") {
+        // Normalize and check query type
+        $trimmed = ltrim($sql);
+        $command = strtoupper(strtok($trimmed, " "));
+
+        if (!in_array($command, ["SELECT","INSERT","UPDATE","DELETE"])) {
+            throw new Exception("Only SELECT, INSERT, UPDATE, DELETE queries are allowed.");
+        }
+
+        $stmt = $this->conn->prepare($sql);
+        if (!$stmt) {
+            throw new Exception("Invalid SQL or prepare failed: " . $this->conn->error);
+        }
+
+        // Bind parameters if provided
+        if (!empty($params)) {
+            if ($types === "") {
+                // auto-detect types if not provided
+                $types = "";
+                foreach ($params as $p) {
+                    if (is_int($p)) $types .= "i";
+                    elseif (is_float($p)) $types .= "d";
+                    else $types .= "s";
+                }
+            }
+            $stmt->bind_param($types, ...$params);
+        }
+
+        $success = $stmt->execute();
+
+        if ($command === "SELECT") {
+            $result = $stmt->get_result();
+            $rows = [];
+            if ($result) {
+                while ($row = $result->fetch_assoc()) {
+                    $rows[] = $row;
+                }
+            }
+            $stmt->close();
+            return $rows;
+        } else {
+            // INSERT/UPDATE/DELETE return boolean
+            $stmt->close();
+            return $success;
+        }
+    }
+
+
 
     public function __destruct() {
         $this->conn->close();

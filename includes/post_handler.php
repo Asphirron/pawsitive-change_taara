@@ -113,7 +113,7 @@ if (isset($_POST['reset_btn'])) {
                 }
                 // If no new file uploaded and no hidden value, keep old DB value
                 if (empty($data[$f]) && $action === 'update' && !empty($_POST[$pk])) {
-                    $existing = $crud->readOne(intval($_POST[$pk]), $pk);
+                    $existing = $crud->read(intval($_POST[$pk]), $pk);
                     $data[$f] = $existing[$f] ?? 'default.png';
                 }
             }
@@ -205,3 +205,4 @@ if (isset($_POST['reset_btn'])) {
 }
 
 END_POST:
+
