@@ -93,7 +93,7 @@ if (!empty($_POST['order_by']) || !empty($_POST['num_of_results']) || isset($_PO
     </button>
 
     <!-- TOGGLEABLE CONTAINER -->
-    <fieldset id="filter-container" style="<?= $filtersUsed ? 'display:block;' : 'display:none;' ?> margin-top:10px;">
+    <fieldset id="filter-container" style="<?= $filtersUsed ? 'display:block;' : 'display:none;' ?> margin-top:10px; max-width: 100%">
 
         <legend>Filters</legend>
 

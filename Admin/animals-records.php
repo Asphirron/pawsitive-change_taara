@@ -59,7 +59,7 @@ $filterConfig = ['type', 'gender', 'age', 'behavior', 'breed', 'status'];
 $_SESSION['fields_config'] = $fieldsConfig; 
 
 // Columns initially visible in table
-$defaultColumns = ['animal_id','name','type','breed','age','status'];
+$defaultColumns = ['img','animal_id','name','type','breed','age','status'];
 
 
 if(!isset($_SESSION['visibleColumns'])) {
@@ -99,60 +99,12 @@ include "../includes/post_handler.php" //Handles POST (search, CRUD, etc)
 
     <div style='padding-inline:10px;'>
 
-    <?php include "../includes/search_and_filters.php"; ?>
+        <?php include "../includes/search_and_filters.php"; ?>
 
         <!-- RESULT TABLE -->
-        <div class="result-table">
-            <table class="rounded-border">
-                <thead>
-                <tr>
-                    <?php foreach($visibleColumns as $f): ?>
-                        <th><?= ucwords(str_replace('_',' ',$f)) ?></th>
-                    <?php endforeach; ?>
-                    <th>Action</th>
-                </tr>
-                </thead>
+        <?php include "../includes/render_table.php"; ?>
 
-                <tbody>
-                <?php if(empty($tableData)): ?>
-                    <tr><td colspan="<?= sizeOF($visibleColumns) ?>">No records found.</td></tr>
-                <?php endif; ?>
-
-                <?php foreach($tableData as $row): ?>
-                <tr>
-                    <?php foreach($visibleColumns as $f): ?>
-                        <?php if ($fieldsConfig[$f] === 'image'): ?>
-                            <?php
-                                $imgFile = $row[$f] ?? '';
-                                $imgPath = "../Assets/UserGenerated/" . $imgFile;
-                                $exists = !empty($imgFile) && file_exists(__DIR__ . "/../Assets/UserGenerated/" . $imgFile);
-                            ?>
-                            <td>
-                                <?php if ($exists): ?>
-                                    <img 
-                                        src="<?= $imgPath ?>" 
-                                        class="thumb-img"
-                                        onclick="openImagePreview('<?= $imgPath ?>')">
-                                <?php else: ?>
-                                    <span>No image</span>
-                                <?php endif; ?>
-                            </td>
-                        <?php else: ?>
-                            <td><?= e($row[$f] ?? '') ?></td>
-                        <?php endif; ?>
-
-                    <?php endforeach; ?>
-                    <td style="width: auto;">
-                        <?php $json = htmlspecialchars(json_encode($row, JSON_HEX_APOS | JSON_HEX_QUOT), ENT_QUOTES, 'UTF-8'); ?>
-                        <button onclick='openSharedModal("edit", <?= $json ?>)' style='width:60px;' class='btn btn-success action-btn'>Edit</button>
-                        <button onclick='openDeleteModal(<?= e($row[$pk]) ?>,"<?= e($row[$pk]) ?>")' style='width:60px;' class='btn btn-danger action-btn'>Delete</button>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-                </tbody>
-
-            </table>
-        </div>
+        
     </div>
 </main>
 

@@ -80,26 +80,41 @@ if (isset($_POST['reset_btn'])) {
     $action = $_POST['action'] ?? '';
     if ($action === 'add' || $action === 'update') {
         $data = [];
+
         foreach ($fieldsConfig as $f => $t) {
-            if ($t === 'number') $data[$f] = isset($_POST[$f]) ? intval($_POST[$f]) : 0;
-            elseif ($t === 'image') $data[$f] = $_POST[$f] ?? 'default.png';
-            else $data[$f] = $_POST[$f] ?? '';
+            if ($t === 'number') {
+                $data[$f] = isset($_POST[$f]) ? intval($_POST[$f]) : 0;
+            } elseif ($t === 'image') {
+                // Start with whatever was posted (hidden field carries old value)
+                $data[$f] = $_POST[$f] ?? '';
+            } else {
+                $data[$f] = $_POST[$f] ?? '';
+            }
         }
 
-        // Handle image upload
+        // Handle image upload (only overwrite if new file uploaded)
         foreach ($fieldsConfig as $f => $t) {
-            if ($t === 'image' && isset($_FILES[$f . '_file']) && $_FILES[$f . '_file']['error'] === UPLOAD_ERR_OK) {
-                $uploadDir = __DIR__ . '/../Assets/UserGenerated/';
-                if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
-                $orig = basename($_FILES[$f . '_file']['name']);
-                $ext = pathinfo($orig, PATHINFO_EXTENSION);
-                $safe = preg_replace('/[^a-zA-Z0-9_-]/', '_', pathinfo($orig, PATHINFO_FILENAME));
-                $newName = $safe . '_' . time() . ($ext ? '.' . $ext : '');
-                $target = $uploadDir . $newName;
-                if (move_uploaded_file($_FILES[$f . '_file']['tmp_name'], $target)) {
-                    $data[$f] = $newName;
-                } else {
-                    $message .= "Warning: image upload failed; using previous/default. ";
+            if ($t === 'image') {
+                if (isset($_FILES[$f . '_file']) && $_FILES[$f . '_file']['error'] === UPLOAD_ERR_OK) {
+                    $uploadDir = __DIR__ . '/../Assets/UserGenerated/';
+                    if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
+
+                    $orig = basename($_FILES[$f . '_file']['name']);
+                    $ext = pathinfo($orig, PATHINFO_EXTENSION);
+                    $safe = preg_replace('/[^a-zA-Z0-9_-]/', '_', pathinfo($orig, PATHINFO_FILENAME));
+                    $newName = $safe . '_' . time() . ($ext ? '.' . $ext : '');
+                    $target = $uploadDir . $newName;
+
+                    if (move_uploaded_file($_FILES[$f . '_file']['tmp_name'], $target)) {
+                        $data[$f] = $newName; // overwrite only if upload succeeded
+                    } else {
+                        $message .= "Warning: image upload failed; keeping previous image. ";
+                    }
+                }
+                // If no new file uploaded and no hidden value, keep old DB value
+                if (empty($data[$f]) && $action === 'update' && !empty($_POST[$pk])) {
+                    $existing = $crud->readOne(intval($_POST[$pk]), $pk);
+                    $data[$f] = $existing[$f] ?? 'default.png';
                 }
             }
         }
@@ -114,6 +129,7 @@ if (isset($_POST['reset_btn'])) {
 
         $tableData = $crud->readAll();
     }
+
 
     // SET PROPERTY (status update)
     if ($action === 'set_property' && !empty($_POST[$pk])) {

@@ -102,7 +102,7 @@ function openSharedModal(mode, data = null) {
     let imagePreviewHTML = '';
 
     for (const [field, type] of Object.entries(fieldsConfig)) {
-        let labelText = fieldLabels[field] || formatLabel(field);
+        let labelText = fieldLabels[field];
         let value = data ? data[field] || '' : '';
 
         if (type === 'image') {
@@ -111,8 +111,10 @@ function openSharedModal(mode, data = null) {
                 <div class="flex-c center" style="margin-bottom:12px;">
                     ${value ? `<img src="../Assets/UserGenerated/${value}" style="max-width:200px;max-height:200px;border-radius:8px;">` : '<span><hr></span>'}
                 </div>
+                <input type="hidden" name="${field}" value="${value}">
                 <input type="file" name="${field}_file" id="file_${field}" accept="image/*">
             `;
+
         } else {
             // Save non-image fields for later layout
             nonImageFields.push({field, type, labelText, value});
@@ -295,7 +297,7 @@ function openSetPropertyModal(data) {
     let imagePreviewHTML = '';
 
     for (const [field, type] of Object.entries(fieldsConfig)) {
-        let labelText = fieldLabels[field] || field;
+        let labelText = fieldLabels[field];
         let value     = data[field] ?? '';
 
         if (type === 'image') {
@@ -304,7 +306,10 @@ function openSetPropertyModal(data) {
                 <div class="flex-c center" style="margin-bottom:12px;">
                     ${value ? `<img src="../Assets/UserGenerated/${value}" style="max-width:200px;max-height:200px;border-radius:8px;">` : '<span><hr></span>'}
                 </div>
+                <input type="hidden" name="${field}" value="${value}">
+                <input type="file" name="${field}_file" id="file_${field}" accept="image/*">
             `;
+
         } else {
             nonImageFields.push({field, type, labelText, value});
         }
