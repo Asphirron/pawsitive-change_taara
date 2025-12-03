@@ -35,8 +35,8 @@ $fieldLabels = [  //Sets the labels/table headers for modal/table
     //if blank then set to default but capitalized and underscore(_) removed
     'vaccination_id' => 'ID',
     'animal_id' => 'Animal',
-    'vaccine_type' => '',
-    'date_vaccinated' => ''
+    'vaccine_type' => 'Vaccine Type',
+    'date_vaccinated' => 'Date Vaccinated'
 ];
 
 $searchBy = 'name';

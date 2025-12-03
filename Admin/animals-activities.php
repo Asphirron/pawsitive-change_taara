@@ -32,9 +32,9 @@ $fieldLabels = [  //Sets the labels/table headers for modal/table
     //if blank then set to default but capitalized and underscore(_) removed
     'activity_id' => 'ID',
     'animal_id' => 'Animal',
-    'description' => '',
-    'date_recorded' => '',
-    'time_recorded' => ''
+    'description' => 'Description',
+    'date_recorded' => 'Date Recorded',
+    'time_recorded' => 'Time Recorded'
 ];
 
 $searchBy = 'name';

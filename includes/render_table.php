@@ -84,7 +84,7 @@ foreach ($fieldsConfig as $f => $t) {
                                 <a href="reports-map.php?geolocation=<?= urlencode($row['location']) ?>"><button class='btn btn-primary action-btn'>Open Map</button></a>
                             <?php endif; ?>
                         <?php elseif(isset($actionType) && $actionType === 'in_and_out' && $tableName === 'donation_inventory'): ?>
-                                <button class="btn btn-primary" onclick='openInventory("insert", <?= $json ?>)'>Insert</button>
+                                <button class="btn btn-primary" onclick='openInventoryModal("insert", <?= $json ?>)'>Insert</button>
                                 <button class="btn btn-secondary" onclick='openInventoryModal("takeout", <?= $json ?>)'>Take Out</button>
                         <?php endif; ?>
 

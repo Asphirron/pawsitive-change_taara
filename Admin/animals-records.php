@@ -38,15 +38,15 @@ $fieldsConfig = [
 $fieldLabels = [  //Sets the labels/table headers for modal/table
     //if blank then set to default but capitalized and underscore(_) removed
     'animal_id' => 'ID',
-    'name' => '',
-    'description' => '',
-    'type' => '',
-    'breed' => '',
-    'gender' => '',
-    'age' => '',
-    'behavior' => '',
-    'date_rescued' => '',
-    'status' => '',
+    'name' => 'Name',
+    'description' => 'Description',
+    'type' => 'Type',
+    'breed' => 'Breed',
+    'gender' => 'Gender',
+    'age' => 'Age',
+    'behavior' => 'Behavior',
+    'date_rescued' => 'Date Rescued',
+    'status' => 'Status',
     'img' => 'Picture'
 ];
 

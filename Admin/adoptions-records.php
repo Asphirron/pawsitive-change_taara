@@ -65,7 +65,7 @@ foreach ($foreignKeys as $fkColumn => $fkConf) {
 }
 
 $fieldLabels = [
-    'adoption' => 'Id',
+    'adoption_id' => 'Id',
     'user_id' => 'Adopter',
     'animal_id' => 'Animal',
     'date_adopted' => 'Date Adopted/Returned',
