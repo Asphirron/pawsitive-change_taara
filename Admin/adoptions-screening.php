@@ -133,11 +133,6 @@ include "../includes/post_handler.php"; //Handles POST (search, CRUD, etc)
 <?= displayNav('adoptions'); ?>
 
 <main class="content flex-c">
-    <header class='top-nav flex-r'>
-        <a href='adoptions-records.php'>Adoptions</a>
-        <a href='adoptions-application.php'>Applications</a>
-        <a href='adoptions-screening.php' class='top-active'>Screening</a>
-    </header>
 
     <div style='padding-inline:10px;'>
         <?php include "../includes/search_and_filters.php"; ?>

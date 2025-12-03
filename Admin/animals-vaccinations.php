@@ -102,11 +102,7 @@ include "../includes/post_handler.php" //Handles POST (search, CRUD, etc)
 <?= displayNav('animals'); ?>
 
 <main class="content flex-c">
-    <header class='top-nav flex-r'>
-        <a href='animals-records.php'>Records</a>
-        <a href='animals-activities.php'>Activity Logs</a>
-        <a href='animals-vaccinations.php' class='top-active'>Vaccination</a>
-    </header>
+
 
     <div style='padding-inline:10px;'>
         <?php include "../includes/search_and_filters.php"; ?>

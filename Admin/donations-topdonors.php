@@ -52,11 +52,6 @@ $stmt->close();
 <?= displayNav('donations'); ?>
 
 <main class="content flex-c">
-    <header class='top-nav flex-r'>
-        <a href='donations-topdonors.php' class='top-active'>Top Donors</a>
-        <a href='donations-monetary.php'>Monetary Donation</a>
-        <a href='donations-inkind.php'>In-kind Donation</a>
-    </header>
 
     <div style='padding-inline: 10px;'>
     <h2>🥇TOP DONORS</h2>

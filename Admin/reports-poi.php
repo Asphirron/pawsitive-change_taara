@@ -75,11 +75,6 @@ include "../includes/post_handler.php"; //Handles POST (search, CRUD, etc)
 <?= displayNav('reports'); ?>
 
 <main class="content flex-c">
-    <header class='top-nav flex-r'>
-        <a href='reports-rescue.php'>Rescue Reports</a>
-        <a href='reports-poi.php' class='top-active'>Points of Interest</a>
-        <a href='reports-map.php'>Map</a>
-    </header>
 
     <div style='padding-inline:10px;'>
         <?php include "../includes/search_and_filters.php"; ?>

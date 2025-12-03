@@ -129,11 +129,7 @@ END_POST_PROCESSING:
 <?= displayNav('donations'); ?>
 
 <main class="content flex-c">
-    <header class='top-nav flex-r'>
-        <a href='donations-topdonors.php'>Top Donors</a>
-        <a href='donations-monetary.php'>Monetary Donation</a>
-        <a href='donations-inkind.php' class='top-active'>In-kind Donation</a>
-    </header>
+
 
     <div style='padding-inline: 10px;'>
     <h2>📦In-kind Donations</h2>

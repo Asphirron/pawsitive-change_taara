@@ -37,12 +37,6 @@ $pois = $poi_table->read();
 <?= displayNav('reports'); ?>
 
 <main class="content flex-c">
-    <header class='top-nav flex-r'>
-        <a href='reports-rescue.php'>Rescue Reports</a>
-        <a href='reports-poi.php'>Points of Interest</a>
-        <a href='reports-map.php' class='top-active'>Map</a>
-    </header>
-
 
     <!-- Map -->
     <div class="flex-c center">

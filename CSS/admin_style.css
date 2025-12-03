@@ -317,6 +317,44 @@ pre { white-space: pre-wrap; }
     box-shadow: 0 0 20px rgba(0,0,0,0.6);
 }
 
+/* DROPDOWN WRAPPER */
+.dropdown {
+    width: 100%;
+    text-align: center;
+}
+
+/* BUTTON */
+.dropdown-btn {
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: inherit;
+    cursor: pointer;
+    width: 100%;
+    padding: 8px 0;
+}
+
+.dropdown-btn:hover {
+    color: rgb(238, 59, 127);
+}
+
+/* HIDDEN MENU */
+.dropdown-content {
+    display: none;
+    flex-direction: column;
+    padding-left: 10px;
+    row-gap: 10px;
+}
+
+.dropdown-content a {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.dropdown.show .dropdown-content {
+    display: flex;
+}
+
 
 
 

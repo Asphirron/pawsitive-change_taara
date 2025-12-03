@@ -146,10 +146,6 @@ function renderEventTable($rows, $visibleColumns, $fieldsConfig, $pk, $fieldLabe
 <?= displayNav('events'); ?>
 
 <main class="content flex-c">
-    <header class='top-nav flex-r'>
-        <a href='events-upcoming.php' class='top-active'>Events</a>
-        <a href='events-calendar.php'>Calendar</a>
-    </header>
 
     <div style='padding-inline:10px;'>
         <h2>📋 <?= ucwords(str_replace('_',' ',$tableName)) ?> Table</h2>

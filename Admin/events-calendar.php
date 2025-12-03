@@ -79,10 +79,6 @@ include "../includes/post_handler.php"; //Handles POST (search, CRUD, etc)
 <?= displayNav('events'); ?>
 
 <main class="content flex-c">
-    <header class='top-nav flex-r'>
-        <a href='events-upcoming.php'>Events</a>
-        <a href='events-calendar.php' class='top-active'>Calendar</a>
-    </header>
 
     <div style='padding-inline:10px;'>
         <h2 class="subsection-header-text">Events Calendar</h2>
