@@ -13,8 +13,6 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
     unset($_SESSION['visibleColumns']);
 }
 
-
-
 // -------------------- CONFIG --------------------
 $tableName = 'animal';   // Change this to your table
 $pk = 'animal_id';       // Primary key column of the table
@@ -37,6 +35,26 @@ $fieldsConfig = [
     'img' => 'image'
 ];
 
+$fieldLabels = [  //Sets the labels/table headers for modal/table
+    //if blank then set to default but capitalized and underscore(_) removed
+    'animal_id' => 'ID',
+    'name' => '',
+    'description' => '',
+    'type' => '',
+    'breed' => '',
+    'gender' => '',
+    'age' => '',
+    'behavior' => '',
+    'date_rescued' => '',
+    'status' => '',
+    'img' => 'Picture'
+];
+
+$searchBy = 'name';
+
+//properties shown in the filters
+$filterConfig = ['type', 'gender', 'age', 'behavior', 'breed', 'status'];
+
 
 $_SESSION['fields_config'] = $fieldsConfig; 
 
@@ -58,6 +76,7 @@ function e($v){ return htmlspecialchars($v ?? '', ENT_QUOTES); }
 include "../includes/post_handler.php" //Handles POST (search, CRUD, etc)
 
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -79,44 +98,8 @@ include "../includes/post_handler.php" //Handles POST (search, CRUD, etc)
     </header>
 
     <div style='padding-inline:10px;'>
-        <h2>📋 <?= ucwords(str_replace('_',' ',$tableName)) ?> Table</h2>
 
-        <!-- SEARCH FORM -->
-        <form method="POST" enctype="multipart/form-data" style="margin-bottom:12px;">
-            <div class="search-group">
-                <input type="text" name="search_bar" class="search-bar" placeholder="Search..." value="<?= e($_POST['search_bar'] ?? '') ?>">
-                <select name="search_by">
-                    <option value="none">None</option>
-                    <?php foreach(array_keys($fieldsConfig) as $f): ?>
-                        <option value="<?= $f ?>" <?= (isset($_POST['search_by']) && $_POST['search_by']===$f)?'selected':'' ?>><?= ucwords(str_replace('_',' ',$f)) ?></option>
-                    <?php endforeach; ?>
-                </select>
-                <select name="order_by" placeholder='Order by'>
-                    <option value="ascending" <?= (isset($_POST['order_by']) && $_POST['order_by']==='ascending')?'selected':'' ?>>Ascending</option>
-                    <option value="descending" <?= (isset($_POST['order_by']) && $_POST['order_by']==='descending')?'selected':'' ?>>Descending</option>
-                </select>
-                <input type="number" name="num_of_results" min="1" max="1000" value="<?= intval($_POST['num_of_results']??10) ?>" placeholder='Results shown'>
-                <button type="button" class="btn btn-secondary" onclick="toggleColumnSelector()">Columns</button>
-
-                <div id="column-selector" style="display:none; position:absolute; background:#fff; border:1px solid #ccc; padding:10px; top: 10%; left: 50%;" placeholder='Table columns shown'>
-                    <?php foreach($fieldsConfig as $f=>$t): ?>
-                        <label>
-                            <input type="checkbox" class="column-toggle" value="<?= $f ?>" 
-                                <?= in_array($f,$visibleColumns)?'checked':'' ?>> <?= ucwords(str_replace('_',' ',$f)) ?>
-                        </label><br>
-                    <?php endforeach; ?>
-                    <button type="button" onclick="applyColumnSelection()">Apply</button>
-                </div>
-
-                <button type="submit" name="reset_btn" class="btn btn-secondary">Reset</button >
-                <button type="submit" name="search_btn" class="btn btn-primary">Search</button>
-
-            </div>
-        </form>
-
-        <!-- ACTION BUTTON -->
-        <button class="btn btn-primary" onclick="openSharedModal('add')">+ Add <?= ucwords($tableName) ?></button>
-        <a href="../export/export_pdf.php?table=<?=$tableName?>" target="_blank"><button type='button' class="btn btn-success">Export as PDF</button></a>
+    <?php include "../includes/search_and_filters.php"; ?>
 
         <!-- RESULT TABLE -->
         <div class="result-table">
@@ -173,11 +156,8 @@ include "../includes/post_handler.php" //Handles POST (search, CRUD, etc)
     </div>
 </main>
 
-<!-- DYNAMIC MODAL -->
-<?php 
-include 'dynamic_modal.php'; 
-//Includes Add/Edit/View, Delete, Message, and ImagePreview Modals
-?> 
+
+
 
 <?php if(!empty($message)): ?>
 <script> showMessage("<?= e($message) ?>"); </script>

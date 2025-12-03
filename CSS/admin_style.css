@@ -160,6 +160,54 @@ input, select, datalist, button, textarea{
     color: #000000;
 }
 
+.main-btn{
+    height: 40px;
+    width: 140px;
+}
+
+.search-bar{
+    width: 25%;
+    height: 30px;
+}
+
+.search-btn{
+    width: 120px;
+    height: 35px;
+    margin-left: 5px;
+}
+
+.filter-field {
+    height: 30px;          /* same for all */
+    line-height: 30px;     /* aligns text vertically */
+    padding: 0 10px;       /* consistent horizontal padding */
+    box-sizing: border-box;
+}
+select.filter-field {
+    padding: 0 8px;        /* reduce default select padding */
+    line-height: normal;   /* reset browser quirks */
+}
+.filter-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;   /* vertically aligns inputs and selects */
+}
+.filter-field,
+.auto-filter {
+    width: 180px;        /* pick a consistent width */
+    height: 30px;        /* same height for all */
+    line-height: 30px;   /* vertically centers text */
+    padding: 0 8px;
+    box-sizing: border-box;
+}
+.filter-group .filter-field,
+.filter-group .auto-filter,
+.filter-group select {
+    min-width: 180px;
+    max-width: 180px;
+    flex: 0 0 180px;   /* fixes flex shrink/grow */
+}
+
+
 
 .content{
     margin-left: 15vw;

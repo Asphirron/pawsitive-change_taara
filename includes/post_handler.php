@@ -12,42 +12,55 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // RESET FILTERS
-    if (isset($_POST['reset_btn'])) {
-        $tableData = $crud->readAll();
-        $_POST = [];
-        goto END_POST;
+    // RESET FILTERS + SEARCH
+if (isset($_POST['reset_btn'])) {
+    $tableData = $crud->readAll();
+
+    // Clear all search and filter inputs
+    foreach (array_merge(['search_bar','search_by','order_by','num_of_results'], $filterConfig) as $f) {
+        unset($_POST[$f]);
     }
 
+    goto END_POST;
+}
+
+
     // SEARCH / FILTER
-    if (isset($_POST['search_btn'])) {
+    if (isset($_POST['search_btn']) || !empty(array_intersect(array_keys($_POST), $filterConfig))) {
         $conn = connect();
         $allowedColumns = array_keys($fieldsConfig);
 
-        $searchBy = $_POST['search_by'] ?? 'none';
+        $searchBy = $_POST['search_by'] ?? $searchBy; // default to $searchBy
         $searchVal = trim($_POST['search_bar'] ?? '');
         $orderDir = strtolower($_POST['order_by'] ?? 'ascending') === 'descending' ? 'DESC' : 'ASC';
         $limit = isset($_POST['num_of_results']) ? intval($_POST['num_of_results']) : 10;
         if ($limit <= 0 || $limit > 1000) $limit = 50;
 
-        if ($searchBy === 'none' || $searchVal === '') {
-            $sql = "SELECT * FROM `$tableName` ORDER BY `$pk` $orderDir LIMIT ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("i", $limit);
-        } elseif (in_array($searchBy, ['age']) && is_numeric($searchVal)) {
-            $sql = "SELECT * FROM `$tableName` WHERE `$searchBy` = ? ORDER BY `$pk` $orderDir LIMIT ?";
-            $stmt = $conn->prepare($sql);
-            $ival = intval($searchVal);
-            $stmt->bind_param("ii", $ival, $limit);
-        } elseif (in_array($searchBy, $allowedColumns)) {
-            $sql = "SELECT * FROM `$tableName` WHERE `$searchBy` = ? ORDER BY `$pk` $orderDir LIMIT ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("si", $searchVal, $limit);
-        } else {
-            $sql = "SELECT * FROM `$tableName` ORDER BY `$pk` $orderDir LIMIT ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("i", $limit);
+        // Build WHERE conditions
+        $conditions = [];
+        $params = [];
+        $types = '';
+
+        if ($searchVal !== '' && in_array($searchBy, $allowedColumns)) {
+            $conditions[] = "`$searchBy` LIKE ?";
+            $params[] = "%$searchVal%";
+            $types .= 's';
         }
+
+        foreach ($filterConfig as $f) {
+            if (!empty($_POST[$f])) {
+                $conditions[] = "`$f` = ?";
+                $params[] = $_POST[$f];
+                $types .= 's';
+            }
+        }
+
+        $whereSql = $conditions ? 'WHERE ' . implode(' AND ', $conditions) : '';
+        $sql = "SELECT * FROM `$tableName` $whereSql ORDER BY `$pk` $orderDir LIMIT ?";
+        $stmt = $conn->prepare($sql);
+        $params[] = $limit;
+        $types .= 'i';
+        $stmt->bind_param($types, ...$params);
 
         $stmt->execute();
         $res = $stmt->get_result();
@@ -57,6 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->close();
         $conn->close();
     }
+
 
     if (isset($overrideCrud)) {
         if ($overrideCrud) { goto END_POST; }
