@@ -77,7 +77,7 @@ include "../includes/post_handler.php"; //Handles POST (search, CRUD, etc)
 function renderEventTable($rows, $visibleColumns, $fieldsConfig, $pk, $fieldLabels, $headerText, $colorClass) {
     ?>
     <h3 class="section-header"><?= $headerText ?></h3>
-    <div class="result-table" style="margin-bottom:20px;">
+    <div class="result-table" style="margin-bottom:5px;">
         <table class="rounded-border">
             <thead>
             <tr>
@@ -113,8 +113,8 @@ function renderEventTable($rows, $visibleColumns, $fieldsConfig, $pk, $fieldLabe
                     <?php endforeach; ?>
                     <td>
                         <?php $json = htmlspecialchars(json_encode($row, JSON_HEX_APOS | JSON_HEX_QUOT), ENT_QUOTES, 'UTF-8'); ?>
-                        <button onclick="openSharedModal('edit', <?= $json ?>)" class="btn btn-info action-btn">Edit</button>
-                        <button onclick="openDeleteModal(<?= e($row[$pk]) ?>,'<?= e($row[$pk]) ?>')" class="btn btn-danger action-btn">Delete</button>
+                        <button onclick="openSharedModal('edit', <?= $json ?>)" class="btn btn-primary action-btn">Edit</button>
+                        <button onclick="openDeleteModal(<?= e($row[$pk]) ?>,'<?= e($row[$pk]) ?>')" class="btn btn-secondary action-btn">Delete</button>
                     </td>
                 </tr>
                 <?php endforeach; ?>
@@ -152,11 +152,15 @@ function renderEventTable($rows, $visibleColumns, $fieldsConfig, $pk, $fieldLabe
     </header>
 
     <div style='padding-inline:10px;'>
-        <h2>📋 <?= ucwords(str_replace('_',' ',$tableName)) ?> Tables</h2>
+        <h2>📋 <?= ucwords(str_replace('_',' ',$tableName)) ?> Table</h2>
+
+        <div class="flex-r" style="margin-left: auto; margin-block: auto;">
 
         <!-- ACTION BUTTON -->
-        <button class="btn btn-primary" onclick="openSharedModal('add')">+ Add <?= ucwords($tableName) ?></button>
-        <a href="../export/export_pdf.php?table=<?=$tableName?>" target="_blank"><button type='button' class="btn btn-success">Export as PDF</button></a>
+        <button class="main-btn btn btn-primary" onclick="openSharedModal('add')">+ Add <?= ucwords($tableName) ?></button>
+        <a href="../export/export_pdf.php?table=<?=$tableName?>" target="_blank"><button type='button' class="main-btn btn btn-success">Export as PDF</button></a>
+
+        </div>
 
         <!-- THREE SEPARATE TABLES -->
         <?php

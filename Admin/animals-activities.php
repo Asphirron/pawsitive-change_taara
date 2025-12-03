@@ -20,9 +20,9 @@ $pk = 'activity_id';       // Primary key column of the table
 $crud = new DatabaseCRUD($tableName);
 $tableData = $crud->readAll();
 // Define fields and types for modal & table
-$lfieldsConfig = [
+$fieldsConfig = [
     'activity_id' => 'id',
-    'anima_id' => 'number',
+    'animal_id' => 'number',
     'description' => 'textarea',
     'date_recorded' => 'date',
     'time_recorded' => 'time'

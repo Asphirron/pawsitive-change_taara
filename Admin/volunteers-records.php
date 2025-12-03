@@ -30,7 +30,7 @@ $fieldsConfig = [
 $searchBy = 'full_name';
 
 //properties shown in the filters
-$filterConfig = ['full_name', 'rolw', 'user_id'];
+$filterConfig = ['full_name', 'role', 'user_id'];
 
 $foreignKeys = [
       'user_id' => [

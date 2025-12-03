@@ -34,6 +34,12 @@ $fieldsConfig = [
     'status' => ['pending', 'cancelled', 'resolved']
 ];
 
+$searchBy = 'full_name';
+
+//properties shown in the filters
+$filterConfig = ['type', 'location', 'date_posted', 'status'];
+$actionType = 'setProperty';
+
 $foreignKeys = [
     'animal_id' => [
         'table' => 'animal',
@@ -123,110 +129,10 @@ include "../includes/post_handler.php"; //Handles POST (search, CRUD, etc)
     </header>
 
     <div style='padding-inline:10px;'>
-        <h2>📋 <?= ucwords(str_replace('_',' ',$tableName)) ?> Table</h2>
-
-        <!-- SEARCH FORM -->
-        <form method="POST" enctype="multipart/form-data" style="margin-bottom:12px;">
-            <div class="search-group">
-                <input type="text" name="search_bar" class="search-bar" placeholder="Search..." value="<?= e($_POST['search_bar'] ?? '') ?>">
-                <select name="search_by">
-                    <option value="none">None</option>
-                    <?php foreach(array_keys($fieldsConfig) as $f): ?>
-                        <option value="<?= $f ?>" <?= (isset($_POST['search_by']) && $_POST['search_by']===$f)?'selected':'' ?>><?= ucwords(str_replace('_',' ',$f)) ?></option>
-                    <?php endforeach; ?>
-                </select>
-                <select name="order_by" placeholder='Order by'>
-                    <option value="ascending" <?= (isset($_POST['order_by']) && $_POST['order_by']==='ascending')?'selected':'' ?>>Ascending</option>
-                    <option value="descending" <?= (isset($_POST['order_by']) && $_POST['order_by']==='descending')?'selected':'' ?>>Descending</option>
-                </select>
-                <input type="number" name="num_of_results" min="1" max="1000" value="<?= intval($_POST['num_of_results']??10) ?>" placeholder='Results shown'>
-                <button type="button" class="btn btn-secondary" onclick="toggleColumnSelector()">Columns</button>
-
-                <div id="column-selector" style="display:none; position:absolute; background:#fff; border:1px solid #ccc; padding:10px; top: 10%; left: 50%;" placeholder='Table columns shown'>
-                    <?php foreach($fieldsConfig as $f=>$t): ?>
-                        <label>
-                            <input type="checkbox" class="column-toggle" value="<?= $f ?>" 
-                                <?= in_array($f,$visibleColumns)?'checked':'' ?>> <?= ucwords(str_replace('_',' ',$f)) ?>
-                        </label><br>
-                    <?php endforeach; ?>
-                    <button type="button" onclick="applyColumnSelection()">Apply</button>
-                </div>
-
-                <button type="submit" name="reset_btn" class="btn btn-secondary">Reset</button >
-                <button type="submit" name="search_btn" class="btn btn-primary">Search</button>
-
-            </div>
-        </form>
-
-        <!-- ACTION BUTTON -->
-        <button class="btn btn-primary" onclick="openSharedModal('add')">+ Add <?= ucwords($tableName) ?></button>
-        <a href="../export/export_pdf.php?table=<?=$tableName?>" target="_blank"><button type='button' class="btn btn-success">Export as PDF</button></a>
+        <?php include "../includes/search_and_filters.php"; ?>
 
         <!-- RESULT TABLE -->
-        <div class="result-table">
-            <table class="rounded-border">
-                <thead>
-                <tr>
-                    <?php foreach($visibleColumns as $f): ?>
-                        <?php 
-                            // Check if the column is a foreign key
-                            if(isset($foreignKeys[$f])) {
-                                $label = $foreignKeys[$f]['label']; // Use the FK label instead of column name
-                                echo "<th>" . e($fieldLabels[$f] ?? ucwords(str_replace('_',' ',$f))) . "</th>";
-                            } else {
-                                echo "<th>" . e($fieldLabels[$f] ?? ucwords(str_replace('_',' ',$f))) . "</th>";
-                            }
-                        ?>
-                    <?php endforeach; ?>
-                    <th>Action</th>
-                </tr>
-                </thead>
-
-                <tbody>
-                <?php if(empty($tableData)): ?>
-                    <tr><td colspan="<?= sizeOF($visibleColumns) ?>">No records found.</td></tr>
-                <?php endif; ?>
-
-                <?php foreach($tableData as $row): ?>
-                <tr>
-
-                    <?php foreach($visibleColumns as $f): ?>
-                        <?php if ($fieldsConfig[$f] === 'image'): ?>
-
-                            <?php
-                                $imgFile = $row[$f] ?? '';
-                                $imgPath = "../Assets/UserGenerated/" . $imgFile;
-                                $exists = !empty($imgFile) && file_exists(__DIR__ . "/../Assets/UserGenerated/" . $imgFile);
-                            ?>
-                            <td>
-                                <?php if ($exists): ?>
-                                    <img 
-                                        src="<?= $imgPath ?>" 
-                                        class="thumb-img"
-                                        onclick="openImagePreview('<?= $imgPath ?>')">
-                                <?php else: ?>
-                                    <span>No image</span>
-                                <?php endif; ?>
-                            </td>
-
-                        <?php elseif(isset($foreignKeys[$f])): ?>
-                            <td><?= e($fkCache[$f][$row[$f]] ?? "Unknown") ?></td>
-                        <?php else: ?>
-                            <td><?= e($row[$f] ?? '') ?></td>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
-
-                    <td style="width: auto;">
-                        <?php $json = htmlspecialchars(json_encode($row, JSON_HEX_APOS | JSON_HEX_QUOT), ENT_QUOTES, 'UTF-8'); ?>
-                        <button onclick="openSetPropertyModal( <?= $json ?>)" class='btn btn-info action-btn'>Handle Report</button>
-                        <a href="reports-map.php?geolocation=<?= urlencode($row['location']) ?>"><button class='btn btn-warning action-btn'>Go to Location</button></a>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-                </tbody>
-
-            </table>
-        </div>
+        <?php include "../includes/render_table.php"; ?>
     </div>
       
 </main>
