@@ -177,9 +177,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?= displayNav('inventory'); ?>
 
 <main class="content flex-c">
-    <header class='top-nav flex-r'>
-        <a href='index.php' class='top-active'>Inventory</a>
-    </header>
 
     <div style='padding-inline:10px;'>
         <!-- SEARCH & FILTERS -->
