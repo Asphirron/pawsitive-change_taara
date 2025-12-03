@@ -137,10 +137,7 @@ function renderEventTable($rows, $visibleColumns, $fieldsConfig, $pk, $fieldLabe
     .section-header {
         padding: 8px 12px;
         border-radius: 4px;
-        color: #fff;
-        margin-top: 20px;
-        width: 30%;
-        background-color: #007bff;
+        margin-top: 40px;
     } 
 </style>
 </head>
