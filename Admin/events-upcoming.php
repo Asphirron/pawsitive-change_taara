@@ -76,7 +76,7 @@ include "../includes/post_handler.php"; //Handles POST (search, CRUD, etc)
 // -------------------- TABLE RENDERER --------------------
 function renderEventTable($rows, $visibleColumns, $fieldsConfig, $pk, $fieldLabels, $headerText, $colorClass) {
     ?>
-    <h3 class="section-header <?= $colorClass ?>"><?= $headerText ?></h3>
+    <h3 class="section-header"><?= $headerText ?></h3>
     <div class="result-table" style="margin-bottom:20px;">
         <table class="rounded-border">
             <thead>
@@ -139,10 +139,9 @@ function renderEventTable($rows, $visibleColumns, $fieldsConfig, $pk, $fieldLabe
         border-radius: 4px;
         color: #fff;
         margin-top: 20px;
-    }
-    .ongoing { background-color: #28a745; }   /* green */
-    .upcoming { background-color: #007bff; }  /* blue */
-    .past { background-color: #6c757d; }      /* gray */
+        width: 30%;
+        background-color: #007bff;
+    } 
 </style>
 </head>
 
