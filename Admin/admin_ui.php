@@ -5,8 +5,7 @@ function displayNav($activePage){
         <nav class='side-nav flex-c'>
             
             <!-- MOBILE TOP BAR -->
-            <div class='mobile-nav-bar'>
-                <button id='hamburger-btn' class='hamburger hidden' onclick='toggleMobileNav()'>☰</button>
+            <div class='flex-c center'>
                 <div class='mobile-logo'>
                     <img class='logo' src='logo.png'>
                     <strong><h2>TAARA Admin</h2></strong>
@@ -15,14 +14,14 @@ function displayNav($activePage){
 
             <div id='nav-links' class='nav-links flex-c'>
 
-                <a href='index.php' class='".($activePage == "dashboard" ? "active" : "")."'>
+                <a href='index.php' class='".($activePage == "dashboard" ? "active" : "")." dropdown'>
                     <i class='fa fa-home nav-icon'></i> Dashboard
                 </a>
 
                 <!-- ANIMALS DROPDOWN -->
                 <div class='dropdown'>
                     <button class='dropdown-btn ".($activePage == "animals" ? "active" : "")."'>
-                        <i class='fa fa-paw nav-icon'></i> Animals
+                        <i class='fa fa-paw nav-icon'></i> Animals 
                     </button>
                     <div class='dropdown-content'>
                         <a href='animals-records.php'>Records</a>
