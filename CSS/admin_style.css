@@ -23,7 +23,7 @@ table{
     margin-block: 10px;
 }
 thead{
-    background-color: #999999;
+    background-color: #4581dc;
 }
 
 th,td{
@@ -32,6 +32,14 @@ th,td{
 }
 th{
     color: white;
+}
+
+td{
+    text-align: start;
+}
+
+.action-td{
+    text-align: center;
 }
 
 img{

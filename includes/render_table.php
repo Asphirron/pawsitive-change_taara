@@ -25,7 +25,7 @@ foreach ($fieldsConfig as $f => $t) {
                         }
                     ?>
                 <?php endforeach; ?>
-                <th>Action</th>
+                <th class='action-td'>Action</th>
             </tr>
         </thead>
 
@@ -69,14 +69,14 @@ foreach ($fieldsConfig as $f => $t) {
                         <?php endif; ?>
                     <?php endforeach; ?>
 
-                    <td>
+                    <td class='action-td'>
                         <?php $json = htmlspecialchars(json_encode($row, JSON_HEX_APOS | JSON_HEX_QUOT), ENT_QUOTES, 'UTF-8'); ?>
 
                         <?php if(!isset($actionType)): ?>
                             <button onclick='openSharedModal("edit", <?= $json ?>)' style='width:60px;' class='btn btn-primary action-btn'>Edit</button>
-                            <button onclick='openDeleteModal(<?= e($row[$pk]) ?>,"<?= e($row[$pk]) ?>")' style='width:60px;' class='btn btn-secondary action-btn'>Delete</button>
+                            <button onclick='openDeleteModal(<?= e($row[$pk]) ?>,"<?= e($row[$pk]) ?>")' style='width:60px;' class='btn btn-success action-btn'>Delete</button>
                         <?php elseif(isset($actionType) && $actionType === 'setProperty'): ?>
-                            <button onclick="openSetPropertyModal( <?= $json ?>)" class='btn btn-secondary action-btn'>Options</button>
+                            <button onclick="openSetPropertyModal( <?= $json ?>)" class='btn btn-success action-btn'>Options</button>
                             
                             <?php if($tableName === 'adoption_application'): ?>
                                 <a href="adoptions-screening.php?application_id=<?=$row['a_application_id']?>"><button class='btn btn-primary action-btn'>Show Screening</button></a>
@@ -85,7 +85,7 @@ foreach ($fieldsConfig as $f => $t) {
                             <?php endif; ?>
                         <?php elseif(isset($actionType) && $actionType === 'in_and_out' && $tableName === 'donation_inventory'): ?>
                                 <button class="btn btn-primary" onclick='openInventoryModal("insert", <?= $json ?>)'>Insert</button>
-                                <button class="btn btn-secondary" onclick='openInventoryModal("takeout", <?= $json ?>)'>Take Out</button>
+                                <button class="btn btn-success" onclick='openInventoryModal("takeout", <?= $json ?>)'>Take Out</button>
                         <?php endif; ?>
 
                     
