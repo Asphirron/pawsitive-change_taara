@@ -89,7 +89,7 @@ $stmt->close();
 
     <!-- RESULT TABLE -->
     <div class="result-table">
-        <table class="rounded-border">
+        <table class="">
             <thead>
                 <tr>
                     <th>Rank</th>

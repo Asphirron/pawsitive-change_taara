@@ -14,6 +14,7 @@ main{
 table{
     text-align: center;
     width: 100%;
+    border: none;
     border-collapse: collapse;
     margin-block: 10px;
 }
@@ -128,19 +129,80 @@ input, select, datalist, button, textarea{
     border-radius: 15px;
 }
 
-.side-nav{
-    width: 15vw;
-    height: 100%;
-    background-color: rgb(30, 0, 81);
-    float: left;
+/* Side Navigation */
+.side-nav {
+    width: 220px;
+    background: linear-gradient(180deg, #1e0051, #2a0a6d);
     min-height: 100vh;
+    padding: 20px 0;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.2);
+    color: #fff;
+    font-size: 15px;
+}
+
+/* Logo area */
+.mobile-logo {
+    margin-bottom: 20px;
+}
+.mobile-logo h2 {
+    font-size: 18px;
+    margin: 10px 0 0;
+    color: #fff;
+}
+
+/* Nav links */
+.nav-links a,
+.dropdown-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    color: #ddd;
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.nav-links a:hover,
+.dropdown-btn:hover {
+    background: rgba(255,255,255,0.1);
+    color: #ff3b7f;
+}
+
+.nav-links .active,
+.dropdown .active {
+    background: rgba(255,255,255,0.15);
+    color: #ff3b7f;
+    font-weight: bold;
+}
+
+/* Dropdown content */
+.dropdown-content {
+    display: none;
+    flex-direction: column;
+    margin-left: 30px;
+    padding: 5px 0;
+}
+.dropdown-content a {
+    font-size: 14px;
+    color: #bbb;
+    padding: 6px 0;
+}
+.dropdown-content a:hover {
+    color: #fff;
+}
+.dropdown.show .dropdown-content {
+    display: flex;
+}
+
+/* Icons */
+.nav-icon {
+    font-size: 16px;
+    width: 20px;
     text-align: center;
 }
 
-.active{
-    color: rgb(238, 59, 127);
-    font-weight: bold;
-}
 
 .top-nav{
     width: 100%;

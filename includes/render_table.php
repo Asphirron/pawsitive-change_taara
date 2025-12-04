@@ -11,7 +11,7 @@ foreach ($fieldsConfig as $f => $t) {
 ?>
 
 <div class="result-table">
-    <table class="rounded-border">
+    <table class="">
         <thead>
             <tr>
                 <?php foreach($visibleColumns as $f): ?>

@@ -177,7 +177,8 @@ if (isset($_POST['reset_btn'])) {
                         'role'=> $_POST['first_committee'],
                         'user_id'=> $_POST['user_id']
                     ]);
-                }    
+                }  
+
             }else if ($tableName == 'monetary_donation' && in_array($value, ['verified'])) {
 
                 if($_POST['status'] === 'verified'){
@@ -190,8 +191,27 @@ if (isset($_POST['reset_btn'])) {
                     return;
                 }
 
+                //$updateData['respond_date'] = date('Y-m-d H:i:s'); // current date/time
+                
+            }/*else if ($tableName == 'inkind_donation' && in_array($value, ['verified'])) {
+
+                if($_POST['status'] === 'received'){
+                    $message = 'Donation has been already receieved.';
+                    return;
+                }
+
+                if($_POST['status'] === 'cancelled'){
+                    $message = 'Donation cannot be set as received. It has been already cancelled. .';
+                    return;
+                }
                 $updateData['respond_date'] = date('Y-m-d H:i:s'); // current date/time
-            }
+                $tempCrud = new DatabaseCRUD('volunteer');
+                    $tempCrud->create([
+                        'full_name'=> $_POST['full_name'],
+                        'role'=> $_POST['first_committee'],
+                        'user_id'=> $_POST['user_id']
+                    ]);
+            }*/
 
             $success = $crud->update(intval($_POST[$pk]), $updateData, $pk);
             $message .= $success 
