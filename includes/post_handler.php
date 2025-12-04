@@ -121,7 +121,7 @@ if (isset($_POST['reset_btn'])) {
 
         if ($action === 'add') {
             $newId = $crud->create($data);
-            $message .= $newId ? "Added record ID: $newId" : "Failed to add record.";
+            $message .= $newId ? "Successfully added record" : "Failed to add record.";
         } elseif ($action === 'update' && !empty($_POST[$pk])) {
             $success = $crud->update(intval($_POST[$pk]), $data, $pk);
             $message .= $success ? "Successfully updated record " : "Failed to update record.";
@@ -207,7 +207,7 @@ if (isset($_POST['reset_btn'])) {
     // DELETE
     if ($action === 'delete' && !empty($_POST[$pk])) {
         $success = $crud->delete(intval($_POST[$pk]), $pk);
-        $message .= $success ? "Deleted record ID: " . $_POST[$pk] : "Failed to delete record.";
+        $message .= $success ? "Successfully deleted record" : "Failed to delete record.";
         $tableData = $crud->readAll();
     }
 }
