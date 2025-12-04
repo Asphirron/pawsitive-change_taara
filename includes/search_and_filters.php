@@ -55,18 +55,18 @@ if (!empty($_POST['order_by']) || !empty($_POST['num_of_results']) || isset($_PO
 <div class="flex-r" style="width: 100%; "> 
     
     <?php if($tableName === 'donation_inventory'): ?>
-        <h2>📋 Inventory Table</h2>
+        <h2>Inventory Table</h2>
     <?php else: ?>
-        <h2>📋 <?= ucwords(str_replace('_',' ',$tableName)) ?> Table</h2>
+        <h2><?= ucwords(str_replace('_',' ',$tableName)) ?> Table</h2>
     <?php endif; ?>
 
     <div class="flex-r" style="margin-left: auto; margin-block: auto;">
 
     <!-- ACTION BUTTON -->
     <?php if($tableName === 'donation_inventory'): ?>
-        <button class="main-btn btn btn-primary" onclick="openSharedModal('add')">+ Add Item </button>
+        <button class="main-btn btn btn-primary" onclick="openSharedModal('add')">➕ Add Item </button>
     <?php else: ?>
-        <button class="main-btn btn btn-primary" onclick="openSharedModal('add')">+ Add <?= ucwords($tableName) ?></button>
+        <button class="main-btn btn btn-primary" onclick="openSharedModal('add')">➕ Add <?= ucwords(str_replace('_',' ',$tableName)) ?></button>
     <?php endif; ?>
 
     <a href="../export/export_pdf.php?table=<?=$tableName?>" target="_blank"><button type='button' class="main-btn btn btn-success">Export as PDF</button></a>
