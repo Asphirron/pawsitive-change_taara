@@ -57,7 +57,7 @@ if (!empty($_POST['order_by']) || !empty($_POST['num_of_results']) || isset($_PO
     <?php if($tableName === 'donation_inventory'): ?>
         <h2>Inventory Table</h2>
     <?php else: ?>
-        <h2><?= ucwords(str_replace('_',' ',$tableName)) ?> Table</h2>
+        <h2 style="margin-left: 10px;"><?= ucwords(str_replace('_',' ',$tableName)) ?> Table</h2>
     <?php endif; ?>
 
     <div class="flex-r" style="margin-left: auto; margin-block: auto;">
