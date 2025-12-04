@@ -14,9 +14,16 @@ function displayNav($activePage){
 
             <div id='nav-links' class='nav-links flex-c'>
 
-                <a href='index.php' class='".($activePage == "dashboard" ? "active" : "")." dropdown'>
-                    <i class='fa fa-home nav-icon'></i> Dashboard
-                </a>
+
+                <!-- DASHBOARD DROPDOWN -->
+                <div class='dropdown'>
+                    <button class='dropdown-btn ".($activePage == "index" ? "active" : "")."'>
+                        <i class='fa fa-home nav-icon'></i> Dashboard 
+                    </button>
+                    <div class='dropdown-content'>
+                        <a href='index.php'>Go to Dashboard</a>
+                    </div>
+                </div>
 
                 <!-- ANIMALS DROPDOWN -->
                 <div class='dropdown'>
@@ -54,9 +61,15 @@ function displayNav($activePage){
                     </div>
                 </div>
 
-                <a href='inventory.php' class='".($activePage == "inventory" ? "active" : "")."'>
-                    <i class='fa fa-box nav-icon'></i> Inventory
-                </a>
+                <!-- INVENTORY DROPDOWN -->
+                <div class='dropdown'>
+                    <button class='dropdown-btn ".($activePage == "inventory" ? "active" : "")."'>
+                        <i class='fa fa-box nav-icon'></i> Inventory
+                    </button>
+                    <div class='dropdown-content'>
+                        <a href='inventory.php'>Records</a>
+                    </div>
+                </div>
 
                 <!-- REPORTS DROPDOWN -->
                 <div class='dropdown'>
@@ -92,9 +105,15 @@ function displayNav($activePage){
                     </div>
                 </div>
 
-                <a href='../includes/logout.php'>
-                    <i class='fa fa-sign-out-alt nav-icon'></i> Logout
-                </a>
+                <!-- LOGOUT DROPDOWN -->
+                <div class='dropdown'>
+                    <button class='dropdown-btn ".($activePage == "logout" ? "active" : "")."'>
+                        <i class='fa fa-sign-out-alt nav-icon'></i> Logout
+                    </button>
+                    <div class='dropdown-content'>
+                        <a href='../includes/logout.php'>Are you sure?</a>
+                    </div>
+                </div>
 
             </div>
         </nav>

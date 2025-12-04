@@ -614,3 +614,39 @@ pre { white-space: pre-wrap; }
 
 
 
+/* Make <a> links behave like dropdown buttons */
+.nav-links{
+    display: flex;
+    align-items: flex-start;
+    row-gap: 5px;
+}
+
+.nav-links a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    color: #ddd;
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s;
+    border-radius: 6px;
+    font-weight: 500;
+    width: 100%;          /* ensures same width as dropdown buttons */
+    box-sizing: border-box;
+}
+
+/* Ensure dropdown wrapper aligns the same */
+.dropdown {
+    width: 100%;
+    padding-left: 0px;
+}
+
+.dropdown-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    width: 100%;
+    text-align: left;     /* matches <a> alignment */
+    box-sizing: border-box;
+}
