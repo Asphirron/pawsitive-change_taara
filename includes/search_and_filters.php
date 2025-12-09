@@ -151,11 +151,11 @@ foreach($totalItemsTable as $t){
 
     <!-- TOGGLE BUTTON -->
     <button type="button" class="btn btn-success" onclick="toggleFilters()">
-        <?= $filtersUsed ? 'Hide Filters' : 'Show Filters' ?>
+        Hide Filters
     </button>
 
     <!-- TOGGLEABLE CONTAINER -->
-    <fieldset id="filter-container" > margin-top:10px; max-width: 100%">
+    <fieldset id="filter-container" style="margin-top:10px; max-width: 100%">
 
         <legend>Filters</legend>
 
