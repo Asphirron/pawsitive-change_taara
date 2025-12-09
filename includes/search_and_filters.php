@@ -155,7 +155,7 @@ foreach($totalItemsTable as $t){
     </button>
 
     <!-- TOGGLEABLE CONTAINER -->
-    <fieldset id="filter-container" style="<?= $filtersUsed ? 'display:block;' : 'display:none;' ?> margin-top:10px; max-width: 100%">
+    <fieldset id="filter-container" > margin-top:10px; max-width: 100%">
 
         <legend>Filters</legend>
 
