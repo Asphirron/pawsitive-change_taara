@@ -453,6 +453,17 @@ pre { white-space: pre-wrap; }
     display: flex;
 }
 
+.stat-preview-container{
+    width: 200px;
+    height: 100px;
+    border: 1px solid rgb(220, 220, 220);
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px 1px rgba(200, 200, 200, 0.5);
+    padding-inline: 15px;
+    padding-block: 10px;
+    margin-bottom: 20px;
+    
+}
 
 
 

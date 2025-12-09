@@ -79,6 +79,54 @@ if (!empty($_POST['order_by']) || !empty($_POST['num_of_results']) || isset($_PO
 
 </div>
 
+<?php if($tableName === 'donation_inventory'): ?>
+
+<?php
+$totalItemsTable = $crud->readAll();
+$totalItems = 0;
+$kinds = count($totalItemsTable) ?? 0;
+$lowStock = 0;
+$noStock = 0;
+
+
+foreach($totalItemsTable as $t){
+    if($t['quantity'] > 0){
+        $totalItems += $t['quantity'];
+
+        if($t['quantity'] <= 10){
+            $lowStock++;
+        }
+    }else{
+        $noStock++;
+    }
+
+}
+
+
+
+
+?>
+
+<div class="flex-r c-gap" style="width: 100%;">
+    <div class='stat-preview-container'>
+        <small>Total Items</small>
+        <h4><b> <?= $totalItems ?> </b></h4>
+        <small> <?= $kinds ?> kinds</small>
+    </div>
+    <div class='stat-preview-container'>
+        <small>Low Stock</small>
+        <h4><b> <?= $lowStock ?> </b></h4>
+        <small><= 10 threshold</small>
+    </div>
+    <div class='stat-preview-container'>
+        <small>Out of Stock</small>
+        <h4><b> <?= $noStock ?> </b></h4>
+        <small>Quantity = 0</small>
+    </div>
+</div>
+
+<?php endif; ?>
+
 <form method="POST" enctype="multipart/form-data" style="margin-bottom:12px;">
 
     <!-- SEARCH GROUP (always visible) -->

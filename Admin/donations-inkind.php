@@ -27,6 +27,7 @@ $fieldsConfig = [
     'full_name' => 'text',
     'item_name' => 'text',
     'donation_type' => ['food', 'medicine', 'toys', 'supplies','equipment', 'other'],
+    'quantity' => 'number',
     'img' => 'image',
     'message' => 'textarea',
     'contact_num' => 'number',
@@ -38,7 +39,7 @@ $fieldsConfig = [
 $searchBy = 'item_name';
 
 //properties shown in the filters
-$filterConfig = ['item_name', 'donation_type', 'location', 'date', 'status'];
+$filterConfig = ['item_name', 'donation_type', 'quantity', 'location', 'date', 'status'];
 $actionType = 'setProperty';
 
 $foreignKeys = [
@@ -70,7 +71,7 @@ $fieldLabels = [
     'full_name' => 'Donor',
     'item_name' => 'Item Name',
     'donation_type' => 'Item Type',
-    'quantity' => 'number',
+    'quantity' => 'Quantity',
     'img' => 'Item Photo',
     'message' => 'Message',
     'contact_num' => 'Contact',
