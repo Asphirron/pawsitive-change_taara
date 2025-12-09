@@ -44,50 +44,7 @@ if (isset($_SESSION['email'])) {
     padding: 0;
   }
 
-  /* === FOOTER === */
-  footer {
-    background-color: #222;
-    color: #eee;
-    text-align: center;
-    padding: 1.5rem 0;
-    font-size: 0.9rem;
-  }
-
-  footer a {
-    color: #e83e8c;
-    text-decoration: none;
-    font-weight: 500;
-  }
-
-  footer a:hover {
-    text-decoration: underline;
-  }
-
-  /* === PAGE HEADER TITLE === */
-  .page-header {
-    text-align: center;
-    padding: 2.5rem 1rem 1.5rem;
-    background: linear-gradient(135deg, #ffffff, #f7f6ff);
-    border-radius: 0 0 25px 25px;
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
-    max-width: 1000px;
-    margin: 1.5rem auto;
-  }
-
-  .page-header h1 {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #2b2ba1;
-    margin-bottom: 0.5rem;
-  }
-
-  .page-header p {
-    font-size: 1rem;
-    color: #555;
-    max-width: 700px;
-    margin: 0 auto;
-    line-height: 1.6;
-  }
+ 
 
   /* === ADOPTION CONTAINER === */
   .adoption-container {
