@@ -321,8 +321,6 @@ $stmt->close();
             </tbody>
         </table>
 
-        <h4 class="subsection-header-text"><small>Donate now to become one of our top donors.</small></h4>
-
       </div>
 
       <div class="card-container">

@@ -1,7 +1,8 @@
 <?php
 include 'ui_elements.php';
-displayUI("header");
 setActivePage('volunteer');
+displayUI("header");
+$displayHeader = true;
 
 ?>
 
