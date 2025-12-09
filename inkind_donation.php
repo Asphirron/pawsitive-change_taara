@@ -44,10 +44,10 @@ if (isset($_SESSION['email'])) {
       <ul>
         <li><a href="rescue.php">Rescue</a></li>
         <li><a href="adoption.php">Adopt</a></li>
-        <li><a href="donation.php">Donation</a></li>
+        <li><a class='active' href="donation.php">Donation</a></li>
         <li><a href="volunteer.php">Volunteer</a></li>
         <li><a href="events.php">Events</a></li>
-        <li><a class='active' href="index.php">About</a></li>
+        <li><a href="index.php">About</a></li>
       </ul>
     </nav>
 
@@ -77,15 +77,22 @@ if (isset($_SESSION['email'])) {
 
   <form action="includes/donate_item.php" method="post" enctype="multipart/form-data" class="space-y-6">
     
-    <!-- Full Name -->
-    <div>
-      <label for="fullname" class="block text-sm font-semibold text-gray-700 mb-1">Full Name</label>
-      <input type="text" id="fullname" name="fullname" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500" placeholder="Enter your full name">
-    </div>
-
     <!-- Two Columns: Type & Image -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+
+          <!-- Full Name -->
       <div>
+        <label for="fullname" class="block text-sm font-semibold text-gray-700 mb-1">Full Name</label>
+        <input type="text" id="fullname" name="fullname" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500" placeholder="Enter your full name">
+      </div>
+
+      <div>
+        <label for="contact" class="block text-sm font-semibold text-gray-700 mb-1">Contact Number</label>
+        <input type="number" id="contact" name="contact" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500" placeholder="Enter your contact number">
+      </div>
+
+            <div>
         <label for="type" class="block text-sm font-semibold text-gray-700 mb-1">Donation Type</label>
         <select id="type" name="type" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500">
           <option value="food">Food</option>
@@ -98,64 +105,55 @@ if (isset($_SESSION['email'])) {
       </div>
 
       <div>
+        <label for="item_name" class="block text-sm font-semibold text-gray-700 mb-1">Item Name</label>
+        <input type="text" id="fullname" name="item_name" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500" placeholder="Enter the item name e.g. Dog Food">
+      </div>
+
+      <div>
         <label for="image" class="block text-sm font-semibold text-gray-700 mb-1">Picture of Donation Item</label>
         <input type="file" id="image" name="image" accept="image/*" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 bg-white">
       </div>
-    </div>
-
-    <!-- Message -->
-    <div>
-      <label for="message" class="block text-sm font-semibold text-gray-700 mb-1">Message</label>
-      <textarea id="message" name="message" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500" placeholder="What do you want to say to us?"></textarea>
-    </div>
-
-    <!-- Two Columns: Contact & Location -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      
       <div>
-        <label for="contact" class="block text-sm font-semibold text-gray-700 mb-1">Contact Number</label>
-        <input type="number" id="contact" name="contact" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500" placeholder="Enter your contact number">
+        <label for="quantity" class="block text-sm font-semibold text-gray-700 mb-1">Quantity</label>
+        <input type="number" id="contact" name="quantity" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500" placeholder="Enter the item quantity">
       </div>
 
+        <!-- Message -->
+      <div>
+        <label for="message" class="block text-sm font-semibold text-gray-700 mb-1">Message</label>
+        <textarea id="message" name="message" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500" placeholder="What do you want to say to us?"></textarea>
+      </div>
+
+
+      <div>
       <div>
         <label for="location" class="block text-sm font-semibold text-gray-700 mb-1">Drop-off Location</label>
         <input type="text" id="location" name="location" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500" placeholder="Where should we expect the item?">
       </div>
-    </div>
 
-    <!-- Date -->
-    <div>
-      <label for="date" class="block text-sm font-semibold text-gray-700 mb-1">Expected Drop-off Date</label>
-      <input type="date" id="date" name="date" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500">
-    </div>
+      <!-- Date -->
+      <div>
+        <label for="date" class="block text-sm font-semibold text-gray-700 mb-1">Expected Drop-off Date</label>
+        <input type="date" id="date" name="date" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500">
+      </div>
+      </div>
 
-    <!-- Checkbox -->
-    <div class="flex items-center gap-3">
-      <input type="checkbox" id="agreed" name="agreed" value="true" class="w-5 h-5 text-pink-600 border-gray-300 rounded focus:ring-pink-500">
-      <label for="agreed" class="text-gray-700">Send me E-mail updates</label>
     </div>
 
     <!-- Buttons -->
     <div class="flex justify-end gap-4 pt-4">
-      <button type="button" onclick="window.location.href='index.php'" class="px-6 py-2 border border-gray-400 text-gray-700 rounded-lg hover:bg-gray-100 transition">Cancel</button>
+      <button type="button" onclick="window.location.href='index.php'" class="px-6 py-2 bg-gray-600 text-white border border-gray-400 text-gray-700 rounded-lg hover:bg-gray-500 transition">Cancel</button>
       <button type="submit" class="px-6 py-2 bg-pink-600 text-white rounded-lg font-semibold hover:bg-pink-700 transition">Donate</button>
     </div>
   </form>
 </div>
 
-<!-- FOOTER -->
-<footer class="site-footer">
-  <div class="footer-content">
-    <img src="Assets/UI/facebook.png" class="footer-content-img">
-    <h3 class="footer-content-text">Facebook</h3>
-  </div>
-  <div class="footer-content">
-    <img src="Assets/UI/phone.png" class="footer-content-img">
-    <h3 class="footer-content-text">09055238105</h3>
-  </div>
-  <div class="footer-content">
-    <h3 class="footer-content-text">Tabaco Animal Advocates and Rescuers Association - All rights reserved</h3>
-  </div>
-</footer>
+  <!-- FOOTER -->
+  <footer>
+    <p>TAARA located at P-3 Burac St., San Lorenzo, Tabaco, Philippines</p>
+    <p><a href="#"><i class="fa-brands fa-facebook"></i> Facebook</a> | <a href="tel:09055238105"><i class="fa-solid fa-phone"></i> 0905 523 8105</a></p>
+  </footer>
 
 <script>
   const profileImg = document.getElementById("user_profile");

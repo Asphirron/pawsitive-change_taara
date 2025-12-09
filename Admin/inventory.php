@@ -34,8 +34,6 @@ $fieldsConfig = [
     'item_type'    => ['food', 'medicine', 'toys','supplies', 'equipment','other'],
     'quantity'     => 'number',
     'date_stored'  => 'date',
-    'item_img'     => 'image',
-    'donater_name' => 'text',
     'status' => ['in stock', 'low stock', 'out of stock']
 ];
 
@@ -45,8 +43,6 @@ $fieldLabels = [
     'item_type'    => 'Type',
     'quantity'     => 'Quantity',
     'date_stored'  => 'Date Updated',
-    'item_img'     => 'Image',
-    'donater_name' => 'Donater',
     'status' => 'Status'
 ];
 

@@ -21,7 +21,9 @@
 
     $uid = $_SESSION['name'];
     $fullname = $_POST['fullname'];
+    $item_name = $_POST['item_name'];
     $type = $_POST['type'];
+    $quantity = $_POST['quantity'];
     $img = '';
 
     /*$img = basename($_FILES['image']['name']);
@@ -39,11 +41,10 @@
     $message = $_POST['message'];
     $contact_num = $_POST['contact'];
     $location = $_POST['contact'];
-    $agreed = (isset($_POST['agreed'])) ? $_POST['agreed'] :'false';
     $date = $_POST['date'];
     
-    $sql = "INSERT INTO inkind_donation (user_id, full_name, donation_type, img, message, contact_num, location, date, status, agreed_to_email)
-                VALUES (\"$uid\", \"$fullname\", \"$type\", \"$img\", \"$message\", \"$contact_num\", \"$location\", \"$date\", \"pending\", \"$agreed\")";
+    $sql = "INSERT INTO inkind_donation (user_id, full_name, donation_type, img, message, contact_num, location, date, status)
+                VALUES (\"$uid\", \"$fullname\", \"$type\", \"$img\", \"$message\", \"$contact_num\", \"$location\", \"$date\", \"pending\" ) ";
 
     
     if ($conn->query($sql) === TRUE) {

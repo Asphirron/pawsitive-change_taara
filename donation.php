@@ -293,7 +293,7 @@ $stmt->close();
 
     <article class="feature-section">
       <div class="collapsible-header">
-        <h2 class="subsection-header-text">This Month's Top Donors</h2>
+        <h2 class="subsection-header-text"><b>This Month's Top Donors</b></h2>
         <!-- RESULT TABLE -->
         <table class="">
             <thead>
