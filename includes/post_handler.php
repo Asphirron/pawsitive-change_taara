@@ -128,6 +128,8 @@ if (isset($_POST['reset_btn'])) {
         }
 
         $tableData = $crud->readAll();
+
+        
     }
 
 
