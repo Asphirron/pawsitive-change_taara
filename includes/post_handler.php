@@ -225,6 +225,7 @@ if (isset($_POST['reset_btn'])) {
                     $message = 'Donation cannot be set as received. It has been already cancelled. .';
                     return;
                 }
+
                 //$updateData['respond_date'] = date('Y-m-d H:i:s'); // current date/time
                 $tempCrud = new DatabaseCRUD('donation_inventory');
                 $tempItem = $tempCrud->select(['item_id', 'quantity'], ['item_name'=>$_POST['item_name'], 'item_type'=>$_POST['donation_type']], 1);
@@ -237,10 +238,12 @@ if (isset($_POST['reset_btn'])) {
                         'date_stored'=> date('Y-m-d H:i:s')
                     ]);
                     $message = "Item has been successfully added into the inventory";
+                    return;
                 }else{
-                    $addQty = $tempItem['quantity'] + $_POST['quantity'];
+                    $addQty = intval($tempItem['quantity']) + intval($_POST['quantity']);
                     $tempCrud->update($tempItem['item_id'], ['quantity' => $addQty], 'item_id');
                     $message = "Item has been successfully inserted into the inventory";
+                    return;
                 }
             }
 
