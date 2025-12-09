@@ -106,7 +106,7 @@ if (isset($_SESSION['email'])) {
 
       <div>
         <label for="item_name" class="block text-sm font-semibold text-gray-700 mb-1">Item Name</label>
-        <input type="text" id="fullname" name="item_name" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500" placeholder="Enter the item name e.g. Dog Food">
+        <input type="text" id="item_name" name="item_name" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500" placeholder="Enter the item name e.g. Dog Food">
       </div>
 
       <div>
@@ -116,7 +116,7 @@ if (isset($_SESSION['email'])) {
       
       <div>
         <label for="quantity" class="block text-sm font-semibold text-gray-700 mb-1">Quantity</label>
-        <input type="number" id="contact" name="quantity" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500" placeholder="Enter the item quantity">
+        <input type="number" id="quantity" name="quantity" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500" placeholder="Enter the item quantity">
       </div>
 
         <!-- Message -->

@@ -43,8 +43,8 @@
     $location = $_POST['contact'];
     $date = $_POST['date'];
     
-    $sql = "INSERT INTO inkind_donation (user_id, full_name, donation_type, img, message, contact_num, location, date, status)
-                VALUES (\"$uid\", \"$fullname\", \"$type\", \"$img\", \"$message\", \"$contact_num\", \"$location\", \"$date\", \"pending\" ) ";
+    $sql = "INSERT INTO inkind_donation (user_id, full_name, donation_type, item_name, quantity, img, message, contact_num, location, date, status)
+                VALUES (\"$uid\", \"$fullname\", \"$type\", \"$item_name\", \"$quantity\", \"$img\", \"$message\", \"$contact_num\", \"$location\", \"$date\", \"pending\" ) ";
 
     
     if ($conn->query($sql) === TRUE) {

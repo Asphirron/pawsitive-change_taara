@@ -35,7 +35,8 @@ th{
 }
 
 td{
-    text-align: center;
+    text-align: start;
+    border-bottom: 1px solid rgba(179, 179, 179, 0.50);
 }
 
 .action-td{
@@ -463,6 +464,11 @@ pre { white-space: pre-wrap; }
     padding-block: 10px;
     margin-bottom: 20px;
     
+}
+
+.action-btn{
+    padding-block: 10px;
+    padding-inline: 5px;
 }
 
 
