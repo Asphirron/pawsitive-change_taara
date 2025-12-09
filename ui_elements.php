@@ -22,6 +22,9 @@ if (isset($_SESSION['email'])) {
 }
 
 //GLOBAL VARIABLES
+$activePage = '';
+$displayHeader = true;
+$displayFooter = false;
 
 function setActivePage($active){
     $activePage = $active;
