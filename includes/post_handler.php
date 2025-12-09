@@ -241,8 +241,10 @@ if (isset($_POST['reset_btn'])) {
                     return;
                 }else{
                     $addQty = intval($tempItem['quantity']) + intval($_POST['quantity']);
-                    $tempCrud->update($tempItem['item_id'], ['quantity' => $addQty], 'item_id');
-                    $message = "Item has been successfully inserted into the inventory";
+                    if($tempCrud->update($tempItem['item_id'], ['quantity' => $addQty], 'item_id')){
+                        $message = "Item has been successfully inserted into the inventory $addQty";
+                    }
+                   
                     return;
                 }
             }
