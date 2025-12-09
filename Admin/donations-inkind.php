@@ -70,6 +70,7 @@ $fieldLabels = [
     'full_name' => 'Donor',
     'item_name' => 'Item Name',
     'donation_type' => 'Item Type',
+    'quantity' => 'number',
     'img' => 'Item Photo',
     'message' => 'Message',
     'contact_num' => 'Contact',
@@ -93,7 +94,7 @@ $setPropertyConfig = [
 $_SESSION['fields_config'] = $fieldsConfig; 
 
 // Columns initially visible in table
-$defaultColumns = ['i_donation_id','full_name','item_name','donation_type', 'img', 'status'];
+$defaultColumns = ['i_donation_id','full_name','item_name','donation_type', 'quantity', 'img', 'status'];
 
 
 if(!isset($_SESSION['visibleColumns'])) {
