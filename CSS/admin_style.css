@@ -35,7 +35,7 @@ th{
 }
 
 td{
-    text-align: start;
+    text-align: center;
 }
 
 .action-td{
@@ -49,6 +49,8 @@ img{
 
 label{
     font-size: small;
+    font-weight: bold;
+    margin-top: 5px;
 }
 
 aside{
@@ -96,7 +98,6 @@ input, select, datalist, button, textarea{
     border-radius: 5px;
     height: auto;
     padding: 2px 10px;
-    margin-inline: 10px;
 }
 .flex-c{
     display: flex;
@@ -108,6 +109,10 @@ input, select, datalist, button, textarea{
 }
 .wrap{
     flex-wrap: wrap;
+}
+
+.gap-r{
+    row-gap: 5px;
 }
 .center{
     align-items: center;
@@ -134,6 +139,13 @@ input, select, datalist, button, textarea{
 
 .c-gap{
     column-gap: 5px;
+}
+
+.value-preview{
+    border: none;
+    border-bottom: 1px solid rgba(69, 69, 69, 0.821);
+    border-radius: 0px;
+    margin-inline: 0px;
 }
 
 .rounded-border{
@@ -292,6 +304,14 @@ select.filter-field {
 
 .status-color-unknown { color: #343a40; font-weight: 600; } /* fallback */
 
+.sub-section-container{
+    height: auto;
+    border: 1px solid rgb(220, 220, 220);
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px 2px rgba(200, 200, 200, 0.5);
+    padding-inline: 8px;
+    margin-bottom: 10px;
+}
 
 
 
@@ -345,7 +365,7 @@ select.filter-field {
 .btn-primary { background:#007bff; color:#fff;}
 .btn-warning { background:#ffc107; color:#000;}
 .btn-danger { background:#dc3545; color:#fff;}
-.btn-success { background:#fff; color:#007bff; border: solid #007bff;}
+.btn-success { background:#fff; color:#007bff; border: 0.5px solid #007bff;}
 .btn-secondary { background:#6c757d; color:#fff;}
 
 .small-img { height:48px; width:48px; object-fit:cover; border-radius:6px; }

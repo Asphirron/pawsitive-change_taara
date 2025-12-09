@@ -19,8 +19,8 @@
 </div>
 
 <!-- DELETE CONFIRMATION MODAL -->
-<div id="deleteModalBackdrop" class="modal-backdrop hidden">
-    <div class="modal">
+<div id="deleteModalBackdrop" class="modal-backdrop hidden" onclick="closeDeleteModal()">
+    <div class="modal flex-c center">
         <h3>Confirm Delete</h3>
         <p id="deleteModalText">Are you sure you want to delete this record?</p>
         <form id="deleteForm" method="POST">
@@ -33,7 +33,7 @@
 </div>
 
 <!-- GENERAL MESSAGE MODAL -->
-<div id="messageModalBackdrop" class="modal-backdrop hidden">
+<div id="messageModalBackdrop" class="modal-backdrop hidden" onclick="closeMessageModal()">
     <div class="modal">
         <p id="messageModalText"></p>
         <button type="button" class="btn btn-primary" onclick="closeMessageModal()">OK</button>
@@ -112,7 +112,10 @@ function openSharedModal(mode, data = null) {
                     ${value ? `<img src="../Assets/UserGenerated/${value}" style="max-width:200px;max-height:200px;border-radius:8px;">` : '<span><hr></span>'}
                 </div>
                 <input type="hidden" name="${field}" value="${value}">
+                <div class='col'>
+                <label>${labelText}</label>
                 <input type="file" name="${field}_file" id="file_${field}" accept="image/*">
+                </div>
             `;
 
         } else {
@@ -237,7 +240,7 @@ function applyColumnSelection() {
 function openDeleteModal(id, label='') {
     document.getElementById('delete_id').value = id;
     document.getElementById('deleteModalText').textContent = 
-        `Are you sure you want to delete record ID: ${label}?`;
+        `Are you sure you want to delete this record?`;
     document.getElementById('deleteModalBackdrop').classList.remove('hidden');
 }
 function closeDeleteModal() {
@@ -307,7 +310,6 @@ function openSetPropertyModal(data) {
                     ${value ? `<img src="../Assets/UserGenerated/${value}" style="max-width:200px;max-height:200px;border-radius:8px;">` : '<span><hr></span>'}
                 </div>
                 <input type="hidden" name="${field}" value="${value}">
-                <input type="file" name="${field}_file" id="file_${field}" accept="image/*">
             `;
 
         } else {
@@ -376,16 +378,16 @@ function renderReadOnlyFieldHTML(f, data) {
         // Hidden input posts the raw ID, visible input shows the label
         return `
             <input type="hidden" name="${f.field}" value="${f.value}">
-            <input type="text" value="${fkLabel}" readonly>
+            <input type="text" value="${fkLabel}" readonly class="value-preview">
         `;
     }
 
     if (Array.isArray(f.type)) {
-        return `<input type="text" name="${f.field}" value="${f.value}" readonly>`;
+        return `<input type="text" name="${f.field}" value="${f.value}" readonly class="value-preview">`;
     } else if (f.type === 'textarea') {
-        return `<textarea name="${f.field}" rows="3" readonly>${f.value}</textarea>`;
+        return `<textarea name="${f.field}" rows="3" readonly>${f.value}</textarea class="value-preview">`;
     } else {
-        return `<input type="text" name="${f.field}" value="${f.value}" readonly>`;
+        return `<input type="text" name="${f.field}" value="${f.value}" readonly class="value-preview">`;
     }
 }
 

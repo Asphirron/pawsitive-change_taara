@@ -75,12 +75,15 @@ foreach ($fieldsConfig as $f => $t) {
                         <?php if(!isset($actionType)): ?>
                             <button onclick='openSharedModal("edit", <?= $json ?>)' style='width:60px;' class='btn btn-primary action-btn'>Edit</button>
                             <button onclick='openDeleteModal(<?= e($row[$pk]) ?>,"<?= e($row[$pk]) ?>")' style='width:60px;' class='btn btn-success action-btn'>Delete</button>
+                            <?php if($tableName === 'point_of_interest'): ?>
+                                <a href="reports-map.php?geolocation=<?= urlencode($row['location']) ?>"><button class='btn btn-success action-btn'>Open Map</button></a>
+                            <?php endif; ?>
                         <?php elseif(isset($actionType) && $actionType === 'setProperty'): ?>
                             <button onclick="openSetPropertyModal( <?= $json ?>)" class='btn btn-success action-btn'>Options</button>
                             
                             <?php if($tableName === 'adoption_application'): ?>
                                 <a href="adoptions-screening.php?application_id=<?=$row['a_application_id']?>"><button class='btn btn-primary action-btn'>Show Screening</button></a>
-                            <?php elseif($tableName === 'rescue_report' || $tableName === 'point_of_interest'): ?>
+                            <?php elseif($tableName === 'rescue_report'): ?>
                                 <a href="reports-map.php?geolocation=<?= urlencode($row['location']) ?>"><button class='btn btn-primary action-btn'>Open Map</button></a>
                             <?php endif; ?>
                         <?php elseif(isset($actionType) && $actionType === 'in_and_out' && $tableName === 'donation_inventory'): ?>

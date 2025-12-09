@@ -21,6 +21,31 @@ if (isset($_SESSION['email'])) {
     $user_type = $user_data['user_type'];
   }
 }
+
+
+$conn = connect();
+
+// Query Top Donors
+$year  = date("Y");
+$month = date("n");
+$limit = 5;
+$sql = "
+    SELECT full_name, SUM(amount) AS total_donated
+    FROM monetary_donation
+    WHERE YEAR(date_donated) = ? 
+      AND MONTH(date_donated) = ?
+    GROUP BY full_name
+    ORDER BY total_donated DESC
+    LIMIT ?
+";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("iii", $year, $month, $limit);
+$stmt->execute();
+$result = $stmt->get_result();
+$topDonors = $result;
+$stmt->close();
+
 ?>
 
 
@@ -113,12 +138,31 @@ if (isset($_SESSION['email'])) {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-direction: column;
       background-color: #fff;
       padding: 15px 25px;
       border-radius: 12px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.05);
       margin-bottom: 20px;
     }
+
+    table{
+      width: 100%;
+    }
+
+    th, td{
+      text-align: center;
+    }
+
+    thead{
+      background-color: #e63946;
+      color: #fff;
+    }
+
+    td{
+      background-color: #fafafa;
+    }
+
 
     .card-container {
       display: grid;
@@ -135,6 +179,7 @@ if (isset($_SESSION['email'])) {
       box-shadow: 0 3px 10px rgba(0,0,0,0.08);
       transition: transform 0.3s;
       position: relative;
+      height: 400px;
     }
 
     .donation-card:hover {
@@ -148,12 +193,13 @@ if (isset($_SESSION['email'])) {
     }
 
     .card-details {
-      flex: 1;
+      /*flex: 1;*/
       padding: 15px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       height: 100%;
+      width: 100%;
       position: relative;
     }
 
@@ -202,64 +248,7 @@ if (isset($_SESSION['email'])) {
       background-color: #d62828;
     }
 
-    footer {
-      background-color: #333;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      font-size: 0.9rem;
-    }
-
-    footer a {
-      color: #ffd166;
-      text-decoration: none;
-    }
-
-    /* --- Modal --- */
-    .user-options-modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.5);
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-    }
-
-    .user-options-content {
-      background: white;
-      border-radius: 15px;
-      padding: 25px;
-      text-align: center;
-      width: 300px;
-      box-shadow: 0 3px 15px rgba(0,0,0,0.2);
-    }
-
-    .user-options-content img {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-bottom: 10px;
-    }
-
-    .user-options-content button {
-      display: block;
-      width: 100%;
-      padding: 10px;
-      border: none;
-      background: #eee;
-      margin: 8px 0;
-      border-radius: 8px;
-      font-weight: 600;
-      transition: 0.3s;
-    }
-
-    .user-options-content button:hover {
-      background-color: #e63946;
-      color: white;
-    }
+   
   </style>
 </head>
 
@@ -304,8 +293,36 @@ if (isset($_SESSION['email'])) {
 
     <article class="feature-section">
       <div class="collapsible-header">
-        <h4 class="subsection-header-text">Food and Supplies</h4>
-        <img class="icon collapse-icon" src="Assets/Icons/angle-small-down.png">
+        <h2 class="subsection-header-text">This Month's Top Donors</h2>
+        <!-- RESULT TABLE -->
+        <table class="">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Donor Name</th>
+                <th>Total Donation Amount</th>
+              </tr>
+            </thead>
+
+            <tbody>
+            <?php 
+            $rank = 1;
+            if ($topDonors && $topDonors->num_rows > 0): 
+                foreach ($topDonors as $td): ?>
+                  <tr>
+                      <td><b><?= $rank++ ?></b></td>
+                      <td><?= htmlspecialchars($td['full_name']) ?></td>
+                      <td>₱<?= htmlspecialchars($td['total_donated']) ?></td>
+                  </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr><td colspan="3">No top donors yet. Donate now to become one of our top donors.</td></tr>
+            <?php endif; ?>
+            </tbody>
+        </table>
+
+        <h4 class="subsection-header-text"><small>Donate now to become one of our top donors.</small></h4>
+
       </div>
 
       <div class="card-container">

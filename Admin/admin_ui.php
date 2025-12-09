@@ -58,6 +58,7 @@ function displayNav($activePage){
                         <a href='donations-topdonors.php'>Top Donors</a>
                         <a href='donations-monetary.php'>Monetary</a>
                         <a href='donations-inkind.php'>In-kind</a>
+                        <a href='donations-allocation.php'>Allocations</a>
                     </div>
                 </div>
 
@@ -107,12 +108,9 @@ function displayNav($activePage){
 
                 <!-- LOGOUT DROPDOWN -->
                 <div class='dropdown'>
-                    <button class='dropdown-btn ".($activePage == "logout" ? "active" : "")."'>
+                    <button class='dropdown-btn ".($activePage == "logout" ? "active" : "")."' onclick='openLogoutModal()'>
                         <i class='fa fa-sign-out-alt nav-icon'></i> Logout
                     </button>
-                    <div class='dropdown-content'>
-                        <a href='../includes/logout.php'>Are you sure?</a>
-                    </div>
                 </div>
 
             </div>
@@ -121,8 +119,24 @@ function displayNav($activePage){
 }
 ?>
 
+<!-- LOGOUT CONFIRMATION MODAL -->
+<div id="logoutModalBackdrop" class="modal-backdrop hidden" onclick="closeLogoutModal()">
+    <div class="modal flex-c center gap-r">
+        <h3>Confirm Logout</h3>
+        <p id="logoutModalText">Are you sure you want to log out?</p>
+        <div>
+            <button type="button" class="btn btn-primary" onclick="logout()">Yes, Logout</button>
+            <button type="button" class="btn btn-success" onclick="closeLogoutModal()">Cancel</button>
+        </div>
+
+    </div>
+</div>
+
+
+
 
 <script>
+
 document.addEventListener("DOMContentLoaded", () => {
     let dropdownButtons = document.querySelectorAll(".dropdown-btn");
 
@@ -133,4 +147,17 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
+
+
+
+// LOGOUT MODAL
+function openLogoutModal() {
+    document.getElementById('logoutModalBackdrop').classList.remove('hidden');
+}
+function closeLogoutModal() {
+    document.getElementById('logoutModalBackdrop').classList.add('hidden');
+}
+function logout(){
+    window.location.href = "../includes/logout.php";
+}
 </script>

@@ -159,9 +159,30 @@ if (isset($_POST['reset_btn'])) {
                         'date_adopted'=> null,
                         'status'=> 'pending'
                     ]);
+
+                    $tempCrud = new DatabaseCRUD('animal');
+                    $tempCrud->update(
+                        $_POST['animal_id'],[
+                        ['status'=> 'Pending Adoption'], 
+                        'animal_id'
+                       ]);
                 }
                 
+            }else if ($tableName == 'adoption' && in_array($value, ['adopted','returned'])) {
+                if($_POST['status'] !== 'pending'){
+                    $message = 'Application has been already adopted/returned!';
+                    return;
+                }
 
+                $updateData['date_adopted'] = date('Y-m-d H:i:s'); // current date/time
+                if($value === 'adopted'){
+                    $tempCrud = new DatabaseCRUD('animal');
+                    $tempCrud->update(
+                        $_POST['animal_id'],[
+                        ['status'=> 'Adopted'], 
+                        'animal_id'
+                       ]);
+                }
             }else if ($tableName == 'volunteer_application' && in_array($value, ['accepted','rejected'])) {
 
                 if($_POST['status'] !== 'pending'){
@@ -193,7 +214,7 @@ if (isset($_POST['reset_btn'])) {
 
                 //$updateData['respond_date'] = date('Y-m-d H:i:s'); // current date/time
                 
-            }/*else if ($tableName == 'inkind_donation' && in_array($value, ['verified'])) {
+            }else if ($tableName == 'inkind_donation' && in_array($value, ['received'])) {
 
                 if($_POST['status'] === 'received'){
                     $message = 'Donation has been already receieved.';
@@ -204,14 +225,24 @@ if (isset($_POST['reset_btn'])) {
                     $message = 'Donation cannot be set as received. It has been already cancelled. .';
                     return;
                 }
-                $updateData['respond_date'] = date('Y-m-d H:i:s'); // current date/time
-                $tempCrud = new DatabaseCRUD('volunteer');
+                //$updateData['respond_date'] = date('Y-m-d H:i:s'); // current date/time
+                $tempCrud = new DatabaseCRUD('donation_inventory');
+                $tempItem = $tempCrud->select(['item_id', 'quantity'], ['item_name'=>$_POST['item_name'], 'item_type'=>$_POST['donation_type']], 1);
+
+                if(empty($tempItem)){
                     $tempCrud->create([
-                        'full_name'=> $_POST['full_name'],
-                        'role'=> $_POST['first_committee'],
-                        'user_id'=> $_POST['user_id']
+                        'item_name' => $_POST['item_name'],
+                        'donation_type' => $_POST['donation_type'],
+                        'quantity' => $_POST['quantity'],
+                        'date_stored'=> date('Y-m-d H:i:s')
                     ]);
-            }*/
+                    $message = "Item has been successfully added into the inventory";
+                }else{
+                    $addQty = $tempItem['quantity'] + $_POST['quantity'];
+                    $tempCrud->update($tempItem['item_id'], ['quantity' => $addQty], 'item_id');
+                    $message = "Item has been successfully inserted into the inventory";
+                }
+            }
 
             $success = $crud->update(intval($_POST[$pk]), $updateData, $pk);
             $message .= $success 

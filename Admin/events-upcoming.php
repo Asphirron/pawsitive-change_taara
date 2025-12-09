@@ -76,51 +76,53 @@ include "../includes/post_handler.php"; //Handles POST (search, CRUD, etc)
 // -------------------- TABLE RENDERER --------------------
 function renderEventTable($rows, $visibleColumns, $fieldsConfig, $pk, $fieldLabels, $headerText, $colorClass) {
     ?>
-    <h3 class="section-header"><?= $headerText ?></h3>
-    <div class="result-table" style="margin-bottom:5px;">
-        <table class="rounded-border">
-            <thead>
-            <tr>
-                <?php foreach($visibleColumns as $f): ?>
-                    <th><?= e($fieldLabels[$f] ?? ucwords(str_replace('_',' ',$f))) ?></th>
-                <?php endforeach; ?>
-                <th>Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php if(empty($rows)): ?>
-                <tr><td colspan="<?= sizeOF($visibleColumns)+1 ?>">No records found.</td></tr>
-            <?php else: ?>
-                <?php foreach($rows as $row): ?>
+    <div class="sub-section-container">
+    <h4 class="section-header" style="margin-bottom: 5px;"><?= $headerText ?></h4>
+        <div class="result-table">
+            <table class="">
+                <thead>
                 <tr>
                     <?php foreach($visibleColumns as $f): ?>
-                        <?php if ($fieldsConfig[$f] === 'image'): ?>
-                            <?php
-                                $imgFile = $row[$f] ?? '';
-                                $imgPath = "../Assets/Images/" . $imgFile;
-                                $exists = !empty($imgFile) && file_exists(__DIR__ . "/../Assets/Images/" . $imgFile);
-                            ?>
-                            <td>
-                                <?php if ($exists): ?>
-                                    <img src="<?= $imgPath ?>" class="thumb-img" onclick="openImagePreview('<?= $imgPath ?>')">
-                                <?php else: ?>
-                                    <span>No image</span>
-                                <?php endif; ?>
-                            </td>
-                        <?php else: ?>
-                            <td><?= e($row[$f] ?? '') ?></td>
-                        <?php endif; ?>
+                        <th><?= e($fieldLabels[$f] ?? ucwords(str_replace('_',' ',$f))) ?></th>
                     <?php endforeach; ?>
-                    <td>
-                        <?php $json = htmlspecialchars(json_encode($row, JSON_HEX_APOS | JSON_HEX_QUOT), ENT_QUOTES, 'UTF-8'); ?>
-                        <button onclick="openSharedModal('edit', <?= $json ?>)" class="btn btn-primary action-btn">Edit</button>
-                        <button onclick="openDeleteModal(<?= e($row[$pk]) ?>,'<?= e($row[$pk]) ?>')" class="btn btn-secondary action-btn">Delete</button>
-                    </td>
+                    <th>Action</th>
                 </tr>
-                <?php endforeach; ?>
-            <?php endif; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                <?php if(empty($rows)): ?>
+                    <tr><td colspan="<?= sizeOF($visibleColumns)+1 ?>">No records found.</td></tr>
+                <?php else: ?>
+                    <?php foreach($rows as $row): ?>
+                    <tr>
+                        <?php foreach($visibleColumns as $f): ?>
+                            <?php if ($fieldsConfig[$f] === 'image'): ?>
+                                <?php
+                                    $imgFile = $row[$f] ?? '';
+                                    $imgPath = "../Assets/Images/" . $imgFile;
+                                    $exists = !empty($imgFile) && file_exists(__DIR__ . "/../Assets/Images/" . $imgFile);
+                                ?>
+                                <td>
+                                    <?php if ($exists): ?>
+                                        <img src="<?= $imgPath ?>" class="thumb-img" onclick="openImagePreview('<?= $imgPath ?>')">
+                                    <?php else: ?>
+                                        <span>No image</span>
+                                    <?php endif; ?>
+                                </td>
+                            <?php else: ?>
+                                <td><?= e($row[$f] ?? '') ?></td>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                        <td>
+                            <?php $json = htmlspecialchars(json_encode($row, JSON_HEX_APOS | JSON_HEX_QUOT), ENT_QUOTES, 'UTF-8'); ?>
+                            <button onclick="openSharedModal('edit', <?= $json ?>)" class="btn btn-primary action-btn">Edit</button>
+                            <button onclick="openDeleteModal(<?= e($row[$pk]) ?>,'<?= e($row[$pk]) ?>')" class="btn btn-secondary action-btn">Delete</button>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
     </div>
     <?php
 }
@@ -149,13 +151,26 @@ function renderEventTable($rows, $visibleColumns, $fieldsConfig, $pk, $fieldLabe
 <main class="content flex-c">
 
     <div style='padding-inline:10px;'>
-        <h2>📋 <?= ucwords(str_replace('_',' ',$tableName)) ?> Table</h2>
+        <div class="flex-r" style="width: 100%; "> 
+            
+            <?php if($tableName === 'donation_inventory'): ?>
+                <h2>Inventory Table</h2>
+            <?php else: ?>
+                <h2 style="margin-left: 10px;"><?= ucwords(str_replace('_',' ',$tableName)) ?> Table</h2>
+            <?php endif; ?>
 
-        <div class="flex-r" style="margin-left: auto; margin-block: auto;">
+            <div class="flex-r" style="margin-left: auto; margin-block: auto;">
 
-        <!-- ACTION BUTTON -->
-        <button class="main-btn btn btn-primary" onclick="openSharedModal('add')">+ Add <?= ucwords($tableName) ?></button>
-        <a href="../export/export_pdf.php?table=<?=$tableName?>" target="_blank"><button type='button' class="main-btn btn btn-success">Export as PDF</button></a>
+            <!-- ACTION BUTTON -->
+            <?php if($tableName === 'donation_inventory'): ?>
+                <button class="main-btn btn btn-primary" onclick="openSharedModal('add')">+ Add Item </button>
+            <?php else: ?>
+                <button class="main-btn btn btn-primary" onclick="openSharedModal('add')">+ Add <?= ucwords(str_replace('_',' ',$tableName)) ?></button>
+            <?php endif; ?>
+
+            <a href="../export/export_pdf.php?table=<?=$tableName?>" target="_blank"><button type='button' class="main-btn btn btn-success" style='margin-left: 5px;'>Export as PDF</button></a>
+
+            </div>
 
         </div>
 

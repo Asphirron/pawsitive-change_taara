@@ -55,18 +55,22 @@ if (!empty($_POST['order_by']) || !empty($_POST['num_of_results']) || isset($_PO
 <div class="flex-r" style="width: 100%; "> 
     
     <?php if($tableName === 'donation_inventory'): ?>
-        <h2>Inventory Table</h2>
+        <h2 style="margin-left: 10px;">Inventory Table</h2>
+    <?php elseif($tableName === 'donation_post'): ?>
+        <h2 style="margin-left: 10px;">Donation Allocations Table</h2>
     <?php else: ?>
         <h2 style="margin-left: 10px;"><?= ucwords(str_replace('_',' ',$tableName)) ?> Table</h2>
     <?php endif; ?>
 
-    <div class="flex-r" style="margin-left: auto; margin-block: auto;">
+    <div class="flex-rc-gap" style="margin-left: auto; margin-block: auto;">
 
     <!-- ACTION BUTTON -->
     <?php if($tableName === 'donation_inventory'): ?>
-        <button class="main-btn btn btn-primary" onclick="openSharedModal('add')">➕ Add Item </button>
+        <button class="main-btn btn btn-primary" onclick="openSharedModal('add')">+ Add Item </button>
+    <?php elseif($tableName === 'donation_post'): ?>
+        <button class="main-btn btn btn-primary" onclick="openSharedModal('add')">+ Add Donation Allocation </button>
     <?php else: ?>
-        <button class="main-btn btn btn-primary" onclick="openSharedModal('add')">➕ Add <?= ucwords(str_replace('_',' ',$tableName)) ?></button>
+        <button class="main-btn btn btn-primary" onclick="openSharedModal('add')">+ Add <?= ucwords(str_replace('_',' ',$tableName)) ?></button>
     <?php endif; ?>
 
     <a href="../export/export_pdf.php?table=<?=$tableName?>" target="_blank"><button type='button' class="main-btn btn btn-success">Export as PDF</button></a>
@@ -98,7 +102,7 @@ if (!empty($_POST['order_by']) || !empty($_POST['num_of_results']) || isset($_PO
     <br>
 
     <!-- TOGGLE BUTTON -->
-    <button type="button" class="btn btn-secondary" onclick="toggleFilters()">
+    <button type="button" class="btn btn-success" onclick="toggleFilters()">
         <?= $filtersUsed ? 'Hide Filters' : 'Show Filters' ?>
     </button>
 
@@ -109,8 +113,8 @@ if (!empty($_POST['order_by']) || !empty($_POST['num_of_results']) || isset($_PO
 
         <!-- OTHER CONTROLS -->
         <select name="order_by" class="filter-field">
-            <option value="ascending" <?= (isset($_POST['order_by']) && $_POST['order_by']==='ascending')?'selected':'' ?>>Ascending</option>
             <option value="descending" <?= (isset($_POST['order_by']) && $_POST['order_by']==='descending')?'selected':'' ?>>Descending</option>
+            <option value="ascending" <?= (isset($_POST['order_by']) && $_POST['order_by']==='ascending')?'selected':'' ?>>Ascending</option>
         </select>
 
         <input type="number" class="filter-field" name="num_of_results" min="1" max="1000" value="<?= intval($_POST['num_of_results']??10) ?>" title='Results shown'>
@@ -132,7 +136,7 @@ if (!empty($_POST['order_by']) || !empty($_POST['num_of_results']) || isset($_PO
         <hr>
 
         <!-- FILTERS -->
-        <div class="filter-group">
+        <div class="filter-group flex-r wrap">
             <?php foreach ($filterConfig as $f): ?>
                 <?php if (isset($fieldsConfig[$f])): ?>
                     <?php if (is_array($fieldsConfig[$f])): ?>

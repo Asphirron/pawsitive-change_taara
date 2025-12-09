@@ -42,8 +42,8 @@
     $agreed = (isset($_POST['agreed'])) ? $_POST['agreed'] :'false';
     $date = $_POST['date'];
     
-    $sql = "INSERT INTO inkind_donation (user_id, full_name, donation_type, img, message, contact_num, location, date, agreed_to_email)
-                VALUES (\"$uid\", \"$fullname\", \"$type\", \"$img\", \"$message\", \"$contact_num\", \"$location\", \"$date\",\"$agreed\")";
+    $sql = "INSERT INTO inkind_donation (user_id, full_name, donation_type, img, message, contact_num, location, date, status, agreed_to_email)
+                VALUES (\"$uid\", \"$fullname\", \"$type\", \"$img\", \"$message\", \"$contact_num\", \"$location\", \"$date\", \"pending\", \"$agreed\")";
 
     
     if ($conn->query($sql) === TRUE) {

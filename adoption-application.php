@@ -32,6 +32,7 @@ if (isset($_SESSION['email'])) {
     <link rel="stylesheet" href="CSS/globals.css">
     <link rel="stylesheet" href="CSS/index.css">
     <link rel="stylesheet" href="CSS/donation.css">
+    <link rel="stylesheet" href="CSS/essentials.css">
     <title>Home</title>
 
     <style>
@@ -207,24 +208,32 @@ if (isset($_SESSION['email'])) {
 
   </head>
   <body>
-    <header class="site-header">
-        <div class="nav-left">
-            <img src="Assets/UI/Taara_Logo.webp" class="brand-logo">
-            <p class="brand-name">TAARA</p>
-        </div>
+    <!-- HEADER -->
+   <header>
+    <img src="Assets/UI/taaralogo.jpg" alt="TAARA Logo">
+    <div class="nav-container">
+      <nav>
+        <ul>
+          <li><a href="rescue.php">Rescue</a></li>
+          <li><a class='active'href="adoption.php">Adopt</a></li>
+          <li><a href="donation.php">Donation</a></li>
+          <li><a href="volunteer.php">Volunteer</a></li>
+          <li><a href="events.php">Events</a></li>
+          <li><a href="index.php">About</a></li> <!-- About moved to last -->
+        </ul>
+      </nav>
 
-        <div class="nav-right">
-            <a class="nav-link" href="index.php">About</a>
-            <a class="nav-link" href="adoption.php">Adoption</a>
-            <a class="nav-link" href="donation.php">Donation</a>
-            <a class="nav-link" href="rescue.php">Rescue</a>
-            <a class="nav-link" href="volunteer.php">Volunteer</a>
-            <a class="nav-link" href="events.php">Events</a>
-            <button class="user-action"><img src="Assets/UI/bell.png" class="user-action-img"></button>
-            <button class="user-action"><img src="Assets/UI/settings.png" class="user-action-img"></button>
-            <button class="user-action"><img src="Assets/UI/user_icon.png" class="user-action-img"></button>
-        </div>
-    </header>
+     <?php
+      if ($logged_in) {
+        echo "<img src='Assets/Profile_Images/$user_img' class='profile-img' id='user_profile'>";
+      } else {
+        echo "<a href='register.php' class='bg-pink-600 text-white px-4 py-2 rounded-full font-bold hover:bg-pink-700 flex items-center gap-2'>
+                <i class='fa-solid fa-user-plus'></i> Register
+              </a>";
+      }
+      ?>
+    </div>
+  </header>
 
     <main>
   <div class="application-container">
@@ -243,9 +252,9 @@ if (isset($_SESSION['email'])) {
 
       <!-- Pet info card -->
       <fieldset class="animal-card">
-        <img class="pet-img-preview" src="Assets/Pets/<?php echo $data['img']; ?>">
+        <img class="pet-img-preview" src="Assets/UserGenerated/<?php echo $data['img']; ?>">
         <div class="pet-info">
-          <strong><p class="pet-detail">Pet to be Adopted</p></strong>
+          <strong><p class="pet-detail"><b>Pet to be Adopted</b></p></strong>
           <p class="pet-detail">Name: <?php echo $data['name'];?></p>
           <p class="pet-detail">Type: <?php echo $data['type'];?></p>
           <p class="pet-detail">Breed: <?php echo $data['breed'];?></p>
@@ -297,7 +306,7 @@ if (isset($_SESSION['email'])) {
 
       <fieldset>
         <span class="button-row">
-          <button type="reset" name="reset">Cancel</button>
+          <button type="button" name="reset" onclick="window.location.href='adoption.php'">Cancel</button>
           <button type="submit" class="submit" name="submit">Next</button>
         </span>
       </fieldset>
@@ -307,17 +316,10 @@ if (isset($_SESSION['email'])) {
 
 
 
-    <footer class="site-footer">
-        <div class="footer-content">
-            <img src="Assets/UI/facebook.png" class="footer-content-img">
-            <h3 class="footer-content-text">Facebook</h3>
-        </div>
-        <div class="footer-content">
-            <img src="Assets/UI/phone.png" class="footer-content-img">
-            <h3 class="footer-content-text">09055238105</h3>
-        </div><div class="footer-content">
-            <h3 class="footer-content-text">Tabaco Animal Advocates and Rescuers Association - All rights reserved</h3>
-        </div>
-    </footer>
+    <!-- FOOTER -->
+  <footer>
+    <p>TAARA located at P-3 Burac St., San Lorenzo, Tabaco, Philippines</p>
+    <p><a href="#"><i class="fa-brands fa-facebook"></i> Facebook</a> | <a href="tel:09055238105"><i class="fa-solid fa-phone"></i> 0905 523 8105</a></p>
+  </footer>
   </body>
 </html>

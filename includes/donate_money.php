@@ -28,7 +28,7 @@ $stmt = $conn->prepare("INSERT INTO monetary_donation
     (user_id, dpost_id, full_name, amount, payment_option, message, contact_num, agreed_to_email, status, date_donated) 
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())");
 
-$status = "Pending"; // default
+$status = "pending"; // default
 
 $stmt->bind_param(
     "iisdsssss",

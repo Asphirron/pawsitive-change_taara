@@ -62,12 +62,12 @@ function displayUI($ui_element){
             <div class='nav-container'>
             <nav>
                 <ul>
-                <li><a href='rescue.php' id= 'rescue'>Rescue</a></li>
-                <li><a href='adoption.php' id='adoption'>Adopt</a></li>
-                <li><a href='donation.php' id='donation'>Donation</a></li>
-                <li><a href='volunteer.php' id='volunteer'>Volunteer</a></li>
-                <li><a href='events.php' id='events'>Events</a></li>
-                <li><a href='index.php' id='index'>About</a></li>
+                <li><a href='rescue.php' id= 'rescue' class='($activePage == 'rescue' ? 'active' : '')'>Rescue</a></li>
+                <li><a href='adoption.php' id='adoption' class='($activePage == 'adoption' ? 'active' : '')>Adopt</a></li>
+                <li><a href='donation.php' id='donation' class='($activePage == 'donation' ? 'active' : '')>Donation</a></li>
+                <li><a href='volunteer.php' id='volunteer' class='($activePage == 'volunteer' ? 'active' : '')>Volunteer</a></li>
+                <li><a href='events.php' id='events' class='($activePage == 'events' ? 'active' : '')>Events</a></li>
+                <li><a href='index.php' id='index' class='($activePage == 'index' ? 'active' : '')>About</a></li>
                 </ul>
             </nav>";
 
@@ -81,38 +81,69 @@ function displayUI($ui_element){
             if ($logged_in) {
                 echo "<img src='Assets/Profile_Images/$user_img' class='profile-img' id='user_profile'>";
             } else {
-                echo "<a href='register.php' class='bg-pink-600 text-white px-4 py-2 rounded-full font-bold hover:bg-pink-700 flex items-center gap-2'>
-                        <i class='fa-solid fa-user-plus'></i> Register
+                echo "<a href='login.php' class='bg-pink-600 text-white px-4 py-2 rounded-full font-bold hover:bg-pink-700 flex items-center gap-2'>
+                        <i class='fa-solid fa-user-plus'></i> Login or Signup
                     </a>";
             }
 
             echo "</header>";
     }
 
+  echo `
+      <!-- USER OPTIONS MODAL -->
+    <div id="user_options" class="user-options-modal">
+      <div class="user-options-content">
+        <img src="Assets/Profile_Images/<?php echo $user_img; ?>" alt="Profile Picture">
+        <h4><?php echo $username; ?></h4>
+        <h6><?php echo $email; ?></h6>
 
-  /*<header>
-    <img src="Assets/UI/taaralogo.jpg" alt="TAARA Logo">
-    <div class="nav-container">
-      <nav>
-        <ul>
-          <li><a <?php if($activePage === 'rescue'){ echo("class='active' ");} ?>href="rescue.php">Rescue</a></li>
-          <li><a <?php if($activePage === 'adopt'){ echo("class='active' ");} ?>href="adoption.php">Adopt</a></li>
-          <li><a <?php if($activePage === 'donation'){ echo("class='active' ");} ?>href="donation.php">Donation</a></li>
-          <li><a <?php if($activePage === 'volunteer'){ echo("class='active' ");} ?>class='active' href="volunteer.php">Volunteer</a></li>
-          <li><a <?php if($activePage === 'events'){ echo("class='active' ");} ?>href="events.php">Events</a></li>
-          <li><a <?php if($activePage === 'index'){ echo("class='active' ");} ?> href="index.php">About</a></li>
-        </ul>
-      </nav>
+        <hr class="my-2">
+        <button onclick="window.location.href='login.php'">Change Account</button>
+        <button onclick="logout()">Logout</button>
+        <?php if ($user_type === 'admin') { ?>
+          <button onclick="window.location.href='Admin/index.php'">Go to Admin Dashboard</button>
+        <?php } ?>
+        <hr class="my-2">
+        <button onclick="window.location.href='adoptions.php'">Your Adoptions</button>
+        <button onclick="window.location.href='donations.php'">Your Donations</button>
+        <button onclick="window.location.href='events.php'">Events</button>
+        <button class="close-btn" onclick="closeModal()">Close</button>
+      </div>
+  `;
 
-     <?php
-      if ($logged_in) {
-        echo "<img src='Assets/Profile_Images/$user_img' class='profile-img' id='user_profile'>";
-      } else {
-        echo "<a href='register.php' class='bg-pink-600 text-white px-4 py-2 rounded-full font-bold hover:bg-pink-700 flex items-center gap-2'>
-                <i class='fa-solid fa-user-plus'></i> Register
-              </a>";
-      }
-      ?>
-    </div>
-  </header>*/
+
+
+
   ?>
+
+
+    
+
+  <script>
+      const profileImg = document.getElementById("user_profile");
+      const modal = document.getElementById("user_options");
+
+      if (profileImg) {
+        profileImg.addEventListener("click", () => {
+          modal.style.display = "flex";
+        });
+      }
+
+      function closeModal() {
+        modal.style.display = "none";
+      }
+
+      function logout() {
+        fetch('includes/logout.php')
+          .then(() => window.location.href = 'login.php');
+      }
+
+      window.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          closeModal();
+        }
+      });
+    </script>
+
+
+   

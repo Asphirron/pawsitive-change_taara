@@ -31,7 +31,7 @@ $fieldsConfig = [
     'comp_name' => 'text',
     'id_img' => 'image',
     'date_applied' => 'date',
-    'status' => ['pending', 'accepted', 'rejected'],
+    'status' => ['pending', 'accepted', 'rejected', 'cancelled'],
     'date_responded' => 'date'
 ];
 
@@ -73,7 +73,7 @@ foreach ($foreignKeys as $fkColumn => $fkConf) {
 $fieldLabels = [
     'a_application_id' => 'ID',
     'user_id' => 'Username',
-    'animal_id' => 'Animal',
+    'animal_id' => 'Animal Name',
     'full_name' => 'Applicant',
     'address' => 'Address',
     'classification' => 'Employment',
@@ -99,7 +99,7 @@ $setPropertyConfig = [
 $_SESSION['fields_config'] = $fieldsConfig; 
 
 // Columns initially visible in table
-$defaultColumns = ['a_application_id','user_id','animal_id','date_applied','status', 'date_responded'];
+$defaultColumns = ['a_application_id','full_name','animal_id','date_applied','status', 'date_responded'];
 
 
 if(!isset($_SESSION['visibleColumns'])) {

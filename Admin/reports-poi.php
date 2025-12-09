@@ -39,7 +39,6 @@ $searchBy = 'type';
 
 //properties shown in the filters
 $filterConfig = ['type', 'location'];
-$actionType = 'setProperty';
 
 $_SESSION['fields_config'] = $fieldsConfig; 
 
