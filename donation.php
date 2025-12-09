@@ -316,7 +316,9 @@ $stmt->close();
                   </tr>
                 <?php endforeach; ?>
             <?php else: ?>
-                <tr><td colspan="3">No top donors yet. Donate now to become one of our top donors.</td></tr>
+                <br>
+                <tr><td colspan="3" style="color: gray">No top donors yet. Donate now to become one of our top donors.</td></tr>
+                <br>
             <?php endif; ?>
             </tbody>
         </table>
