@@ -394,19 +394,13 @@ fieldset.checkbox-group label {
     </div>
   </main>
 
-  <!-- FOOTER -->
+    <!-- FOOTER -->
   <footer>
-    <div class="footer-content">
-      <img src="Assets/UI/facebook.png" class="footer-content-img" alt="">
-      <h3>Facebook</h3>
-    </div>
-    <div class="footer-content">
-      <img src="Assets/UI/phone.png" class="footer-content-img" alt="">
-      <h3>09055238105</h3>
-    </div>
-    <div class="footer-content">
-      <h3>Tabaco Animal Advocates and Rescuers Association — All rights reserved</h3>
-    </div>
+    <p>TAARA located at P-3 Burac St., San Lorenzo, Tabaco, Philippines</p>
+    <p>
+      <a href="#"><i class="fa-brands fa-facebook"></i> Facebook</a> | 
+      <a href="tel:09055238105"><i class="fa-solid fa-phone"></i> 0905 523 8105</a>
+    </p>
   </footer>
 
   <!-- MAP MODAL -->

@@ -285,8 +285,8 @@ if (isset($_SESSION['email'])) {
       <nav>
         <ul>
           <li><a href="rescue.php">Rescue</a></li>
-          <li><a href="adoption.php">Adopt</a></li>
-          <li><a class='active' href="donation.php">Donation</a></li>
+          <li><a class='active' href="adoption.php">Adopt</a></li>
+          <li><a href="donation.php">Donation</a></li>
           <li><a href="volunteer.php">Volunteer</a></li>
           <li><a href="events.php">Events</a></li>
           <li><a href="index.php">About</a></li> <!-- About moved to last -->

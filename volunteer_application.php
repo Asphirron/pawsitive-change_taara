@@ -427,19 +427,13 @@ form { display: block; }               /* override your old form grid */
 </div>
 
 
-  <!-- FOOTER -->
-  <footer class="site-footer">
-    <div class="footer-content">
-      <img src="Assets/UI/facebook.png" class="footer-content-img">
-      <h3 class="footer-content-text">Facebook</h3>
-    </div>
-    <div class="footer-content">
-      <img src="Assets/UI/phone.png" class="footer-content-img">
-      <h3 class="footer-content-text">09055238105</h3>
-    </div>
-    <div class="footer-content">
-      <h3 class="footer-content-text">Tabaco Animal Advocates and Rescuers Association - All rights reserved</h3>
-    </div>
+    <!-- FOOTER -->
+  <footer>
+    <p>TAARA located at P-3 Burac St., San Lorenzo, Tabaco, Philippines</p>
+    <p>
+      <a href="#"><i class="fa-brands fa-facebook"></i> Facebook</a> | 
+      <a href="tel:09055238105"><i class="fa-solid fa-phone"></i> 0905 523 8105</a>
+    </p>
   </footer>
 </body>
 
