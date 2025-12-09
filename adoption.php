@@ -277,14 +277,15 @@ if (isset($_SESSION['email'])) {
 
   </head>
   <body>
-  <header>
+  <!-- HEADER -->
+   <header>
     <img src="Assets/UI/taaralogo.jpg" alt="TAARA Logo">
     <div class="nav-container">
       <nav>
         <ul>
           <li><a href="rescue.php">Rescue</a></li>
-          <li><a class='active' href="adoption.php">Adopt</a></li>
-          <li><a href="donation.php">Donation</a></li>
+          <li><a href="adoption.php">Adopt</a></li>
+          <li><a class='active' href="donation.php">Donation</a></li>
           <li><a href="volunteer.php">Volunteer</a></li>
           <li><a href="events.php">Events</a></li>
           <li><a href="index.php">About</a></li> <!-- About moved to last -->
@@ -295,7 +296,7 @@ if (isset($_SESSION['email'])) {
       if ($logged_in) {
         echo "<img src='Assets/Profile_Images/$user_img' class='profile-img' id='user_profile'>";
       } else {
-        echo "<a href='register.html' class='bg-pink-600 text-white px-4 py-2 rounded-full font-bold hover:bg-pink-700 flex items-center gap-2'>
+        echo "<a href='register.php' class='bg-pink-600 text-white px-4 py-2 rounded-full font-bold hover:bg-pink-700 flex items-center gap-2'>
                 <i class='fa-solid fa-user-plus'></i> Register
               </a>";
       }
