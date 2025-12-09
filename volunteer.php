@@ -42,6 +42,51 @@ $displayHeader = true;
   <!-- FOOTER -->
   <?php displayUI('footer'); ?>
     
-   
+    <!-- USER OPTIONS MODAL -->
+    <div id="user_options" class="user-options-modal">
+      <div class="user-options-content">
+        <img src="Assets/Profile_Images/<?php echo $user_img; ?>" alt="Profile Picture">
+        <h4><?php echo $username; ?></h4>
+        <h6><?php echo $email; ?></h6>
+
+        <hr class="my-2">
+        <button onclick="window.location.href='login.php'">Change Account</button>
+        <button onclick="logout()">Logout</button>
+        <?php if ($user_type === 'admin') { ?>
+          <button onclick="window.location.href='Admin/index.php'">Go to Admin Dashboard</button>
+        <?php } ?>
+        <hr class="my-2">
+        <button onclick="window.location.href='adoptions.php'">Your Adoptions</button>
+        <button onclick="window.location.href='donations.php'">Your Donations</button>
+        <button onclick="window.location.href='events.php'">Events</button>
+        <button class="close-btn" onclick="closeModal()">Close</button>
+      </div>
+    
+
+  <script>
+      const profileImg = document.getElementById("user_profile");
+      const modal = document.getElementById("user_options");
+
+      if (profileImg) {
+        profileImg.addEventListener("click", () => {
+          modal.style.display = "flex";
+        });
+      }
+
+      function closeModal() {
+        modal.style.display = "none";
+      }
+
+      function logout() {
+        fetch('includes/logout.php')
+          .then(() => window.location.href = 'login.php');
+      }
+
+      window.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          closeModal();
+        }
+      });
+    </script>
   </body>
 </html>
