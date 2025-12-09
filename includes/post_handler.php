@@ -233,19 +233,16 @@ if (isset($_POST['reset_btn'])) {
                 if(empty($tempItem)){
                     $tempCrud->create([
                         'item_name' => $_POST['item_name'],
-                        'donation_type' => $_POST['donation_type'],
+                        'item_type' => $_POST['donation_type'],
                         'quantity' => $_POST['quantity'],
                         'date_stored'=> date('Y-m-d H:i:s')
                     ]);
                     $message = "Item has been successfully added into the inventory";
-                    return;
                 }else{
                     $addQty = intval($tempItem['quantity']) + intval($_POST['quantity']);
                     if($tempCrud->update($tempItem['item_id'], ['quantity' => $addQty], 'item_id')){
                         $message = "Item has been successfully inserted into the inventory $addQty";
-                    }
-                   
-                    return;
+                    } 
                 }
             }
 
