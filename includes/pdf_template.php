@@ -85,6 +85,7 @@ body { font-family: Arial, sans-serif; margin: 40px; font-size: 12px; }
 .footer { position: fixed; bottom: -10px; left: 0; right: 0; text-align: center; font-size: 10px; color: #555; }
 .header {
   display: flex;
+  flex-direction: row;
   align-items: center;   /* vertically center logo and text */
   margin-bottom: 20px;
 }
