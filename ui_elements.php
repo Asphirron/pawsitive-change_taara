@@ -21,59 +21,42 @@ if (isset($_SESSION['email'])) {
   }
 }
 
-
 function displayHeader($activePage){
-
   global $logged_in, $user_img;
-  echo "
-  <header>
-  <img src='Assets/UI/taaralogo.jpg' alt='TAARA Logo'>
-  <div class='nav-container'>
-  <nav>
-      <ul>
-      <li><a href='rescue.php' id= 'rescue' class='($activePage == 'rescue' ? 'active' : '')'>Rescue</a></li>
-      <li><a href='adoption.php' id='adoption' class='($activePage == 'adoption' ? 'active' : '')>Adopt</a></li>
-      <li><a href='donation.php' id='donation' class='($activePage == 'donation' ? 'active' : '')>Donation</a></li>
-      <li><a href='volunteer.php' id='volunteer' class='($activePage == 'volunteer' ? 'active' : '')>Volunteer</a></li>
-      <li><a href='events.php' id='events' class='($activePage == 'events' ? 'active' : '')>Events</a></li>
-      <li><a href='index.php' id='index' class='($activePage == 'index' ? 'active' : '')>About</a></li>
-      </ul>
-  </nav>";
 
-  echo "
-      <script>
-      document.getElementById('$activePage').addClass('active');
-      </script>
-  ";
-
+  echo "<header>
+    <img src='Assets/UI/taaralogo.jpg' alt='TAARA Logo'>
+    <div class='nav-container'>
+    <nav>
+        <ul>
+        <li><a href='rescue.php' id='rescue' class='".($activePage == 'rescue' ? 'active' : '')."'>Rescue</a></li>
+        <li><a href='adoption.php' id='adoption' class='".($activePage == 'adoption' ? 'active' : '')."'>Adopt</a></li>
+        <li><a href='donation.php' id='donation' class='".($activePage == 'donation' ? 'active' : '')."'>Donation</a></li>
+        <li><a href='volunteer.php' id='volunteer' class='".($activePage == 'volunteer' ? 'active' : '')."'>Volunteer</a></li>
+        <li><a href='events.php' id='events' class='".($activePage == 'events' ? 'active' : '')."'>Events</a></li>
+        <li><a href='index.php' id='index' class='".($activePage == 'index' ? 'active' : '')."'>About</a></li>
+        </ul>
+    </nav>";
 
   if ($logged_in) {
-      echo "<img src='Assets/Profile_Images/$user_img' class='profile-img' id='user_profile'>";
+      echo "<img src='Assets/Profile_Images/$user_img' class='profile-img' id='user_profile' onclick='openUserModal()'>";
   } else {
       echo "<a href='register.php' class='bg-pink-600 text-white px-4 py-2 rounded-full font-bold hover:bg-pink-700 flex items-center gap-2'>
               <i class='fa-solid fa-user-plus'></i> Register
           </a>";
   }
 
-  echo "</header>";
-
+  echo "</header></div>";
 }
-
-
 
 function displayFooter(){
-
-  echo " 
-  <footer>
-  <p>TAARA located at P-3 Burac St., San Lorenzo, Tabaco, Philippines</p>
-  <p><a href='#'><i class='fa-brands fa-facebook'></i> Facebook</a> | 
-  <a href='tel:09055238105'><i class='fa-solid fa-phone'></i> 0905 523 8105</a></p>
-  </footer>";
-            
+  echo "<footer>
+    <p>TAARA located at P-3 Burac St., San Lorenzo, Tabaco, Philippines</p>
+    <p><a href='#'><i class='fa-brands fa-facebook'></i> Facebook</a> | 
+    <a href='tel:09055238105'><i class='fa-solid fa-phone'></i> 0905 523 8105</a></p>
+    </footer>";
 }
-
 ?>
-
 
 <!-- USER OPTIONS MODAL -->
 <div id="user_options" class="user-options-modal">
@@ -89,21 +72,19 @@ function displayFooter(){
       <button onclick="window.location.href='Admin/index.php'">Go to Admin Dashboard</button>
     <?php } ?>
     <hr class="my-2">
-    <button onclick="window.location.href='adoptions.php'">Your Adoptions</button>
-    <button onclick="window.location.href='donations.php'">Your Donations</button>
-    <button onclick="window.location.href='events.php'">Events</button>
+    <button onclick="window.location.href='user_.php'">Your Adoptions</button>
+    <button onclick="window.location.href='user_donations.php'">Your Donations</button>
+    <button onclick="window.location.href='user_reports.php'">Your Reports</button>
     <button class="close-btn" onclick="closeModal()">Close</button>
   </div>
-
+</div>
 
 <script>
   const profileImg = document.getElementById("user_profile");
   const modal = document.getElementById("user_options");
 
-  if (profileImg) {
-    profileImg.addEventListener("click", () => {
-      modal.style.display = "flex";
-    });
+  function openUserModal(){
+    modal.style.display = "flex";
   }
 
   function closeModal() {

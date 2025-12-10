@@ -31,13 +31,14 @@ $fieldsConfig = [
     'location' => 'text',
     'img' => 'image',
     'date_posted' => 'date',
+    'date_updated' => 'date',
     'status' => ['pending', 'cancelled', 'resolved']
 ];
 
 $searchBy = 'full_name';
 
 //properties shown in the filters
-$filterConfig = ['type', 'location', 'date_posted', 'status'];
+$filterConfig = ['type', 'location','status'];
 $actionType = 'setProperty';
 
 $foreignKeys = [
@@ -73,6 +74,7 @@ $fieldLabels = [
     'location' => 'Location(geodata)',
     'img' => 'Documentation',
     'date_posted' => 'Date Posted',
+    'date_updated' => 'Date Updated',
     'status' => 'Status'
 ];
 

@@ -166,6 +166,9 @@ if (isset($_POST['reset_btn'])) {
             if (in_array($value, ['adopted','returned'])) {
                 $updateData['date_adopted'] = date('Y-m-d H:i:s'); // current date/time
 
+            }else if($tableName == 'rescue_report'){
+                $crud->update($_POST[$pk], ['date_updated' => date('Y-m-d H:i:s'), 'report_id']);
+            
             }else if ($tableName == 'adoption_application' && in_array($value, ['accepted','rejected'])) {
                 if($_POST['status'] !== 'pending'){
                     $message = 'Application has been already accepted/rejected!';

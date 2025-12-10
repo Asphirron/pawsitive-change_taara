@@ -20,7 +20,7 @@ include 'ui_elements.php';
 
   <body>
 
-  <?php displayHeader('index') ?>
+  <?php displayHeader('volunteer') ?>
 
   <div class="content-area">
 
@@ -30,7 +30,7 @@ include 'ui_elements.php';
             <h5 class="hero-section-subheader">Be a hero for the voiceless — volunteer with TAARA and make tails wag with hope!"</h5>
             <p class="hero-section-text">TAARA, a community-driven initiative devoted to animal welfare in Tabaco City. We're on the lookout for dedicated volunteers who share our passion for animals and want to make a meaningful difference. Our core activities revolve around Monthly Stray Feeding Program, Pound-to-Adopter Initiative, and Fostering Programs.</p>
             <p class="hero-section-text">If you're passionate about animals and eager to make a difference, this is an incredible opportunity to enhance the well-being and welfare of our beloved four-legged friends. Join us, and together, we can make a positive impact on the lives of our furry companions. Your involvement can truly make a meaningful impact on their lives. Let's work together to make a positive change!</p>
-            <button class="hero-section-btn"><a href="volunteer_application.php" style="color: var(--color-text-secondary);">Join Now</a></button>
+            <button class="hero-section-btn" onclick="window.location.href='volunteer_application.php'">Join Now</button>
         </div>
         <img src="Assets/Images/volunteer_banner.jpg" class="hero-section-img">
     </article>
