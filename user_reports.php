@@ -21,7 +21,7 @@ if (isset($_POST['cancel_report'])) {
 
 // Fetch user donations
 $rescue_reports = $reportDB->select(["*"], ["user_id" => $user_id, "type" => "rescue"]);
-$lost_and_fund = $reportDB->select(["*"], ["user_id" => $user_id, "type" => "lost_and_found"]);
+$lost_and_found = $reportDB->select(["*"], ["user_id" => $user_id, "type" => "lost_and_found"]);
 
 ?>
 <!DOCTYPE html>
@@ -80,7 +80,7 @@ $lost_and_fund = $reportDB->select(["*"], ["user_id" => $user_id, "type" => "los
         <button class="btn btn-back" onclick="window.history.back();">← Back</button>
     </div>
 
-    <!-- Monetary Donations -->
+    <!-- Rescue Reports -->
     <div class="card p-4">
         <h2 class="mb-3">Rescue Reports</h2>
         <?php if (!empty($rescue_reports)): ?>
@@ -127,6 +127,56 @@ $lost_and_fund = $reportDB->select(["*"], ["user_id" => $user_id, "type" => "los
             </div>
         <?php else: ?>
             <p class="text-muted">You have not made any rescue reports yet.</p>
+        <?php endif; ?>
+    </div>
+
+    <!-- Rescue Reports -->
+    <div class="card p-4">
+        <h2 class="mb-3">Lost and Found Reports</h2>
+        <?php if (!empty($lost_and_found)): ?>
+            <div class="table-responsive">
+                <table class="table table-striped align-middle">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>#</th>
+                            <th>Description</th>
+                            <th>Date Posted</th>
+                            <th>Status</th>
+                            <th>Action</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($lost_and_found as $index => $r): ?>
+                            <tr>
+                                <td><?= $index + 1 ?></td>
+                                <td><?= htmlspecialchars($r['description']) ?></td>
+                                <td><?= htmlspecialchars($r['date_posted']) ?></td>
+                                <td>
+                                    <span class="badge 
+                                        <?= $r['status'] == 'pending' ? 'bg-warning' : 
+                                           ($r['status'] == 'resolved' ? 'bg-success' : 'bg-secondary') ?>">
+                                        <?= ucfirst($r['status']) ?>
+                                    </span>
+                                </td>
+                                <td>
+                                    <?php if ($r['status'] === 'pending'): ?>
+                                        <form method="POST" class="d-inline">
+                                            <input type="hidden" name="report_id" value="<?= $r['report_id'] ?>">
+                                            <input type="hidden" name="type" value="report">
+                                            <button type="submit" name="cancel_report" class="btn btn-sm btn-cancel">Cancel</button>
+                                        </form>
+                                    <?php else: ?>
+                                        <span class="text-muted">N/A</span>
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        <?php else: ?>
+            <p class="text-muted">You have not made any lost and found reports yet.</p>
         <?php endif; ?>
     </div>
 
