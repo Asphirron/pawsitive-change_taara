@@ -95,7 +95,7 @@ foreach($rescueTable as $r){
   <div class="content-area">
 
     <article style="flex-wrap: wrap-reverse;" class="hero-section" style='width: 80%;'>
-        <img src="Assets/Images/volunteer_banner.jpg" class="hero-section-img" style="height: 600px; width: 700px">
+        <img src="Assets/Images/rescue_banner.webp" class="hero-section-img" style="height: 600px; width: 700px">
     <div class="hero-section-details">
         <h1 class="hero-section-header">Rescue Animals, Restore Hope</h1>
         <h5 class="hero-section-subheader">Every report brings us closer to saving lives and reuniting families.</h5>
