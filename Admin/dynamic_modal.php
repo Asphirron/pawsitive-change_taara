@@ -115,7 +115,7 @@ function openSharedModal(mode, data = null) {
             // Render image preview at top
             imagePreviewHTML = `
                 <div class="flex-c center" style="margin-bottom:12px;">
-                    ${value ? `<img src="../Assets/UserGenerated/${value}" style="max-width:200px;max-height:200px;border-radius:8px;">` : '<span><hr></span>'}
+                    ${value ? `<img src="../Assets/UserGenerated/${value}" style="max-width:200px;max-height:200px;border-radius:8px;" onclick="openImagePreview('../Assets/UserGenerated/${value}')">` : '<span><hr></span>'}
                 </div>
                 <input type="hidden" name="${field}" value="${value}">
                 <div class='col'>
@@ -315,7 +315,7 @@ function openSetPropertyModal(data) {
             // Render image preview at top
             imagePreviewHTML = `
                 <div class="flex-c center" style="margin-bottom:12px;">
-                    ${value ? `<img src="../Assets/UserGenerated/${value}" style="max-width:200px;max-height:200px;border-radius:8px;">` : '<span><hr></span>'}
+                    ${value ? `<img src="../Assets/UserGenerated/${value}" style="max-width:200px;max-height:200px;border-radius:8px;" onclick="openImagePreview('../Assets/UserGenerated/${value}')">>` : '<span><hr></span>'}
                 </div>
                 <input type="hidden" name="${field}" value="${value}">
             `;
