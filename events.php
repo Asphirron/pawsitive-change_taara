@@ -218,7 +218,8 @@ if (isset($_SESSION['email'])) {
       <?php
       $conn = connect();
       $events = [];
-      $query = "SELECT event_id, title, description, img, location, event_date FROM event ORDER BY event_date ASC";
+      $now = date('Y-m-d H:i:s');
+      $query = "SELECT event_id, title, description, img, location, event_date FROM event WHERE event_date > $now ORDER BY event_date ASC";
       $result = $conn->query($query);
 
       while ($row = $result->fetch_assoc()) {
