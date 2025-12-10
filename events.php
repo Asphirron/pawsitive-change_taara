@@ -218,8 +218,7 @@ if (isset($_SESSION['email'])) {
       <?php
       $conn = connect();
       $events = [];
-      $now = date('Y-m-d H:i:s');
-      $query = "SELECT event_id, title, description, img, location, event_date FROM event WHERE event_date > $now ORDER BY event_date ASC";
+      $query = "SELECT event_id, title, description, img, location, event_date FROM event ORDER BY event_date ASC";
       $result = $conn->query($query);
 
       while ($row = $result->fetch_assoc()) {
@@ -247,17 +246,20 @@ if (isset($_SESSION['email'])) {
           <?php
           if (!empty($events)) {
             foreach ($events as $e) {
-              echo "
-              <div class='event-card'>
-                <img src='{$e['img']}' alt='{$e['title']}'>
-                <div class='card-details'>
-                    <small class='event-date'>{$e['date']}</small>
-                    <h4 class='card-title'>{$e['title']}</h4>
-                    <p class='card-text'>{$e['desc']}</p>
-                    <p class='event-info'><strong>Location:</strong> {$e['location']}</p>
-                    <button id='notify-btn{$e['id']}' onclick='notify({$e['id']})'>Notify Me</button>
-                </div>
-              </div>";
+              if($e['event_date'] >= date('Y-m-d H:i:s')){
+                echo "
+                      <div class='event-card'>
+                        <img src='{$e['img']}' alt='{$e['title']}'>
+                        <div class='card-details'>
+                            <small class='event-date'>{$e['date']}</small>
+                            <h4 class='card-title'>{$e['title']}</h4>
+                            <p class='card-text'>{$e['desc']}</p>
+                            <p class='event-info'><strong>Location:</strong> {$e['location']}</p>
+                            <button id='notify-btn{$e['id']}' onclick='notify({$e['id']})'>Notify Me</button>
+                        </div>
+                      </div>";
+              }
+              
             }
           } else {
             echo "<p>No events found.</p>";
