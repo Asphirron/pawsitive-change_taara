@@ -3,6 +3,25 @@
 // Expects: $tableData, $visibleColumns, $fieldsConfig, $fieldLabels, $pk
 // Optional: $foreignKeys, $fkCache
 
+function getAddressFromCoordinates($lat, $lng) {
+    $url = "https://nominatim.openstreetmap.org/reverse?lat=$lat&lon=$lng&format=json";
+
+    $opts = [
+        "http" => [
+            "header" => "User-Agent: TaaraAnimalRescue/1.0\r\n"
+        ]
+    ];
+
+    $context = stream_context_create($opts);
+    $json = file_get_contents($url, false, $context);
+
+    if (!$json) return "Unknown location";
+
+    $data = json_decode($json, true);
+
+    return $data["display_name"] ?? "Unknown location";
+}
+
 foreach ($fieldsConfig as $f => $t) {
     if (empty($fieldLabels[$f])) {
         $fieldLabels[$f] = ucwords(str_replace('_',' ',$f));
@@ -64,6 +83,15 @@ foreach ($fieldsConfig as $f => $t) {
                             <!-- Show the cached FK label instead of raw ID -->
                             <td><?= e($fkCache[$f][$row[$f]] ?? "Unknown") ?></td>
 
+                        <?php elseif ($tableName === 'rescue_report' || $tableName == 'point_of_interest' && $f == 'location'): ?>
+                            <?php
+                            $coords = explode(',', $row[$f]);
+                            $lat = trim($coords[0] ?? '');
+                            $lng = trim($coords[1] ?? '');
+
+                            ?>
+
+                            <td><?= getAddressFromCoordinates($lat, $lng) ?></td>
                         <?php else: ?>
                             <td><?= e($row[$f] ?? '') ?></td>
                         <?php endif; ?>
