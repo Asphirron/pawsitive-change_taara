@@ -1,8 +1,5 @@
 <?php
 include 'ui_elements.php';
-setActivePage('volunteer');
-displayUI("header");
-$displayHeader = true;
 
 ?>
 
@@ -23,7 +20,7 @@ $displayHeader = true;
 
   <body>
 
-  <?php ?>
+  <?php displayHeader('index') ?>
 
   <div class="content-area">
 
@@ -40,7 +37,7 @@ $displayHeader = true;
 
   </div>
   <!-- FOOTER -->
-  <?php displayUI('footer'); ?>
+  <?php displayFooter(); ?>
     
     <!-- USER OPTIONS MODAL -->
     <div id="user_options" class="user-options-modal">
