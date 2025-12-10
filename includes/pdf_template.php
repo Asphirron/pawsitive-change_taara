@@ -88,16 +88,48 @@ body { font-family: Arial, sans-serif; margin: 40px; font-size: 12px; }
 .data-table th { background: #e8e8e8; border: 1px solid #aaa; padding: 6px; font-weight: bold; text-align: left; }
 .data-table td { border: 1px solid #aaa; padding: 6px; }
 .footer { position: fixed; bottom: -10px; left: 0; right: 0; text-align: center; font-size: 10px; color: #555; }
+.header {
+  display: flex;
+  align-items: center;   /* vertically center logo and text */
+  margin-bottom: 20px;
+}
+
+.header img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-right: 15px;    /* space between logo and text */
+}
+
+.header-text {
+  display: flex;
+  flex-direction: column; /* stack brand and subtext vertically */
+}
+
+.header-text .brand {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.header-text .subtext {
+  font-size: 12px;
+  color: #555;
+  margin-top: 5px;
+}
+
 </style>
 </head>
 <body>
 <div class='header'>
+    <img src='https://pawsitive-change-taara.com/Assets/UI/taara_logo.png'>
     <div class='header-text'>
-        <img src='https://pawsitive-change-taara.com/Assets/UI/taara_logo.png'>
-        <div class='brand'>{$brandTitle}</div>
-        <div class='subtext'>P-3 Burac St., San Lorenzo, Tabaco, Philippines — Generated on {$now}</div>
+        <div class='brand'><?php echo $brandTitle; ?></div>
+        <div class='subtext'>
+            P-3 Burac St., San Lorenzo, Tabaco, Philippines — Generated on <?php echo $now; ?>
+        </div>
     </div>
 </div>
+
 <div class='section-title'>{$formattedTableName} TABLE</div>
 {$tableHTML}
 <div class='footer'>© 2025 Tabaco Animal Advocates and Rescuers Association. All Rights Reserved.</div>
