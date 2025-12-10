@@ -9,18 +9,18 @@ $rescueTable = $rescueDB->runQuery(
 $cases = $rescued = $lost = $found = 0;
 
 foreach($rescueTable as $r){
-  $cases++;
-  if($r['type' == 'rescue'] && $r['status'] == 'resolved'){
-    $rescued++;
-  }elseif('type' == 'lost_and_found'){
-    if($r['status'] == 'resolved'){
-      $found++;
+    $cases++;
+    switch($r['type']){
+        case 'rescue':
+            if($r['status'] == 'resolved') $rescued++;
+            break;
+        case 'lost_and_found':
+            if($r['status'] == 'resolved') $found++;
+            else $lost++;
+            break;
     }
-    else{
-      $lost++;
-    }
-  }
 }
+
 
 
 
