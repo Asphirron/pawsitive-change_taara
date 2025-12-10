@@ -92,6 +92,7 @@ $lost_and_fund = $reportDB->select(["*"], ["user_id" => $user_id, "type" => "los
                             <th>Description</th>
                             <th>Date Posted</th>
                             <th>Status</th>
+                            <th>Action</th>
 
                         </tr>
                     </thead>
@@ -100,7 +101,7 @@ $lost_and_fund = $reportDB->select(["*"], ["user_id" => $user_id, "type" => "los
                             <tr>
                                 <td><?= $index + 1 ?></td>
                                 <td><?= htmlspecialchars($r['report_id']) ?></td>
-                                <td>₱<?= htmlspecialchars($r['description']) ?></td>
+                                <td><?= htmlspecialchars($r['description']) ?></td>
                                 <td><?= htmlspecialchars($r['date_posted']) ?></td>
                                     <span class="badge 
                                         <?= $r['status'] == 'pending' ? 'bg-warning' : 
