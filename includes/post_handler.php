@@ -48,12 +48,32 @@ if (isset($_POST['reset_btn'])) {
         }
 
         foreach ($filterConfig as $f) {
+
+            // Handle virtual 'status' column
+            if ($f === 'status' && !empty($_POST['status'])) {
+                $statusVal = $_POST['status'];
+
+                if ($statusVal === 'out of stock') {
+                    $conditions[] = "quantity <= 0";
+                }
+                else if ($statusVal === 'low stock') {
+                    $conditions[] = "quantity > 0 AND quantity <= 10";
+                }
+                else if ($statusVal === 'in stock') {
+                    $conditions[] = "quantity > 10";
+                }
+
+                continue; // Skip normal handler
+            }
+
+            // Normal columns
             if (!empty($_POST[$f])) {
                 $conditions[] = "`$f` = ?";
                 $params[] = $_POST[$f];
-                $types .= 's';
+                $types .= "s";
             }
         }
+
 
         $whereSql = $conditions ? 'WHERE ' . implode(' AND ', $conditions) : '';
         $sql = "SELECT * FROM `$tableName` $whereSql ORDER BY `$pk` $orderDir LIMIT ?";
@@ -219,34 +239,54 @@ if (isset($_POST['reset_btn'])) {
             }else if ($tableName == 'inkind_donation' && in_array($value, ['received'])) {
 
                 if($_POST['status'] === 'received'){
-                    $message = 'Donation has been already receieved.';
+                    $message = 'Donation has already been received.';
                     return;
                 }
 
                 if($_POST['status'] === 'cancelled'){
-                    $message = 'Donation cannot be set as received. It has been already cancelled. .';
+                    $message = 'Donation cannot be set as received. It has been cancelled.';
                     return;
                 }
 
-                //$updateData['respond_date'] = date('Y-m-d H:i:s'); // current date/time
+                // Load actual donation record (CRITICAL FIX)
+                $donation = $crud->read(intval($_POST[$pk]), $pk);
+
+                if (!$donation) {
+                    $message = "Error: Donation record not found.";
+                    return;
+                }
+
+                $itemName  = $donation['item_name'];
+                $itemType  = $donation['donation_type'];
+                $quantity  = intval($donation['quantity']);
+
+                // Move to inventory
                 $tempCrud = new DatabaseCRUD('donation_inventory');
-                $tempItem = $tempCrud->select(['item_id', 'quantity'], ['item_name'=>$_POST['item_name'], 'item_type'=>$_POST['donation_type']], 1);
+                $tempItem = $tempCrud->select(['item_id', 'quantity'], [
+                    'item_name' => $itemName, 
+                    'item_type' => $itemType
+                ], 1);
 
                 if(empty($tempItem)){
+                    // Insert new inventory item
                     $tempCrud->create([
-                        'item_name' => $_POST['item_name'],
-                        'item_type' => $_POST['donation_type'],
-                        'quantity' => $_POST['quantity'],
+                        'item_name' => $itemName,
+                        'item_type' => $itemType,
+                        'quantity' => $quantity,
                         'date_stored'=> date('Y-m-d H:i:s')
                     ]);
-                    $message = "Item has been successfully added into the inventory";
-                }else{
-                    $addQty = intval($tempItem['quantity']) + intval($_POST['quantity']);
-                    if($tempCrud->update($tempItem['item_id'], ['quantity' => $addQty], 'item_id')){
-                        $message = "Item has been successfully inserted into the inventory $addQty";
-                    } 
+
+                    $message = "Item has been added to inventory.";
+                } else {
+                    // Update existing inventory
+                    $newQty = intval($tempItem['quantity']) + $quantity;
+
+                    if($tempCrud->update($tempItem['item_id'], ['quantity' => $newQty], 'item_id')){
+                        $message = "Inventory updated. New quantity: $newQty";
+                    }
                 }
             }
+
 
             $success = $crud->update(intval($_POST[$pk]), $updateData, $pk);
             $message .= $success 
