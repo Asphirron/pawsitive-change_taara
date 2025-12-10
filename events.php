@@ -258,6 +258,8 @@ if (isset($_SESSION['email'])) {
                             <button id='notify-btn{$e['id']}' onclick='notify({$e['id']})'>Notify Me</button>
                         </div>
                       </div>";
+              }else{
+                echo "<p>No events found.</p>";
               }
               
             }
