@@ -50,15 +50,15 @@ foreach($rescueTable as $r){
     .stat-card.container {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
-      margin-top: 1.5rem;
+      gap: 1.2rem;
+      margin-top: 1.2rem;
     }
 
     /* Individual Stat Card */
     .stat-card {
       background: #ffffff;
       border-radius: 12px;
-      padding: 1.5rem;
+      padding: 1.2rem;
       text-align: center;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -73,18 +73,18 @@ foreach($rescueTable as $r){
       font-size: 1.1rem;
       font-weight: 600;
       color: #333;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.3rem;
     }
 
     .stats-number {
       font-size: 2.5rem;
       font-weight: bold;
       color: #e63946; /* a bold accent color */
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.3rem;
     }
 
     .stat-card small {
-      font-size: 0.85rem;
+      font-size: 0.70rem;
       color: #666;
     }
 
@@ -99,7 +99,7 @@ foreach($rescueTable as $r){
   <div class="content-area">
 
     <article style="flex-wrap: wrap-reverse;" class="hero-section" style='width: 80%;'>
-        <img src="Assets/Images/volunteer_banner.jpg" class="hero-section-img" style="height: 600px; width: 400px">
+        <img src="Assets/Images/volunteer_banner.jpg" class="hero-section-img" style="height: 600px; width: 700px">
     <div class="hero-section-details">
         <h1 class="hero-section-header">Rescue Animals, Restore Hope</h1>
         <h5 class="hero-section-subheader">Every report brings us closer to saving lives and reuniting families.</h5>
