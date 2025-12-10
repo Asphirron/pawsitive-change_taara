@@ -78,11 +78,6 @@ function buildTaaraPDF($tableName, $columns, $rows) {
 <head>
 <style>
 body { font-family: Arial, sans-serif; margin: 40px; font-size: 12px; }
-.header { display: flex; align-items: center; margin-bottom: 20px; }
-.header img { width: 80px; height: 80px; object-fit: contain; }
-.header-text { margin-left: 15px; }
-.header-text .brand { font-size: 20px; font-weight: bold; }
-.header-text .subtext { font-size: 12px; color: #555; margin-top: 5px; }
 .section-title { margin-top: 25px; font-size: 16px; font-weight: bold; border-bottom: 1px solid #444; padding-bottom: 5px; }
 .data-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 11px; }
 .data-table th { background: #e8e8e8; border: 1px solid #aaa; padding: 6px; font-weight: bold; text-align: left; }
@@ -123,9 +118,9 @@ body { font-family: Arial, sans-serif; margin: 40px; font-size: 12px; }
 <div class='header'>
     <img src='https://pawsitive-change-taara.com/Assets/UI/taara_logo.png'>
     <div class='header-text'>
-        <div class='brand'><?php echo $brandTitle; ?></div>
+        <div class='brand'>$brandTitle</div>
         <div class='subtext'>
-            P-3 Burac St., San Lorenzo, Tabaco, Philippines — Generated on <?php echo $now; ?>
+            P-3 Burac St., San Lorenzo, Tabaco, Philippines — Generated on $now;
         </div>
     </div>
 </div>
