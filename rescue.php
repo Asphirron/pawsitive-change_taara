@@ -99,11 +99,10 @@ foreach($rescueTable as $r){
   <div class="content-area">
 
     <article style="flex-wrap: wrap-reverse;" class="hero-section">
-        <h1 class="hero-section-header">Rescue Animals, Restore Hope</h1>
-        <h5 class="hero-section-subheader">Every report brings us closer to saving lives and reuniting families.</h5>
         <img src="Assets/Images/volunteer_banner.jpg" class="hero-section-img">
     <div class="hero-section-details">
-        
+        <h1 class="hero-section-header">Rescue Animals, Restore Hope</h1>
+        <h5 class="hero-section-subheader">Every report brings us closer to saving lives and reuniting families.</h5>
 
         <div class='stat-card container'>
           <div class='stat-card'>
@@ -131,9 +130,6 @@ foreach($rescueTable as $r){
           </div>
         </div>
 
-        <p class="hero-section-text">
-          TAARA is committed to giving animals a second chance. Whether it’s rescuing strays, reuniting lost pets with their families, or supporting adoption, every effort counts. By reporting cases and spreading awareness, you help us protect and care for the voiceless. Together, we can turn compassion into action and save more lives.
-        </p>
         <button class="hero-section-btn" onclick="window.location.href='rescue_reporting.php'">Report a Case</button>
     </div>
 
