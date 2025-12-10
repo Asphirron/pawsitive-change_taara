@@ -91,7 +91,7 @@ foreach ($fieldsConfig as $f => $t) {
 
                             ?>
 
-                            <td><small><?= getAddressFromCoordinates($lat, $lng) ?></small></td>
+                            <td style="max-width: 500px;"><small><?= getAddressFromCoordinates($lat, $lng) ?></small></td>
                         <?php else: ?>
                             <td><?= e($row[$f] ?? '') ?></td>
                         <?php endif; ?>
