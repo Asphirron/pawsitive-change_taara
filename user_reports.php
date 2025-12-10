@@ -83,7 +83,7 @@ $lost_and_fund = $reportDB->select(["*"], ["user_id" => $user_id, "type" => "los
     <!-- Monetary Donations -->
     <div class="card p-4">
         <h2 class="mb-3">Rescue Reports</h2>
-        <?php if (!empty($monetary_donations)): ?>
+        <?php if (!empty($rescue_reports)): ?>
             <div class="table-responsive">
                 <table class="table table-striped align-middle">
                     <thead class="table-primary">
