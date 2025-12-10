@@ -38,7 +38,9 @@ function pdfImage($filename) {
     }
 
     // Convert file path to full URL for Dompdf
-    $url = 'https:pawsitive-change-taara.com/' . str_replace('\\','/',$filePath); // Dompdf can read file:// URLs
+    $url = 'https://pawsitive-change-taara.com/Assets/UserGenerated/' . rawurlencode($filename);
+    return "<img src='{$url}' style='width:80px;height:80px;object-fit:cover;border-radius:8px;'>";
+
 
     return "<img src='{$url}' style='width:80px;height:80px;object-fit:cover;border-radius:8px;'>";
 }
@@ -91,7 +93,7 @@ body { font-family: Arial, sans-serif; margin: 40px; font-size: 12px; }
 <body>
 <div class='header'>
     <div class='header-text'>
-        <img src='../Assets/UI/taara_logo.png'>
+        <img src='https://pawsitive-change-taara.com/Assets/UI/taara_logo.png'>
         <div class='brand'>{$brandTitle}</div>
         <div class='subtext'>P-3 Burac St., San Lorenzo, Tabaco, Philippines — Generated on {$now}</div>
     </div>
