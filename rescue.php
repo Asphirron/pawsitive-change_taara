@@ -71,7 +71,7 @@ foreach($rescueTable as $r){
 
               <div class='stat-card'>
                 <b class='stat-title'>Lost</b>
-                <p class='stats-number'><?php $cases ?></p>
+                <p class='stats-number'><?php echo $cases; ?></p>
                 <small>Total number of lost animals this month</small>
               </div>
 
