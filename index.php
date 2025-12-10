@@ -459,7 +459,7 @@ if (isset($_SESSION['email'])) {
       <hr class="my-2">
       <button onclick="window.location.href='user_adoptions.php'">Your Adoptions</button>
       <button onclick="window.location.href='user_donations.php'">Your Donations</button>
-      <button onclick="window.location.href='events.php'">Events</button>
+      <button onclick="window.location.href='user_reports.php'">Your Reports</button>
       <button class="close-btn" onclick="closeModal()">Close</button>
     </div>
   
