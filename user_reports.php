@@ -103,6 +103,7 @@ $lost_and_fund = $reportDB->select(["*"], ["user_id" => $user_id, "type" => "los
                                 <td><?= htmlspecialchars($r['report_id']) ?></td>
                                 <td><?= htmlspecialchars($r['description']) ?></td>
                                 <td><?= htmlspecialchars($r['date_posted']) ?></td>
+                                <td>
                                     <span class="badge 
                                         <?= $r['status'] == 'pending' ? 'bg-warning' : 
                                            ($r['status'] == 'resolved' ? 'bg-success' : 'bg-secondary') ?>">
