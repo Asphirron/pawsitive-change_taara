@@ -100,7 +100,6 @@ $lost_and_fund = $reportDB->select(["*"], ["user_id" => $user_id, "type" => "los
                         <?php foreach ($rescue_reports as $index => $r): ?>
                             <tr>
                                 <td><?= $index + 1 ?></td>
-                                <td><?= htmlspecialchars($r['report_id']) ?></td>
                                 <td><?= htmlspecialchars($r['description']) ?></td>
                                 <td><?= htmlspecialchars($r['date_posted']) ?></td>
                                 <td>
