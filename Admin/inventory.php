@@ -34,7 +34,8 @@ $fieldsConfig = [
     'item_type'    => ['food', 'medicine', 'toys','supplies', 'equipment','other'],
     'quantity'     => 'number',
     'date_stored'  => 'date',
-    'status' => ['in stock', 'low stock', 'out of stock']
+    'status' => ['in stock', 'low stock', 'out of stock', '__modal_excluded']
+
 ];
 
 $fieldLabels = [

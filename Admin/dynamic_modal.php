@@ -102,6 +102,11 @@ function openSharedModal(mode, data = null) {
     let imagePreviewHTML = '';
 
     for (const [field, type] of Object.entries(fieldsConfig)) {
+        // Hide fields that should not appear in modal
+        if (Array.isArray(type) && type.includes('__modal_excluded')) {
+            continue; // Skip rendering this field
+        }
+
         let labelText = fieldLabels[field];
         let value = data ? data[field] || '' : '';
 
@@ -192,6 +197,8 @@ function renderFieldHTML(f, mode) {
         }
         html += `</select>`;
         return html;
+    }else if(f.type === 'excluded'){
+
     } else if (f.type === 'textarea') {
         return `<textarea name="${f.field}" id="field_${f.field}" rows="3">${f.value}</textarea>`;
     } else if (['number','text','date','time'].includes(f.type)) {
