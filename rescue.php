@@ -9,7 +9,7 @@ $rescueTable = $rescueDB->runQuery(
 $cases = $rescued = $lost = $found = '';
 
 if(empty($rescueTable)){
-  $cases = 'nthing';
+  $cases = $rescued = $lost = $found = 0;
 }
 
 foreach($rescueTable as $r){
@@ -43,6 +43,53 @@ foreach($rescueTable as $r){
     <script src="functions.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Home</title>
+
+
+    <style>
+    /* Stat Cards Grid */
+    .stat-card.container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    /* Individual Stat Card */
+    .stat-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    }
+
+    .stat-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+
+    .stats-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #e63946; /* a bold accent color */
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-card small {
+      font-size: 0.85rem;
+      color: #666;
+    }
+
+
+    </style>
   </head>
 
   <body>
@@ -53,38 +100,42 @@ foreach($rescueTable as $r){
 
     <article style="flex-wrap: wrap-reverse;" class="hero-section">
         <img src="Assets/Images/volunteer_banner.jpg" class="hero-section-img">
-        <div class="hero-section-details">
-            <h1 class="hero-section-header">Hello Volunteers!</h1>
-            <h5 class="hero-section-subheader">Be a hero for the voiceless — volunteer with TAARA and make tails wag with hope!"</h5>
-            <div class='stat-card container'>
-              <div class='stat-card'>
-                <b class='stat-title'>Cases</b>
-                <p class='stats-number'><?php $cases ?></p>
-                <small>Total number of rescue reports and lost/found this month</small>
-              </div>
+    <div class="hero-section-details">
+        <h1 class="hero-section-header">Rescue Animals, Restore Hope</h1>
+        <h5 class="hero-section-subheader">Every report brings us closer to saving lives and reuniting families.</h5>
 
-              <div class='stat-card'>
-                <b class='stat-title'>Rescued</b>
-                <p class='stats-number'><?php $rescued ?></p>
-                <small>Total number of pets rescued this month</small>
-              </div>
+        <div class='stat-card container'>
+          <div class='stat-card'>
+            <b class='stat-title'>Cases</b>
+            <p class='stats-number'><?php echo $cases; ?></p>
+            <small>Total rescue and lost/found reports this month</small>
+          </div>
 
-              <div class='stat-card'>
-                <b class='stat-title'>Lost</b>
-                <p class='stats-number'><?php echo $cases; ?></p>
-                <small>Total number of lost animals this month</small>
-              </div>
+          <div class='stat-card'>
+            <b class='stat-title'>Rescued</b>
+            <p class='stats-number'><?php echo $rescued; ?></p>
+            <small>Animals successfully rescued this month</small>
+          </div>
 
-              <div class='stat-card'>
-                <b class='stat-title'>Found</b>
-                <p class='stats-number'><?php $cases ?></p>
-                <small>Total number of found animals this month</small>
-              </div>
-              
-            </div>
-            <p class="hero-section-text">If you're passionate about animals and eager to make a difference, this is an incredible opportunity to enhance the well-being and welfare of our beloved four-legged friends. Join us, and together, we can make a positive impact on the lives of our furry companions. Your involvement can truly make a meaningful impact on their lives. Let's work together to make a positive change!</p>
-            <button class="hero-section-btn" onclick="window.location.href='rescue_reporting.php'">Report Now</button>
+          <div class='stat-card'>
+            <b class='stat-title'>Lost</b>
+            <p class='stats-number'><?php echo $lost; ?></p>
+            <small>Pets still missing this month</small>
+          </div>
+
+          <div class='stat-card'>
+            <b class='stat-title'>Found</b>
+            <p class='stats-number'><?php echo $found; ?></p>
+            <small>Lost pets reunited with families this month</small>
+          </div>
         </div>
+
+        <p class="hero-section-text">
+          TAARA is committed to giving animals a second chance. Whether it’s rescuing strays, reuniting lost pets with their families, or supporting adoption, every effort counts. By reporting cases and spreading awareness, you help us protect and care for the voiceless. Together, we can turn compassion into action and save more lives.
+        </p>
+        <button class="hero-section-btn" onclick="window.location.href='rescue_reporting.php'">Report a Case</button>
+    </div>
+
     </article>
 
   </div>
