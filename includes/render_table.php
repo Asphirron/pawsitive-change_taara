@@ -83,7 +83,7 @@ foreach ($fieldsConfig as $f => $t) {
                             <!-- Show the cached FK label instead of raw ID -->
                             <td><?= e($fkCache[$f][$row[$f]] ?? "Unknown") ?></td>
 
-                        <?php elseif ($tableName === 'rescue_report' || $tableName == 'point_of_interest' && $f == 'location'): ?>
+                        <?php elseif (($tableName === 'rescue_report' || $tableName == 'point_of_interest') && $f == 'location'): ?>
                             <?php
                             $coords = explode(',', $row[$f]);
                             $lat = trim($coords[0] ?? '');
@@ -91,7 +91,7 @@ foreach ($fieldsConfig as $f => $t) {
 
                             ?>
 
-                            <td><?= getAddressFromCoordinates($lat, $lng) ?></td>
+                            <td><small><?= getAddressFromCoordinates($lat, $lng) ?></small></td>
                         <?php else: ?>
                             <td><?= e($row[$f] ?? '') ?></td>
                         <?php endif; ?>
