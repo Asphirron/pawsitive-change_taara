@@ -16,7 +16,7 @@ if (isset($_POST['cancel_donation'])) {
     if ($type === 'monetary') {
         $monetaryDB->update($id, ['status' => 'cancelled'], 'm_donation_id');
     } elseif ($type === 'inkind') {
-        $inkindDB->delete($id, 'i_donation_id');
+        $inkindDB->update($id, ['status' => 'cancelled'], 'i_donation_id');
     }
 
     header('Location: user_donations.php');

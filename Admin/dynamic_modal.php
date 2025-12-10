@@ -34,8 +34,9 @@
 
 <!-- GENERAL MESSAGE MODAL -->
 <div id="messageModalBackdrop" class="modal-backdrop hidden" onclick="closeMessageModal()">
-    <div class="modal">
-        <p id="messageModalText"></p>
+    <div class="modal general-modal">
+        <h3><b>MESSAGE</b></h3>
+        <p id="messageModalText" class='message-modal-text'></p>
         <button type="button" class="btn btn-primary" onclick="closeMessageModal()">OK</button>
     </div>
 </div>
