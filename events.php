@@ -246,7 +246,7 @@ if (isset($_SESSION['email'])) {
           <?php
           if (!empty($events)) {
             foreach ($events as $e) {
-              if($e['date'] >= date('Y-m-d')){
+              if($e['date'] <= date('Y-m-d')){
                 echo "
                       <div class='event-card'>
                         <img src='{$e['img']}' alt='{$e['title']}'>
