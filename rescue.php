@@ -8,6 +8,10 @@ $rescueTable = $rescueDB->runQuery(
 //STATS for Showing
 $cases = $rescued = $lost = $found = '';
 
+if(empty($rescueTable)){
+  $cases = 'nthing';
+}
+
 foreach($rescueTable as $r){
   $cases++;
   if($r['type' === 'rescue'] && $r['status'] === 'resolved'){
