@@ -107,21 +107,21 @@ foreach($totalItemsTable as $t){
 
 ?>
 
-<div class="flex-r c-gap" style="width: 100%;">
+<div class="flex-r c-gap1" style="width: 100%;">
     <div class='stat-preview-container'>
         <small>Total Items</small>
         <h4><b> <?= $totalItems ?> </b></h4>
-        <small> <?= $kinds ?> kinds</small>
+        <small style="color: gray;"> <?= $kinds ?> kinds</small>
     </div>
     <div class='stat-preview-container'>
         <small>Low Stock</small>
         <h4><b> <?= $lowStock ?> </b></h4>
-        <small><= 10 threshold</small>
+        <small style="color: gray;"><= 10 threshold</small>
     </div>
     <div class='stat-preview-container'>
         <small>Out of Stock</small>
         <h4><b> <?= $noStock ?> </b></h4>
-        <small>Quantity = 0</small>
+        <small style="color: gray;">Quantity = 0</small>
     </div>
 </div>
 

@@ -142,6 +142,10 @@ input, select, datalist, button, textarea{
     column-gap: 5px;
 }
 
+.c-gap1{
+    column-gap: 10px;
+}
+
 .value-preview{
     border: none;
     border-bottom: 1px solid rgba(69, 69, 69, 0.821);
@@ -455,7 +459,7 @@ pre { white-space: pre-wrap; }
 }
 
 .stat-preview-container{
-    width: 200px;
+    width: 240px;
     height: 100px;
     border: 1px solid rgb(220, 220, 220);
     border-radius: 10px;
@@ -467,8 +471,8 @@ pre { white-space: pre-wrap; }
 }
 
 .action-btn{
-    padding-block: 10px;
-    padding-inline: 5px;
+    padding-block: 8px;
+    padding-inline: 8px;
 }
 
 
