@@ -6,15 +6,11 @@ $rescueTable = $rescueDB->runQuery(
 "SELECT * FROM rescue_report WHERE MONTH(date_updated) = ?",[date('n')],"s");
 
 //STATS for Showing
-$cases = $rescued = $lost = $found = '';
-
-if(empty($rescueTable)){
-  $cases = $rescued = $lost = $found = 0;
-}
+$cases = $rescued = $lost = $found = 0;
 
 foreach($rescueTable as $r){
   $cases++;
-  if($r['type' === 'rescue'] && $r['status'] === 'resolved'){
+  if($r['type' == 'rescue'] && $r['status'] == 'resolved'){
     $rescued++;
   }elseif('type' == 'lost_and_found'){
     if($r['status'] == 'resolved'){
