@@ -48,7 +48,7 @@ $fieldLabels = [
 ];
 
 $searchBy = 'item_name';
-$filterConfig = ['item_type', 'item_name', 'status', 'quantity','date_stored'];
+$filterConfig = ['item_type', 'item_name', 'quantity','date_stored'];
 $actionType = 'in_and_out';
 
 // Columns initially visible
