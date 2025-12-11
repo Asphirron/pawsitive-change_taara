@@ -120,7 +120,7 @@ foreach($totalItemsTable as $t){
     </div>
         <div class='stat-preview-container'>
         <small>In Stock</small>
-        <h4><b> <?= ($totalItems - $noStock) ?> </b></h4>
+        <h4><b> <?= ($totalItems - $lowStock) ?> </b></h4>
         <small style="color: gray;">Quantity > 10</small>
     </div>
     <div class='stat-preview-container'>
