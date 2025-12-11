@@ -38,21 +38,22 @@ $fieldsConfig = [
 $searchBy = 'full_name';
 
 //properties shown in the filters
-$filterConfig = ['user_id', 'animal_id', 'address', 'classification', 'date_applied', 'status', 'date_responded'];
+$filterConfig = ['user_id', 'animal_id', 'address', 'classification', 'date_applied', 'status', 'id_img'];
 $actionType = 'setProperty';
 
 
 $foreignKeys = [
+    'user_id' => [
+        'table' => 'user',
+        'key'   => 'user_id',
+        'label' => 'username'
+    ],
     'animal_id' => [
         'table' => 'animal',
         'key'   => 'animal_id',
         'label' => 'name'
-    ],
-      'user_id' => [
-        'table' => 'user',
-        'key'   => 'user_id',
-        'label' => 'username'
     ]
+  
     // add more here...
 ];
 

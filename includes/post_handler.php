@@ -213,8 +213,8 @@ if (isset($_POST['reset_btn'])) {
                         'status'=> 'pending'
                     ]);
 
-                    $tempCrud = new DatabaseCRUD('animal');
-                    $tempCrud->update(
+                    $tempCrud2 = new DatabaseCRUD('animal');
+                    $tempCrud2->update(
                         intval($_POST['animal_id']),
                         ['status'=> 'Pending Adoption'], 
                         'animal_id'
