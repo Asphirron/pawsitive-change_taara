@@ -6,8 +6,8 @@ include "../Admin/admin_ui.php"; //Displays Navigation
 $animals = new DatabaseCRUD('animal');
 $adoptions = new DatabaseCRUD('adoption');
 $volunteers = new DatabaseCRUD('volunteer');
-$mDonations = new DatabaseCRUD('monetary_donations');
-$iDonations = new DatabaseCRUD('inkind_donations');
+$mDonations = new DatabaseCRUD('monetary_donation');
+$iDonations = new DatabaseCRUD('inkind_donation');
 
 $animalN = $adoptionN = $volunteerN = $mDonationN = $iDonationN = 0;
 
