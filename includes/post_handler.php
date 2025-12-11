@@ -179,9 +179,22 @@ if (isset($_POST['reset_btn'])) {
             $updateData = [$property => $value];
 
             // If we're setting status to adopted or returned, also set date_adopted
-            if (in_array($value, ['adopted','returned'])) {
-                $updateData['date_adopted'] = date('Y-m-d H:i:s'); // current date/time
+            if ($tableName == 'adoption' && in_array($value, ['adopted','returned'])) {
+                if($_POST['status'] !== 'pending'){
+                    $message = 'Application has been already adopted/returned!';
+                    return;
+                }
 
+                $updateData['date_adopted'] = date('Y-m-d H:i:s'); // current date/time
+                if($value === 'adopted'){
+                    $tempCrud = new DatabaseCRUD('animal');
+                    $tempCrud->update(
+                        intval($_POST['animal_id']),
+                        ['status'=> 'Adopted'], 
+                        'animal_id'
+                       );
+                }
+                
             }else if($tableName == 'rescue_report' && in_array($value, ['resolved','cancelled'])){
                 if($_POST['status' == 'pending']){
                     if($value == 'resolved'){
@@ -221,21 +234,6 @@ if (isset($_POST['reset_btn'])) {
                        );
                 }
                 
-            }else if ($tableName == 'adoption' && in_array($value, ['adopted','returned'])) {
-                if($_POST['status'] !== 'Pending Adoption' || $_POST['status'] !== 'At a Shelter'){
-                    $message = 'Application has been already adopted/returned!';
-                    return;
-                }
-
-                $updateData['date_adopted'] = date('Y-m-d H:i:s'); // current date/time
-                if($value === 'adopted'){
-                    $tempCrud = new DatabaseCRUD('animal');
-                    $tempCrud->update(
-                        intval($_POST['animal_id']),
-                        ['status'=> 'Adopted'], 
-                        'animal_id'
-                       );
-                }
             }else if ($tableName == 'volunteer_application' && in_array($value, ['accepted','rejected'])) {
 
                 if($_POST['status'] !== 'pending'){
