@@ -184,7 +184,7 @@ if (isset($_POST['reset_btn'])) {
 
             }else if($tableName == 'rescue_report' && in_array($value, ['resolved','cancelled'])){
                 if($value == 'resolved'){
-                    $crud->update($_POST['report_id'], ['date_updated' => date('Y-m-d H:i:s'), 'report_id']);
+                    $crud->update(intval($_POST[$pk]), ['date_updated' => date('Y-m-d H:i:s')], 'report_id');
                 }
                 
             
@@ -206,7 +206,7 @@ if (isset($_POST['reset_btn'])) {
 
                     $tempCrud = new DatabaseCRUD('animal');
                     $tempCrud->update(
-                        $_POST['animal_id'],
+                        intval($_POST['animal_id']),
                         ['status'=> 'Pending Adoption'], 
                         'animal_id'
                        );
