@@ -341,7 +341,7 @@ $stmt->close();
 
             echo "
               <div class='donation-card'>
-                <img src='Assets/Images/$img' class='card-img'>
+                <img src='Assets/UserGenerated/$img' class='card-img'>
                 <div class='card-details'>
                   <h4 class='card-title text-lg font-bold mb-1'>$title</h4>
                   <p class='card-description'>$desc</p>

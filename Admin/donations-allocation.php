@@ -101,7 +101,7 @@ include "../includes/post_handler.php"; //Handles POST (search, CRUD, etc)
 </head>
 
 <body>
-<?= displayNav('events'); ?>
+<?= displayNav('donations'); ?>
 
 <main class="content flex-c">
 
