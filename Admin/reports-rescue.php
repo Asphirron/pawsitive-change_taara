@@ -42,10 +42,10 @@ $filterConfig = ['type', 'location','status'];
 $actionType = 'setProperty';
 
 $foreignKeys = [
-    'animal_id' => [
-        'table' => 'animal',
-        'key'   => 'animal_id',
-        'label' => 'name'
+    'user_id' => [
+        'table' => 'user',
+        'key'   => 'user_id',
+        'label' => 'username'
     ]
     // add more here...
 ];
