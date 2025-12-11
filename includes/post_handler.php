@@ -222,7 +222,7 @@ if (isset($_POST['reset_btn'])) {
                 }
                 
             }else if ($tableName == 'adoption' && in_array($value, ['adopted','returned'])) {
-                if($_POST['status'] !== 'pending'){
+                if($_POST['status'] !== 'Pending Adoption' || $_POST['status'] !== 'At a Shelter'){
                     $message = 'Application has been already adopted/returned!';
                     return;
                 }
