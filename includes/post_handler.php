@@ -189,8 +189,10 @@ if (isset($_POST['reset_btn'])) {
                     }
                 }else if($_POST['status'] == 'resolved'){
                     $message = "Case has already been resolved. Cannot do action.";
+                    return;
                 }else{
                     $message = "Case has already been cancelled. Cannot do action.";
+                    return;
                 }
              
                 
