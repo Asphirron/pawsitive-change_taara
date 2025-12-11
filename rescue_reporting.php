@@ -381,11 +381,6 @@ fieldset.checkbox-group label {
         </fieldset>
         </div>
 
-       <!--fieldset class="checkbox-group" hidden>
-        <input type="checkbox" name="agreed" value="true" class="check-box">
-        <label for="agreed">Send me E-mail Updates</label>
-      </fieldset-->
-
         <div class="button-group">
           <button type="reset">Reset</button>
           <button type="submit" class="submit">Post Report</button>

@@ -27,7 +27,7 @@
     <img src="../Assets/UI/Taara_Logo.webp" class="confirmation-img" >
     <h1 class="confirmation-message">YOUR APPLICATION HAS BEEN SUCCESSFULLY SENT</h1>
 
-      <h4 class="confirmation-text"> Please wait for a follow-up to be sent to your email. </h4>
+      <h4 class="confirmation-text"> Please wait for a our response. </h4>
 
     <a href="../index.php"><button>Return to Home</button></a>
        

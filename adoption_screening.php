@@ -34,7 +34,7 @@ $comp_name = $_POST['comp_name'];
 
 $id_img = "";
 if (isset($_FILES['id_img'])) {
-  $target_dir = 'Assets/UserGenerated/';
+  $target_dir = '../Assets/UserGenerated/';
   $file_name = basename($_FILES['id_img']['name']);
   $target_file = $target_dir . $file_name;
   if(move_uploaded_file($_FILES["id_img"]['tmp_name'], $target_file)){
