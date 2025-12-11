@@ -38,7 +38,7 @@ $fieldsConfig = [
 $searchBy = 'full_name';
 
 //properties shown in the filters
-$filterConfig = ['user_id', 'animal_id', 'address', 'classification', 'date_applied', 'status', 'id_img'];
+$filterConfig = ['user_id', 'animal_id', 'address', 'classification', 'date_applied', 'status', 'date_responded'];
 $actionType = 'setProperty';
 
 
@@ -100,7 +100,7 @@ $setPropertyConfig = [
 $_SESSION['fields_config'] = $fieldsConfig; 
 
 // Columns initially visible in table
-$defaultColumns = ['a_application_id','full_name','animal_id','date_applied','status', 'date_responded'];
+$defaultColumns = ['a_application_id','full_name','animal_id','date_applied','status', 'id_img'];
 
 
 if(!isset($_SESSION['visibleColumns'])) {
