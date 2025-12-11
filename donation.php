@@ -293,11 +293,6 @@ $stmt->close();
 
     <article class="feature-section">
       <div class="collapsible-header">
-        
-
-      </div>
-
-      <div class="card-container" style="flex-direction: column;">
         <h2 class="subsection-header-text"><b>This Month's Top Donors</b></h2>
         <!-- RESULT TABLE -->
         <table class="">
@@ -325,11 +320,11 @@ $stmt->close();
             <?php endif; ?>
             </tbody>
         </table>
+
       </div>
-      
-      <div class='donation-card'>
-                
-        </div>
+
+      <div class="card-container">
+        
         <?php
         $conn = connect();
         $query = "SELECT dpost_id, title, description, post_img, goal_amount, current_amount FROM donation_post";
