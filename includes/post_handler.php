@@ -26,56 +26,53 @@ if (isset($_POST['reset_btn'])) {
 
 
     // SEARCH / FILTER
-    // -------------------- SEARCH / FILTER --------------------
-    if ((isset($_POST['search_btn']) || !empty(array_intersect(array_keys($_POST), $filterConfig)))) {
-
+    if (isset($_POST['search_btn']) || !empty(array_intersect(array_keys($_POST), $filterConfig))) {
         $conn = connect();
         $allowedColumns = array_keys($fieldsConfig);
 
-        $searchBy  = $_POST['search_by'] ?? $searchBy; // default search column
+        $searchBy = $_POST['search_by'] ?? $searchBy; // default to $searchBy
         $searchVal = trim($_POST['search_bar'] ?? '');
-        $orderDir  = strtolower($_POST['order_by'] ?? 'ascending') === 'descending' ? 'DESC' : 'ASC';
-        $limit     = isset($_POST['num_of_results']) ? intval($_POST['num_of_results']) : 10;
+        $orderDir = strtolower($_POST['order_by'] ?? 'ascending') === 'descending' ? 'DESC' : 'ASC';
+        $limit = isset($_POST['num_of_results']) ? intval($_POST['num_of_results']) : 10;
         if ($limit <= 0 || $limit > 1000) $limit = 50;
 
         // Build WHERE conditions
         $conditions = [];
-        $params     = [];
-        $types      = '';
+        $params = [];
+        $types = '';
 
-        // --- Search bar ---
         if ($searchVal !== '' && in_array($searchBy, $allowedColumns)) {
             $conditions[] = "`$searchBy` LIKE ?";
             $params[] = "%$searchVal%";
             $types .= 's';
         }
 
-        // --- Filters ---
         foreach ($filterConfig as $f) {
 
-            // Handle virtual 'status' column for donation_inventory
-            if ($f === 'status' && $tableName === 'donation_inventory' && !empty($_POST['status'])) {
-                $statusVal = $_POST['status'];
-                if ($statusVal === 'out of stock') {
-                    $conditions[] = "quantity <= 0";
-                } elseif ($statusVal === 'low stock') {
-                    $conditions[] = "quantity > 0 AND quantity <= 10";
-                } elseif ($statusVal === 'in stock') {
-                    $conditions[] = "quantity > 10";
-                }
-                continue; // skip normal handler
+            // Handle virtual 'status' column
+            if ($f === 'status' && !empty($_POST['status']) && $tableName === 'donation_inventory') {
+            $statusVal = $_POST['status'];
+            if ($statusVal === 'out of stock') {
+                $conditions[] = "quantity <= 0";
+            } elseif ($statusVal === 'low stock') {
+                $conditions[] = "quantity > 0 AND quantity <= 10";
+            } elseif ($statusVal === 'in stock') {
+                $conditions[] = "quantity > 10";
+            }
+            continue;
             }
 
             // Normal columns
             if (!empty($_POST[$f])) {
                 $conditions[] = "`$f` = ?";
                 $params[] = $_POST[$f];
-                $types .= 's';
+                $types .= "s";
             }
         }
 
-        $whereSql = $conditions ? 'WHERE ' . implode(' AND ', $conditions) : '';
 
+        $whereSql = $conditions ? 'WHERE ' . implode(' AND ', $conditions) : '';
+        
         // --- Build SQL ---
         if ($tableName === 'donation_inventory') {
             $sql = "
@@ -94,23 +91,21 @@ if (isset($_POST['reset_btn'])) {
             $sql = "SELECT * FROM `$tableName` $whereSql ORDER BY `$pk` $orderDir LIMIT ?";
         }
 
-        // --- Bind parameters ---
+
+
+        $stmt = $conn->prepare($sql);
         $params[] = $limit;
         $types .= 'i';
-        $stmt = $conn->prepare($sql);
         $stmt->bind_param($types, ...$params);
 
-        // --- Execute ---
         $stmt->execute();
         $res = $stmt->get_result();
         $rows = [];
         while ($r = $res->fetch_assoc()) $rows[] = $r;
         $tableData = $rows;
-
         $stmt->close();
         $conn->close();
     }
-
 
 
     if (isset($overrideCrud)) {
