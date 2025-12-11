@@ -17,12 +17,9 @@ function displayNav($activePage){
 
                 <!-- DASHBOARD DROPDOWN -->
                 <div class='dropdown'>
-                    <button class='dropdown-btn ".($activePage == "index" ? "active" : "")."'>
+                    <button onclick = 'goToAdmin()' class='dropdown-btn ".($activePage == "index" ? "active" : "")."'>
                         <i class='fa fa-home nav-icon'></i> Dashboard 
                     </button>
-                    <div class='dropdown-content'>
-                        <a href='index.php'>Go to Dashboard</a>
-                    </div>
                 </div>
 
                 <!-- ANIMALS DROPDOWN -->
@@ -156,6 +153,9 @@ function openLogoutModal() {
 }
 function closeLogoutModal() {
     document.getElementById('logoutModalBackdrop').classList.add('hidden');
+}
+function goToLogin(){
+    window.location.href = "../Admin/index.php";
 }
 function logout(){
     window.location.href = "../includes/logout.php";
