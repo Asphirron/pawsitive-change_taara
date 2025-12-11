@@ -17,7 +17,7 @@ function displayNav($activePage){
 
                 <!-- DASHBOARD DROPDOWN -->
                 <div class='dropdown'>
-                    <button onclick = 'goToAdmin()' class='dropdown-btn ".($activePage == "index" ? "active" : "")."'>
+                    <button onclick='goToAdmin()' class='dropdown-btn ".($activePage == "index" ? "active" : "")."'>
                         <i class='fa fa-home nav-icon'></i> Dashboard 
                     </button>
                 </div>
@@ -154,7 +154,7 @@ function openLogoutModal() {
 function closeLogoutModal() {
     document.getElementById('logoutModalBackdrop').classList.add('hidden');
 }
-function goToLogin(){
+function goToAdmin(){
     window.location.href = "../Admin/index.php";
 }
 function logout(){
