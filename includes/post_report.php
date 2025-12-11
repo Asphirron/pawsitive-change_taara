@@ -36,7 +36,7 @@
        $file_name = basename( ($_FILES['image']['name']));
        $target_file = $target_dir . $file_name;
        if(move_uploaded_file($_FILES["image"]['tmp_name'], $target_file)){
-        $img = $target_file;
+        $img = $file_name;
        }
       
     }
