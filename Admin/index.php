@@ -12,19 +12,19 @@ $iDonations = new DatabaseCRUD('inkind_donation');
 $animalN = $adoptionN = $volunteerN = $mDonationN = $iDonationN = 0;
 
 foreach($animals->readAll() as $a){
-  if($a['status' == 'At a Shelter']){ $animalN++;}
+  if($a['status'] == 'At a Shelter'){ $animalN++;}
 }
 foreach($adoptions->readAll() as $ad){
-  if($ad['status' == 'pending']){ $adoptionN++;}
+  if($ad['status'] == 'pending'){ $adoptionN++;}
 }
 foreach($volunteers->readAll() as $v){
   $volunteerN++;
 }
 foreach($mDonations->readAll() as $m){
-  if($m['status' == 'verified']){ $mDonationN += $m['amount'];}
+  if($m['status'] == 'verified'){ $mDonationN += $m['amount'];}
 }
 foreach($iDonations->readAll() as $i){
-  if($i['status' == 'received']){ $iDonationN += $m['quantity'];}
+  if($i['status'] == 'received'){ $iDonationN += $m['quantity'];}
 }
 
 
