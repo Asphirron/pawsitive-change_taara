@@ -116,11 +116,11 @@ foreach($totalItemsTable as $t){
     <div class='stat-preview-container'>
         <small>Low Stock</small>
         <h4><b> <?= $lowStock ?> </b></h4>
-        <small style="color: gray;"><= 10 threshold</small>
+        <small style="color: gray;">Quantity < 10</small>
     </div>
         <div class='stat-preview-container'>
         <small>In Stock</small>
-        <h4><b> <?= ($totalItems - $lowStock) ?> </b></h4>
+        <h4><b> <?= ($kinds - $lowStock) ?> </b></h4>
         <small style="color: gray;">Quantity > 10</small>
     </div>
     <div class='stat-preview-container'>

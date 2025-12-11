@@ -50,7 +50,7 @@ if (isset($_POST['reset_btn'])) {
         foreach ($filterConfig as $f) {
 
             // Handle virtual 'status' column
-            if ($f === 'status' && !empty($_POST['status'])) {
+            if ($f === 'status' && !empty($_POST['status']) && $tableName == 'donation_inventory') {
                 $statusVal = $_POST['status'];
 
                 if ($statusVal === 'out of stock') {
