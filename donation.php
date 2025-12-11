@@ -297,7 +297,7 @@ $stmt->close();
 
       </div>
 
-      <div class="card-container">
+      <div class="card-container" style="flex-direction: column;">
         <h2 class="subsection-header-text"><b>This Month's Top Donors</b></h2>
         <!-- RESULT TABLE -->
         <table class="">
