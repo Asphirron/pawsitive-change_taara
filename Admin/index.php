@@ -24,7 +24,7 @@ foreach($mDonations->readAll() as $m){
   if($m['status'] == 'verified'){ $mDonationN += $m['amount'];}
 }
 foreach($iDonations->readAll() as $i){
-  if($i['status'] == 'received'){ $iDonationN += $m['quantity'];}
+  if($i['status'] == 'received'){ $iDonationN += $i['quantity'];}
 }
 
 
