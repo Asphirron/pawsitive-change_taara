@@ -3,6 +3,30 @@
 include "../includes/db_connection.php"; //Establishes database connection
 include "../Admin/admin_ui.php"; //Displays Navigation
 
+$animals = new DatabaseCRUD('animal');
+$adoptions = new DatabaseCRUD('adoption');
+$volunteers = new DatabaseCRUD('volunteer');
+$mDonations = new DatabaseCRUD('monetary_donations');
+$iDonations = new DatabaseCRUD('inkind_donations');
+
+$animalN = $adoptionN = $volunteerN = $mDonationN = $iDonationN = 0;
+
+foreach($animals->readAll() as $a){
+  if($a['status' == 'At a Shelter']){ $animalN++;}
+}
+foreach($adoptions->readAll() as $ad){
+  if($ad['status' == 'pending']){ $adoptionN++;}
+}
+foreach($volunteers->readAll() as $v){
+  $volunteerN++;
+}
+foreach($mDonations->readAll() as $m){
+  if($m['status' == 'verified']){ $mDonationN += $m['amount'];}
+}
+foreach($iDonations->readAll() as $i){
+  if($i['status' == 'received']){ $iDonationN += $m['quantity'];}
+}
+
 
 
 
@@ -33,20 +57,20 @@ include "../Admin/admin_ui.php"; //Displays Navigation
       <!-- Dashboard Section -->
       <main class="p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div class="bg-white shadow rounded-xl p-6">
-          <h3 class="font-bold">Animal Profiles</h3>
-          <p class="text-gray-600">Manage rescued and adoptable animals.</p>
+          <h3 class="font-bold">Animals</h3>
+          <p class="text-blue-600 font-bold"><?php echo $animalN; ?> At a Shelter</p>
         </div>
         <div class="bg-white shadow rounded-xl p-6">
           <h3 class="font-bold">Adoption</h3>
-          <p class="text-blue-600 font-bold">26 Pending</p>
+          <p class="text-blue-600 font-bold"><?php echo $adoptionN; ?> Pending</p>
         </div>
         <div class="bg-white shadow rounded-xl p-6">
           <h3 class="font-bold">Volunteers</h3>
-          <p class="text-green-600 font-bold">100 Registered</p>
+          <p class="text-blue-600 font-bold"><?php echo $volunteerN; ?> Registered</p>
         </div>
         <div class="bg-white shadow rounded-xl p-6">
           <h3 class="font-bold">Donations</h3>
-          <p>₱10,000 • 30 Items</p>
+          <p class="text-blue-600 font-bold">₱<?php echo $mDonationN; ?> • <?php echo $iDonationN; ?> Items</p>
         </div>
       </main>
 
@@ -60,35 +84,42 @@ include "../Admin/admin_ui.php"; //Displays Navigation
           <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg cursor-pointer">
             <h3 class="font-bold text-lg mb-3">Animal Management</h3>
             <p class="text-sm text-gray-600">Update profiles, track adoptions, mark rescued.</p>
-            <a href='animals-records.php'><button class="mt-3 px-4 py-2 bg-green-500 text-white rounded" style="height: 40px;">Manage</button></a>
+            <a href='animals-records.php'><button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded" style="height: 40px;">Manage</button></a>
           </div>
 
           <!-- Manage Donations -->
           <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg cursor-pointer">
             <h3 class="font-bold text-lg mb-3">Donation Management</h3>
             <p class="text-sm text-gray-600">Approve donations and view history.</p>
-            <a href='donations-topdonors.php'><button class="mt-3 px-4 py-2 bg-green-500 text-white rounded" style="height: 40px;">Manage</button></a>
+            <a href='donations-topdonors.php'><button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded" style="height: 40px;">Manage</button></a>
           </div>
 
           <!-- Manage Events -->
           <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg cursor-pointer">
             <h3 class="font-bold text-lg mb-3">Event Management</h3>
             <p class="text-sm text-gray-600">Create, edit, or cancel adoption drives.</p>
-            <a href='events-upcoming.php'><button class="mt-3 px-4 py-2 bg-green-500 text-white rounded" style="height: 40px;">Manage</button></a>
+            <a href='events-upcoming.php'><button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded" style="height: 40px;">Manage</button></a>
           </div>
 
           <!-- Manage Rescues -->
           <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg cursor-pointer">
             <h3 class="font-bold text-lg mb-3">Rescue Management</h3>
             <p class="text-sm text-gray-600">Resolve or reject rescue reports and view map</p>
-            <a href='reports-rescue.php'><button class="mt-3 px-4 py-2 bg-green-500 text-white rounded" style="height: 40px;">Manage</button></a>
+            <a href='reports-rescue.php'><button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded" style="height: 40px;">Manage</button></a>
           </div>
 
           <!-- Manage Inventory -->
           <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg cursor-pointer">
             <h3 class="font-bold text-lg mb-3">Inventory Management</h3>
             <p class="text-sm text-gray-600">Create, insert, or take out inventory records</p>
-            <a href='inventory.php'><button class="mt-3 px-4 py-2 bg-green-500 text-white rounded" style="height: 40px;">Manage</button></a>
+            <a href='inventory.php'><button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded" style="height: 40px;">Manage</button></a>
+          </div>
+
+          <!-- Manage Inventory -->
+          <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg cursor-pointer">
+            <h3 class="font-bold text-lg mb-3">Volunteer Management</h3>
+            <p class="text-sm text-gray-600">Accept or reject applications and set roles</p>
+            <a href='volunteers-records.php'><button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded" style="height: 40px;">Manage</button></a>
           </div>
 
        
