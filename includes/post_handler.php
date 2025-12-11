@@ -178,7 +178,6 @@ if (isset($_POST['reset_btn'])) {
             // Build update array
             $updateData = [$property => $value];
 
-            // If we're setting status to adopted or returned, also set date_adopted
             if ($tableName == 'adoption' && in_array($value, ['adopted','returned'])) {
                 if($_POST['status'] !== 'pending'){
                     $message = 'Application has been already adopted/returned!';
@@ -194,7 +193,7 @@ if (isset($_POST['reset_btn'])) {
                         'animal_id'
                        );
                 }
-                
+
             }else if($tableName == 'rescue_report' && in_array($value, ['resolved','cancelled'])){
                 if($_POST['status' == 'pending']){
                     if($value == 'resolved'){

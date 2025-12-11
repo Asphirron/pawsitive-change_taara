@@ -5,6 +5,8 @@ include "../Admin/admin_ui.php"; //Displays Navigation
 
 
 
+
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -53,12 +55,6 @@ include "../Admin/admin_ui.php"; //Displays Navigation
         <h2 class="text-2xl font-bold mb-6">Admin Panel</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-          <!-- Manage Users -->
-          <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg cursor-pointer">
-            <h3 class="font-bold text-lg mb-3">User Management</h3>
-            <p class="text-sm text-gray-600">Add, update, or remove volunteers & adopters.</p>
-            <a href='animals-records.php'><button class="mt-3 px-4 py-2 bg-green-500 text-white rounded" style="height: 40px;">Manage</button></a>
-          </div>
 
           <!-- Manage Animals -->
           <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg cursor-pointer">
@@ -81,19 +77,21 @@ include "../Admin/admin_ui.php"; //Displays Navigation
             <a href='events-upcoming.php'><button class="mt-3 px-4 py-2 bg-green-500 text-white rounded" style="height: 40px;">Manage</button></a>
           </div>
 
-          <!-- Reports -->
+          <!-- Manage Rescues -->
           <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg cursor-pointer">
-            <h3 class="font-bold text-lg mb-3">Reports & Analytics</h3>
-            <p class="text-sm text-gray-600">Generate and download reports in CSV/PDF.</p>
-            <button class="mt-3 px-4 py-2 bg-red-500 text-white rounded" style="height: 40px;">Generate</button>
+            <h3 class="font-bold text-lg mb-3">Rescue Management</h3>
+            <p class="text-sm text-gray-600">Resolve or reject rescue reports and view map</p>
+            <a href='reports-rescue.php'><button class="mt-3 px-4 py-2 bg-green-500 text-white rounded" style="height: 40px;">Manage</button></a>
           </div>
 
-          <!-- Notifications -->
+          <!-- Manage Inventory -->
           <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg cursor-pointer">
-            <h3 class="font-bold text-lg mb-3">Admin Notifications</h3>
-            <p class="text-sm text-gray-600">Approve requests & review pending alerts.</p>
-            <button class="mt-3 px-4 py-2 bg-yellow-500 text-white rounded" style="height: 40px;">View</button>
+            <h3 class="font-bold text-lg mb-3">Inventory Management</h3>
+            <p class="text-sm text-gray-600">Create, insert, or take out inventory records</p>
+            <a href='inventory.php'><button class="mt-3 px-4 py-2 bg-green-500 text-white rounded" style="height: 40px;">Manage</button></a>
           </div>
+
+       
 
         </div>
       </section>

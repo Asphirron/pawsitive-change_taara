@@ -59,7 +59,7 @@ $filterConfig = ['type', 'gender', 'age', 'behavior', 'breed', 'status'];
 $_SESSION['fields_config'] = $fieldsConfig; 
 
 // Columns initially visible in table
-$defaultColumns = ['img','name','type','breed','age','behavior'];
+$defaultColumns = ['img','name','type','breed','age','behavior', 'status'];
 
 
 if(!isset($_SESSION['visibleColumns'])) {
