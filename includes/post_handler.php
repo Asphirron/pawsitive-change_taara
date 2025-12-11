@@ -183,9 +183,16 @@ if (isset($_POST['reset_btn'])) {
                 $updateData['date_adopted'] = date('Y-m-d H:i:s'); // current date/time
 
             }else if($tableName == 'rescue_report' && in_array($value, ['resolved','cancelled'])){
-                if($value == 'resolved'){
+                if($_POST['status' == 'pending']){
+                    if($value == 'resolved'){
                     $crud->update(intval($_POST[$pk]), ['date_updated' => date('Y-m-d H:i:s')], 'report_id');
+                    }
+                }else if($_POST['status'] == 'resolved'){
+                    $message = "Case has already been resolved. Cannot do action.";
+                }else{
+                    $message = "Case has already been cancelled. Cannot do action.";
                 }
+             
                 
             
             }else if ($tableName == 'adoption_application' && in_array($value, ['accepted','rejected'])) {
@@ -222,7 +229,7 @@ if (isset($_POST['reset_btn'])) {
                 if($value === 'adopted'){
                     $tempCrud = new DatabaseCRUD('animal');
                     $tempCrud->update(
-                        $_POST['animal_id'],
+                        intval($_POST['animal_id']),
                         ['status'=> 'Adopted'], 
                         'animal_id'
                        );
@@ -255,6 +262,20 @@ if (isset($_POST['reset_btn'])) {
                     $message = 'Donation cannot be verified. It has been already cancelled. .';
                     return;
                 }
+
+                $tempCrud = new DatabaseCRUD("donation_post");
+                $tempTable = $tempCrud->select(['dpost_id, current_amount'], ['dpost_id' => $_POST['dpost_id']], 1);
+                $addAmount = 0;
+
+                foreach($tempTable as $t){
+                    $addAmount = ($t['current_amount'] + $_POST['amount']);
+                }
+
+                $tempCrud->update(
+                    intval($_POST['dpost_id']),
+                    ['current_amount' => $addAmount],
+                    'dpost_id'
+                );
 
                 //$updateData['respond_date'] = date('Y-m-d H:i:s'); // current date/time
                 
@@ -304,7 +325,7 @@ if (isset($_POST['reset_btn'])) {
                     $newQty = intval($tempItem['quantity']) + $quantity;
 
                     if($tempCrud->update($tempItem['item_id'], ['quantity' => $newQty], 'item_id')){
-                        $message = "Inventory updated. New quantity: $newQty";
+                        $message = "Item quantity has been successfully inserted";
                     }
                 }
             }
