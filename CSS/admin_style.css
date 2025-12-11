@@ -459,7 +459,7 @@ pre { white-space: pre-wrap; }
 }
 
 .stat-preview-container{
-    width: 240px;
+    width: 260px;
     height: 100px;
     border: 1px solid rgb(220, 220, 220);
     border-radius: 10px;

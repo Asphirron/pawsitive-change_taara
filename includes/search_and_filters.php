@@ -118,6 +118,11 @@ foreach($totalItemsTable as $t){
         <h4><b> <?= $lowStock ?> </b></h4>
         <small style="color: gray;"><= 10 threshold</small>
     </div>
+        <div class='stat-preview-container'>
+        <small>In Stock</small>
+        <h4><b> <?= ($totalItems - $noStock) ?> </b></h4>
+        <small style="color: gray;">Quantity > 10</small>
+    </div>
     <div class='stat-preview-container'>
         <small>Out of Stock</small>
         <h4><b> <?= $noStock ?> </b></h4>
