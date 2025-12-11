@@ -166,8 +166,11 @@ if (isset($_POST['reset_btn'])) {
             if (in_array($value, ['adopted','returned'])) {
                 $updateData['date_adopted'] = date('Y-m-d H:i:s'); // current date/time
 
-            }else if($tableName == 'rescue_report'){
-                $crud->update($_POST[$pk], ['date_updated' => date('Y-m-d H:i:s'), 'report_id']);
+            }else if($tableName == 'rescue_report' && in_array($value, ['resolved','cancelled'])){
+                if($value == 'resolved'){
+                    $crud->update($_POST['report_id'], ['date_updated' => date('Y-m-d H:i:s'), 'report_id']);
+                }
+                
             
             }else if ($tableName == 'adoption_application' && in_array($value, ['accepted','rejected'])) {
                 if($_POST['status'] !== 'pending'){
@@ -187,10 +190,10 @@ if (isset($_POST['reset_btn'])) {
 
                     $tempCrud = new DatabaseCRUD('animal');
                     $tempCrud->update(
-                        $_POST['animal_id'],[
+                        $_POST['animal_id'],
                         ['status'=> 'Pending Adoption'], 
                         'animal_id'
-                       ]);
+                       );
                 }
                 
             }else if ($tableName == 'adoption' && in_array($value, ['adopted','returned'])) {
@@ -203,10 +206,10 @@ if (isset($_POST['reset_btn'])) {
                 if($value === 'adopted'){
                     $tempCrud = new DatabaseCRUD('animal');
                     $tempCrud->update(
-                        $_POST['animal_id'],[
+                        $_POST['animal_id'],
                         ['status'=> 'Adopted'], 
                         'animal_id'
-                       ]);
+                       );
                 }
             }else if ($tableName == 'volunteer_application' && in_array($value, ['accepted','rejected'])) {
 
