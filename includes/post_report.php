@@ -41,7 +41,7 @@
       
     }
 
-    //$agreed = (isset($_POST['agreed'])) ? $_POST['agreed'] :'false';
+    $agreed = (isset($_POST['agreed'])) ? $_POST['agreed'] :'false';
 
     date_default_timezone_set('Asia/Manila');
     $date = date('Y-m-d');
@@ -50,8 +50,8 @@
    
 
 
-    $sql = "INSERT INTO rescue_report (user_id, type, description, full_name, contact_num, location, img, date_posted, status)
-                VALUES (\"$uid\", \"$type\", \"$desc\", \"$fullname\", \"$contact_num\", \"$location\", \"$img\",\"$date\",\"$status\")";
+    $sql = "INSERT INTO rescue_report (user_id, type, description, full_name, contact_num, location, img, agreed_to_email, date_posted, status)
+                VALUES (\"$uid\", \"$type\", \"$desc\", \"$fullname\", \"$contact_num\", \"$location\", \"$img\", \"$agreed\",\"$date\",\"$status\")";
 
     
     if ($conn->query($sql) === TRUE) {
