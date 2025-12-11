@@ -48,25 +48,7 @@ if (isset($_POST['reset_btn'])) {
         }
 
         foreach ($filterConfig as $f) {
-
-            // Handle virtual 'status' column
-            if ($f === 'status' && !empty($_POST['status']) && $tableName == 'donation_inventory') {
-                $statusVal = $_POST['status'];
-
-                if ($statusVal === 'out of stock') {
-                    $conditions[] = "quantity <= 0";
-                }
-                else if ($statusVal === 'low stock') {
-                    $conditions[] = "quantity > 0 AND quantity <= 10";
-                }
-                else if ($statusVal === 'in stock') {
-                    $conditions[] = "quantity > 10";
-                }
-
-                continue; // Skip normal handler
-            }
-
-            // Normal columns
+            
             if (!empty($_POST[$f])) {
                 $conditions[] = "`$f` = ?";
                 $params[] = $_POST[$f];
@@ -76,7 +58,25 @@ if (isset($_POST['reset_btn'])) {
 
 
         $whereSql = $conditions ? 'WHERE ' . implode(' AND ', $conditions) : '';
-        $sql = "SELECT * FROM `$tableName` $whereSql ORDER BY `$pk` $orderDir LIMIT ?";
+
+        if ($tableName === 'donation_inventory') {
+            $sql = "
+                SELECT item_id, item_name, item_type, quantity, date_stored, item_img, donater_name,
+                    CASE
+                        WHEN quantity <= 0 THEN 'out of stock'
+                        WHEN quantity <= 10 THEN 'low stock'
+                        ELSE 'in stock'
+                    END AS status
+                FROM `$tableName`
+                $whereSql
+                ORDER BY `$pk` $orderDir
+                LIMIT ?
+            ";
+        } else {
+            $sql = "SELECT * FROM `$tableName` $whereSql ORDER BY `$pk` $orderDir LIMIT ?";
+        }
+
+
         $stmt = $conn->prepare($sql);
         $params[] = $limit;
         $types .= 'i';
