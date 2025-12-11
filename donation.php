@@ -325,6 +325,8 @@ $stmt->close();
             <?php endif; ?>
             </tbody>
         </table>
+      </div>
+      
       <div class='donation-card'>
                 
         </div>
